@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\DBSizes;
+use App\Helpers\DBTypes;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUserRequest extends FormRequest
@@ -13,7 +15,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +26,12 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            
+            'email' => 'required|email|unique:users,email|max:' . DBSizes::STRING,
+            'password' => 'required|string|min:8',
+            'name'=> 'required|string|min:2|max:' . DBSizes::STRING,
+            'identification_type'=> 'required|in_array:' . DBTypes::IDENTIFICATION_TYPE,
+            'identification_value'=> 'required|cpf',
+            'phone'=> 'required|integer|digits_between:10,14',
         ];
     }
 }

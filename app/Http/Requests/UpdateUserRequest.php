@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\DBSizes;
+use App\Helpers\DBTypes;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
@@ -13,7 +15,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +25,13 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('id');
         return [
-            //
+            'email' => 'email|unique:users,email,' . $id . '|max:' . DBSizes::STRING,
+            'name'=> 'string|min:2|max:' . DBSizes::STRING,
+            'identification_type'=> 'in_array:' . DBTypes::IDENTIFICATION_TYPE,
+            'identification_value'=> 'cpf',
+            'phone'=> 'integer|digits_between:10,14',
         ];
     }
 }

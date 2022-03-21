@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use App\Helpers\DBSizes;
 use App\Helpers\DBTypes;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -17,12 +18,12 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
 
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('name');
-            $table->enum('identification_type',DBTypes::get('identification_type'));
-            $table->string('identification_value');
-            $table->string('phone');
+            $table->string('email',DBSizes::STRING)->unique();
+            $table->string('password',DBSizes::STRING);
+            $table->string('name',DBSizes::STRING);
+            $table->enum('identification_type',DBTypes::IDENTIFICATION_TYPE);
+            $table->string('identification_value',DBSizes::STRING);
+            $table->unsignedInteger('phone');
             $table->boolean('is_verified')->default(false);
             $table->timestamp('verified_at')->nullable();
 

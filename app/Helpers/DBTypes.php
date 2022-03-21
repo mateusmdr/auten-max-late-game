@@ -3,10 +3,6 @@
 namespace App\Helpers;
 
 class DBTypes {
-    static function get($type){
-        switch($type) {
-            case 'identification_type':
-                return ['CPF'];
-        }
-    }
+    
+    const IDENTIFICATION_TYPE = ['CPF'];
 }
