@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 
@@ -15,17 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $builder = User::query();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return UserResource::collection($builder->get());
     }
 
     /**
@@ -36,7 +30,19 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        $data = $request->only([
+            'email',
+            'password',
+            'name',
+            'identification_type',
+            'identification_value',
+            'phone',
+        ]);
+        $data['password'] = Hash::make($data['password']);
+
+        $user = User::create($data);
+
+        return new UserResource($user);
     }
 
     /**
@@ -47,18 +53,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
+        return new UserResource($user);
     }
 
     /**
@@ -70,7 +65,20 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $data = $request->only([
+            'email',
+            'password',
+            'name',
+            'identification_type',
+            'identification_value',
+            'phone',
+        ]);
+        
+        if(!empty($data)) {
+            $user->update($data);
+        }
+
+        return new UserResource($user);
     }
 
     /**
@@ -81,6 +89,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        return $user->deleteOrFail();
     }
 }

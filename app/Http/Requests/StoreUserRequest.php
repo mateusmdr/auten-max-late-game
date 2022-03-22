@@ -4,9 +4,11 @@ namespace App\Http\Requests;
 
 use App\Helpers\DBSizes;
 use App\Helpers\DBTypes;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use App\Http\Requests\DefaultRequest;
 
-class StoreUserRequest extends FormRequest
+class StoreUserRequest extends DefaultRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,8 +31,11 @@ class StoreUserRequest extends FormRequest
             'email' => 'required|email|unique:users,email|max:' . DBSizes::STRING,
             'password' => 'required|string|min:8',
             'name'=> 'required|string|min:2|max:' . DBSizes::STRING,
-            'identification_type'=> 'required|in_array:' . DBTypes::IDENTIFICATION_TYPE,
-            'identification_value'=> 'required|cpf',
+            'identification_type'=> [
+                'required',
+                Rule::in(DBTypes::IDENTIFICATION_TYPE)
+            ],
+            'identification_value'=> 'required|cpf|unique:users,identification_value',
             'phone'=> 'required|integer|digits_between:10,14',
         ];
     }

@@ -20,10 +20,10 @@ return new class extends Migration
 
             $table->string('email',DBSizes::STRING)->unique();
             $table->string('password',DBSizes::STRING);
-            $table->string('name',DBSizes::STRING);
-            $table->enum('identification_type',DBTypes::IDENTIFICATION_TYPE);
-            $table->string('identification_value',DBSizes::STRING);
-            $table->unsignedInteger('phone');
+            $table->string('name',DBSizes::STRING)->nullable();
+            $table->enum('identification_type',DBTypes::IDENTIFICATION_TYPE)->nullable();
+            $table->string('identification_value',DBSizes::STRING)->nullable();
+            $table->string('phone')->nullable();
             $table->boolean('is_verified')->default(false);
             $table->timestamp('verified_at')->nullable();
 

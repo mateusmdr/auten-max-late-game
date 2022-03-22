@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         DB::listen(function($query) {
-            Log::channel('database')->info(
+            Log::channel('stack')->info(
                 $query->sql.' -- '.$query->time.'ms -- ',
                 $query->bindings
             );
