@@ -10,15 +10,6 @@ use App\Http\Requests\DefaultRequest;
 
 class UpdateUserRequest extends DefaultRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
     // /**
     //  * Prepare the data for validation.
     //  *

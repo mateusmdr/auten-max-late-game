@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('identification_type',DBTypes::IDENTIFICATION_TYPE)->nullable();
             $table->string('identification_value',DBSizes::STRING)->nullable();
             $table->string('phone')->nullable();
+            $table->string('remember_token',DBSizes::TOKEN)->nullable();
             $table->boolean('is_verified')->default(false);
             $table->timestamp('verified_at')->nullable();
 

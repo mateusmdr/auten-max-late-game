@@ -11,6 +11,18 @@ use App\Http\Requests\UpdateUserRequest;
 class UserController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except('store');
+
+        $this->authorizeResource(User::class);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -67,7 +79,6 @@ class UserController extends Controller
     {
         $data = $request->only([
             'email',
-            'password',
             'name',
             'identification_type',
             'identification_value',

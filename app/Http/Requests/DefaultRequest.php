@@ -17,7 +17,7 @@ abstract class DefaultRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     public function failedValidation(Validator $validator) {
