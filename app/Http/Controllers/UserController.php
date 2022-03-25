@@ -17,9 +17,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('store');
-
-        $this->authorizeResource(User::class);
+        // $this->authorizeResource(User::class);
     }
 
     /**

@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -24,10 +25,24 @@ class UserFactory extends Factory
             'identification_type'=> 'CPF',
             'identification_value'=> $this->faker->cpf(false),
             'phone'=> $this->faker->cellphone(false),
-            'is_verified'=> false,
-            'verified_at'=> null,
+            'email_verified_at' => now(),
+            'remember_token' => Str::random(10),
             
             'is_admin'=> false,
         ];
+    }
+
+    /**
+     * Indicate that the model's email address should be unverified.
+     *
+     * @return static
+     */
+    public function unverified()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'email_verified_at' => null,
+            ];
+        });
     }
 }

@@ -6,9 +6,9 @@ use App\Helpers\DBSizes;
 use App\Helpers\DBTypes;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use App\Http\Requests\DefaultRequest;
+use App\Http\Requests\BaseRequest;
 
-class StoreUserRequest extends DefaultRequest
+class StoreUserRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.

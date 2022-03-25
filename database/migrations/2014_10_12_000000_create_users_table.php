@@ -18,19 +18,20 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
 
+            $table->string('name',DBSizes::STRING);
             $table->string('email',DBSizes::STRING)->unique();
             $table->string('password',DBSizes::STRING);
-            $table->string('name',DBSizes::STRING)->nullable();
             $table->enum('identification_type',DBTypes::IDENTIFICATION_TYPE)->nullable();
             $table->string('identification_value',DBSizes::STRING)->nullable();
-            $table->string('phone')->nullable();
-            $table->string('remember_token',DBSizes::TOKEN)->nullable();
-            $table->boolean('is_verified')->default(false);
-            $table->timestamp('verified_at')->nullable();
-
+            $table->string('phone',DBSizes::STRING)->nullable();
+            
             $table->boolean('is_admin')->default(false);
+
+            $table->rememberToken();
+            $table->timestamp('email_verified_at')->nullable();
             
             $table->timestamps();
+            
             $table->unique(['identification_type','identification_value']);
         });
     }
