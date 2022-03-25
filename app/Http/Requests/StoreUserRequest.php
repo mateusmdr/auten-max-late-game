@@ -20,7 +20,7 @@ class StoreUserRequest extends DefaultRequest
         return [
             'email' => 'required|email|unique:users,email|max:' . DBSizes::STRING,
             'password' => 'required|string|min:8',
-            'confirm_password' => 'required|string|same:password|min:8',
+            'password_confirmation' => 'required|string|same:password|min:8',
             'name'=> 'required|string|min:2|max:' . DBSizes::STRING,
             'identification_type'=> [
                 'required',

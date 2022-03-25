@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Helpers\DBSizes;
 use App\Http\Requests\DefaultRequest;
 
-class AuthRequest extends DefaultRequest
+class ResetPasswordRequest extends DefaultRequest
 {
     /**
      * Get the validation rules that apply to the request.
