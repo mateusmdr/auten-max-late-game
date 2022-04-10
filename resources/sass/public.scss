@@ -1,0 +1,44 @@
+// Fonts
+// @import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Libraries
+@import '~normalize.css';
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-icons';
+
+:root {
+    min-height: 100vh;
+}
+
+a {
+    @extend .text-decoration-none;
+}
+
+// Assets
+img {
+    &.logo {
+        content: url('../images/header_logo.png');
+        height: $header-logo-height;
+        width: auto;
+    }
+}
+
+// Components
+.header {
+    background: $header-bg;
+    height: $header-height;
+}
+
+.blurry-circle {
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+    &.blurry-circle-0{
+        width: 250px;
+        height: 250px;
+    }
+}

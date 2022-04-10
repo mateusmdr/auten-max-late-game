@@ -13,3 +13,9 @@ yarn-error.log
 /.idea
 /.vscode
 /doc/doc.asta.lock
+
+/public/css
+/public/fonts
+/public/images
+/public/js
+/public/mix-manifest.json

@@ -1,7 +1,26 @@
-// Body
-$body-bg: #f8fafc;
+// Sizes
+$header-height: 64px;
+$header-logo-height: 32px;
+
+// Colors
+$header-bg: linear-gradient(180deg, #000000 0%, #141414 100%);
+$body-bg: #000000;
+$link-color: #F2F5FA;
+$button-color: #4040F4;
+$arrow-up-color: #05F28E;
+
+$plan-card-colors: #EB4263,#B376F8,#05F28E;
+
+$stepper-collor: #05F28E;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
-$font-size-base: 0.9rem;
-$line-height-base: 1.6;
+$font-family-sans-serif: 'Open Sans', sans-serif;
+$font-size-base: 1rem;
+$font-size-sm: $font-size-base * .875;
+$font-size-lg: $font-size-base * 1.25;
+$h1-font-size: $font-size-base * 2.75; // 44px
+$h2-font-size: $font-size-base * 2; // 32px
+$h3-font-size: $font-size-base * 1.5; // 24px
+$h4-font-size: $font-size-base; // 16px
+$h5-font-size: $font-size-base * 0.875; // 14px
+$h6-font-size: $font-size-base * 0.875; // 14px

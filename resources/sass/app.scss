@@ -1,8 +1,10 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+// @import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
 @import 'variables';
 
-// Bootstrap
+// Libraries
+@import '~normalize.css';
 @import '~bootstrap/scss/bootstrap';
+
