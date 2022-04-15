@@ -17,6 +17,11 @@ $plan-card-colors: #EB4263,#B376F8,#05F28E;
 
 $stepper-collor: #05F28E;
 
+$form-bg: #1C1C1C;
+$form-input-bg: #333333;
+$input-icon-color: #BFC9DB;
+$form-grey: #BFC9DB;
+
 // Typography
 $font-family-sans-serif: 'Open Sans', sans-serif;
 $font-size-base: 1rem;
@@ -27,4 +32,9 @@ $h2-font-size: $font-size-base * 2; // 32px
 $h3-font-size: $font-size-base * 1.5; // 24px
 $h4-font-size: $font-size-base; // 16px
 $h5-font-size: $font-size-base * 0.875; // 14px
-$h6-font-size: $font-size-base * 0.875; // 14px
+$h6-font-size: $font-size-base * 0.75; // 12px
+
+$form-check-input-checked-color: #FFFFFF;
+$form-check-input-checked-bg-color: #4040F4;
+$form-check-input-width: 1.75em;
+$form-check-input-border-radius: 4px;

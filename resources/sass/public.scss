@@ -9,10 +9,15 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~bootstrap-icons';
 
+//Pages
+@import './pages/welcome.scss';
+@import './pages/forms.scss';
+
 :root, html, body {
     min-height: 100vh;
     overflow-x: hidden;
     width: 100%;
+    scroll-behavior: smooth;
 }
 
 @media only screen and (max-width: 768px)  {
@@ -31,66 +36,6 @@ a {
     -ms-user-select: none;
 }
 
-// Assets
-img {
-    &.img-header-logo {
-        content: url('../images/header_logo.png');
-        height: $header-logo-height;
-        width: auto;
-    }
-    &.img-logo {
-        content: url('../images/logo.png');
-    }
-    &.img-poker-chips-1 {
-        content: url('../images/poker_chips_1.png');
-        width: 400px;
-        height: auto;
-        top: 50%;
-        left: 30%;
-
-        transform: translate(-50%,-50%);
-    }
-    &.img-platform-pokerstars{
-        content: url('../images/platforms/pokerstars.png');
-    }
-    &.img-platform-partypoker{
-        content: url('../images/platforms/partypoker.png');
-    }
-    &.img-platform-ggpoker{
-        content: url('../images/platforms/ggpoker.png');
-    }
-    &.img-platform-wpn{
-        content: url('../images/platforms/wpn.png');
-    }
-    &.img-platform {
-        height: 30px;
-        width: auto;
-    }
-    &.img-poker-chips-1 {
-        content: url('../images/poker_chips_1.png');
-        width: 400px;
-        height: auto;
-        top: 50%;
-        left: 30%;
-
-        transform: translate(-50%,-50%);
-    }
-    &.img-poker-chips-2 {
-        content: url('../images/poker_chips_2.png');
-        width: 300px;
-        height: auto;
-        top: 60%;
-        left: 65%;
-
-        transform: translate(-50%,-50%);
-    }
-    &.img-cards {
-        content: url('../images/cards.png');
-        height: auto;
-        width: min(440px,100%);
-    }
-}
-
 // Components
 .header {
     background: $header-bg;
@@ -99,19 +44,9 @@ img {
     z-index: 2;
 }
 
-.blurry-circle {
-    svg {
-        width: 100%;
-        height: 100%;
-    }
-    &.blurry-circle-1 {
-        height: 1200px;
-        width: 1200px;
-    }
-    &.blurry-circle-2 {
-        height: 1400px;
-        width: 1400px;
-    }
+.blurry-circle svg{
+    width: 100%;
+    height: 100%;
 }
 
 .submit-btn {
@@ -120,55 +55,16 @@ img {
     border-radius: 24px;
 }
 
-.custom-card {
-    background-color: $custom-card-bg;
-    height: 64px;
-    width: 300px;
-    padding: 18px 24px;
-    margin-bottom: 16px;
-    border-radius: 16px;
-
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.custom-card span {
-    font-size: $font-size-base;
-}
-.arrow-up {
-    color: $arrow-up-color;
-    font-size: 1.7rem;
-    margin-right: 20px;
-}
-
-.plan-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem 0;
-    border-width: 2px;
-    border-style: solid;
-    border-radius: 16px;
-    box-sizing: border-box;
-}
-
-.plan-card-container{
-    box-sizing: border-box;
-    padding-right: 1rem;
-    padding-left: 1rem;
+// Assets
+img{
+    &.img-header-logo {
+        content: url('../images/header_logo.png');
+        height: $header-logo-height;
+        width: auto;
+    }
 }
 
 // Other
-@media screen and (min-width: 768px) {
-    .section {
-        padding: 6rem 0;
-    }
-}
-.section {
-    margin-top: 7rem;
-    margin-bottom: 7rem;
-}
 
 ul {
     list-style-type: none;

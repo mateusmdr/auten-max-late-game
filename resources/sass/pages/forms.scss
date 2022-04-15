@@ -1,0 +1,82 @@
+// Forms
+.form-page{
+    //Assets
+    img {
+        &.img-poker-chips-3 {
+            content: url('../../images/poker_chips_3.png');
+            height: 500px;
+            width: auto;
+            position: relative;
+            right: 80px;
+        }
+    }
+
+    .form-background {
+        position: absolute;
+        right: 130px;
+        top: calc(650px);
+        transform: translate(50%,-50%);
+        z-index: -1;
+    }
+    
+    .form-background .blurry-circle-1 {
+        width: 1400px;
+        height: 1400px;
+    }
+
+    form {
+        background-color: $form-bg;
+        padding: 64px 64px 0 64px;
+        border-radius: 8px;
+    
+        .submit-btn {
+            position: relative;
+            top: 50%;
+        }
+
+        input {
+            background-color: $form-input-bg;
+            border-radius: 8px;
+            &[type="text"], &[type="email"], &[type="password"]{
+                height: 48px;
+                border: 0;
+                padding: 0 18px;
+                &:focus{
+                    outline: none;
+                    border: 0;
+                    box-shadow: 0 0 0 0.15rem $input-icon-color;
+                }
+            }
+            &[type="checkbox"] {
+                border: 0;
+                &:focus{
+                    outline: none;
+                    border: 0;
+                    box-shadow: none;
+                }
+            }
+        }
+
+        .input-container {
+            position: relative;
+
+            input + .input-icon {
+                position: absolute;
+                right: 20px;
+                top: 50%;
+                transform: translate(-50%,-50%);
+                vertical-align: middle;
+                font-size: 1.5rem;
+                color: $input-icon-color;
+            }
+            input:autofill + .input-icon {
+                color: black;
+            }
+        }
+
+        .form-grey {
+            color: $form-grey;
+            font-weight: 600;
+        }
+    }
+}

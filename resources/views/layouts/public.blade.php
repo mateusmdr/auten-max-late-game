@@ -16,7 +16,7 @@
     </head>
     <body>
         @include('components.header')
-        <main class="position-relative">
+        <main class="position-relative{{!($isForm ?? false) ?: ' form-page'}}" id="{{ Route::currentRouteName() ?: 'welcome' }}">
             @yield('content')
         </main>
         <footer>
