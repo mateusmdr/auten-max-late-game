@@ -13,6 +13,7 @@ yarn-error.log
 /.idea
 /.vscode
 /doc/doc.asta.lock
+/doc/.*
 
 /public/css
 /public/fonts

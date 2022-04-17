@@ -8,14 +8,14 @@ import './bootstrap';
 
 import { createApp } from 'vue';
 import adminRouter from './routes/admin';
-import clientRouter from './routes/admin';
+import clientRouter from './routes/client';
 
 import adminHome from './views/admin/Home.vue';
-import clientHome from './views/admin/Home.vue';
+import clientHome from './views/client/Home.vue';
 
 // Load root component respectively to user privileges
 const app = createApp(PHP_USER.is_admin ? adminHome : clientHome, PHP_USER);
-
+console.log(PHP_USER.is_admin)
 // Load route respectively to user privileges
 app.use(PHP_USER.is_admin ? adminRouter : clientRouter);
 
@@ -41,5 +41,3 @@ app.use(PHP_USER.is_admin ? adminRouter : clientRouter);
 
 // Mount the app into browser DOM
 app.mount('#app');
-
-// document.getElementById('app').innerText = JSON.stringify(PHP_USER);
