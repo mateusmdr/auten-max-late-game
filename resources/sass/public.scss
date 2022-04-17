@@ -1,13 +1,5 @@
-// Fonts
-// @import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
-
-// Libraries
-@import '~normalize.css';
-@import '~bootstrap/scss/bootstrap';
-@import '~bootstrap-icons';
 
 //Pages
 @import './pages/welcome.scss';
@@ -27,7 +19,7 @@
 }
 
 a {
-    @extend .text-decoration-none;
+    text-decoration: none;
     user-drag: none;
     user-select: none;
     -moz-user-select: none;

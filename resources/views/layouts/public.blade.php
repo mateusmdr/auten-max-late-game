@@ -15,9 +15,10 @@
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
         
         <!-- Styles -->
-        <link href="{{ asset('css/public.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/global.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/public.css') }}" rel="stylesheet">        
     </head>
-    <body style="{{!($isForm ?? false) ?: 'overflow:hidden;'}}>">
+    <body style="{{!($isForm ?? false) ?: 'overflow:hidden;'}}">
         @include('components.header')
         <main class="position-relative{{!($isForm ?? false) ?: ' form-page'}}" id="{{ Route::currentRouteName() ?: 'welcome' }}">
             @yield('content')
