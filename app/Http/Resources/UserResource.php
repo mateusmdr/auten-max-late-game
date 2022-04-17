@@ -19,8 +19,7 @@ class UserResource extends JsonResource
 
             'email' => $this->email,
             'name' => $this->name,
-            'identification_type' => $this->identification_type,
-            'identification_value' => $this->identification_value,
+            'cpf' => $this->cpf,
             'phone' => $this->phone,
             'is_verified' => !!$this->is_verified,
             'verified_at' => $this->verified_at,

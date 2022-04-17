@@ -9,10 +9,10 @@
                     @auth
                         <a href="{{ url('/home') }}" class="header-link">Home</a>
                     @else
-                        <a href="{{ route('login') }}" class="header-link me-2 me-sm-4">Entrar</a>
+                        <a href="{{ route('login') }}" class="header-link me-2 me-sm-4{{ Route::currentRouteName() !== 'login' ? '' : ' fw-bold' }}">Entrar</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ms-2 ms-sm-4 header-link">Cadastrar-se</a>
+                            <a href="{{ route('register') }}" class="ms-2 ms-sm-4 header-link{{ Route::currentRouteName() !== 'register' ? '': ' fw-bold' }}">Cadastrar-se</a>
                         @endif
                     @endauth
                 @endif

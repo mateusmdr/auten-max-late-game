@@ -22,11 +22,7 @@ class StoreUserRequest extends BaseRequest
             'password' => 'required|string|min:8',
             'password_confirmation' => 'required|string|same:password|min:8',
             'name'=> 'required|string|min:2|max:' . DBSizes::STRING,
-            'identification_type'=> [
-                'required',
-                Rule::in(DBTypes::IDENTIFICATION_TYPE)
-            ],
-            'identification_value'=> 'required|cpf|unique:users,identification_value',
+            'cpf'=> 'required|cpf|unique:users,cpf',
             'phone'=> 'required|integer|digits_between:10,14',
         ];
     }

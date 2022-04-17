@@ -6,9 +6,7 @@
         <img class="img-poker-chips-3"/>
     </aside>
     <div class="row justify-content-center">
-        <div class="col-sm-4 col-11 top-spacing">
-            @yield('form')
-        </div>
+        @yield('form')
     </div>
     <div class="top-spacing"></div>
 @endsection

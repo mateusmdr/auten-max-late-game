@@ -1,28 +1,27 @@
 @extends('layouts.form')
 
 @section('form')
-    @component('components.public_form',['action' => route('login'), 'title' => 'Entrar'])
+    @component('components.public_form',['action' => route('login'), 'title' => 'Entrar', 'submitMessage' => 'Entrar', 'formClasses' => 'px-5 pt-5 col-sm-4 col-11 top-spacing'])
         <div class="mb-1">
-            <label for="email" class="h5 fw-bold">Login</label>
+            <label for="email" class="h5 fw-bold">E-mail</label>
         </div>
         <div class="mb-4 input-container">
-            <input id="email" placeholder="e-mail" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-            <i class="bi bi-person input-icon"></i>
-
+            <input id="email" placeholder="exemplo@email.com" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
             @error('email')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
+            
+            <i class="bi bi-envelope input-icon @error('email') d-none @enderror"></i>
         </div>
-    
         <div class="mb-1">
             <label for="password" class="h5 fw-bold">Senha</label>
         </div>
         <div class="input-container">
             <input id="password" placeholder="senha" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-            <i class="bi bi-key input-icon"></i>
-
+            <i class="bi bi-key input-icon @error('password') d-none @enderror"></i>
+        
             @error('password')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -43,14 +42,6 @@
                 <label class="form-check-label form-grey" for="remember">
                     Lembrar de mim
                 </label>
-            </div>
-        </div>
-    
-        <div class="row mb-0">
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn submit-btn">
-                    Entrar
-                </button>
             </div>
         </div>
     @endcomponent

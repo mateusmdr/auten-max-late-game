@@ -4,17 +4,19 @@
     img {
         &.img-poker-chips-3 {
             content: url('../../images/poker_chips_3.png');
-            height: 500px;
+            height: 340px;
             width: auto;
-            position: relative;
-            right: 80px;
+            position: absolute;
+            top: 55%;
+            left: 45%;
+            transform: translate(-50%,-50%);
         }
     }
 
     .form-background {
         position: absolute;
-        right: 130px;
-        top: calc(650px);
+        right: 300px;
+        top: 48vh;
         transform: translate(50%,-50%);
         z-index: -1;
     }
@@ -77,6 +79,53 @@
         .form-grey {
             color: $form-grey;
             font-weight: 600;
+        }
+        .form-green {
+            color: $form-green;
+            font-weight: bold !important;
+        }
+        .form-red {
+            color: $form-red;
+            font-weight: bold !important;
+        }
+
+        .was-validated .form-control:invalid, .form-control.is-invalid {
+            background-position: right calc(0.375em + 0.1875rem + 20px) center;
+        }
+
+        .form-stepper{
+            align-items: center;
+            .step{
+                color: $form-grey;
+                &.current-step {
+                    color: $current-step-color;
+                    font-weight: bold !important;
+                }
+                &.completed-step {
+                    font-weight: bold !important;
+                    color: white;
+                    .bi-circle-fill, .bi-dash-lg {
+                        color: $current-step-color;
+                    }
+                }
+                .bi-dash-lg {
+                    position: relative;
+                    left: 8px;
+                    z-index: 0;
+                    font-size: 32px;
+                }
+                .bi-circle {
+                    position: relative;
+                    background-color: $form-bg;
+                    border-radius: 50%;
+                    z-index: 1;
+                    &::before {
+                        font-weight: bold !important;
+                    }
+                }
+                display: flex;
+                align-items: center;
+            }
         }
     }
 }

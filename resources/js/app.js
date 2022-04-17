@@ -30,3 +30,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
+document.getElementById('app').innerText = JSON.stringify(PHP_USER);
