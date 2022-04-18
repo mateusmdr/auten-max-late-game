@@ -7,7 +7,7 @@
             <nav class="hidden">
                 @if (Route::has('login'))
                     @auth
-                        <a href="{{ url('/home') }}" class="header-link">Home</a>
+                        <a href="{{ route('home') }}" class="header-link">Home</a>
                     @else
                         <a href="{{ route('login') }}" class="header-link me-2 me-sm-4{{ Route::currentRouteName() !== 'login' ? '' : ' fw-bold' }}">Entrar</a>
 

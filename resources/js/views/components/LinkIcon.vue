@@ -1,6 +1,6 @@
 <template>
     <router-link 
-        :to="this.url"
+        :to="{name: this.url}"
         v-if="this.isRoute"
     >
         <i :class="`bi ${this.icon}`"></i>

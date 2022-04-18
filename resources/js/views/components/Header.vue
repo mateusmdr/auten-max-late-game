@@ -6,9 +6,12 @@
 
 <template>
     <header class="row align-items-center">
-            <a href="/home" class="position-relative col-1">
+            <router-link 
+                :to="{name: 'home'}"
+                class="col-1"
+            >
                 <img class="img-header-logo" src="@images/header_logo.png"/>
-            </a>
+            </router-link>
             <nav class="col-10">
                 <ul v-if="isAdmin">
                     <li><LinkIcon icon='bi-trophy' url='tournaments'/></li>
@@ -27,7 +30,7 @@
                 </ul>
             </nav>
             <div class="col-1">
-                <a @click="this.logout"><LinkIcon icon='bi-box-arrow-right' url='/'/></a>
+                <a @click="this.logout"><LinkIcon icon='bi-box-arrow-right' url='/' :isRoute="false"/></a>
             </div>
     </header>
 </template>

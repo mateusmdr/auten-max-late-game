@@ -7,15 +7,30 @@ const routes = [
     name: "home",
     component: Home,
   },
-  // {
-  //   path: "/about",
-  //   name: "About",
-  //   component: About,
-  // },
+  {
+    path: '/notificacoes',
+    name: 'notifications',
+    component: Home,
+  },
+  {
+    path: '/torneios',
+    name: 'tournaments',
+    component: Home,
+  },
+  {
+    path: '/perfil',
+    name: 'profile',
+    component: Home,
+  },
+  {
+    path: '/configuracoes',
+    name: 'settings',
+    component: Home,
+  },
 ];
 
 const router = createRouter({
-  history: createWebHistory('/home'),
+  history: createWebHistory('/plataforma'),
   routes,
 });
 

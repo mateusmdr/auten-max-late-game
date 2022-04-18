@@ -7,7 +7,8 @@
 <template>
     <Page>
         <div>sou client</div>
-        <DynamicButton text="Dinâmico"/>
+        <DynamicButton text="Dinâmico 1"/>
+        <DynamicButton text="Dinâmico 2" :primary="false"/>
         <StaticButton text="Estático 1"/>
         <StaticButton text="Estático 2" :primary="false"/>
     </Page>
