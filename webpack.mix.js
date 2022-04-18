@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,9 +12,13 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix
+    .js('resources/js/app.js', 'public/js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/public.scss', 'public/css')
     .sass('resources/sass/global.scss', 'public/css')
-    .version(); 
+    .alias({
+        '@images': path.join(__dirname, 'resources/images')
+    })
+    .version();

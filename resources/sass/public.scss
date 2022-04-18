@@ -43,8 +43,15 @@ a {
 
 .submit-btn {
     background-color: $button-color;
+    font-weight: bold;
     padding: 12px 40px;
     border-radius: 24px;
+    transition: .2s;
+}
+
+.submit-btn:hover {
+    color: $button-color;
+    background-color: $button-color-hover;
 }
 
 // Assets

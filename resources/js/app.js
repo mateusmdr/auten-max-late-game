@@ -15,7 +15,7 @@ import clientHome from './views/client/Home.vue';
 
 // Load root component respectively to user privileges
 const app = createApp(PHP_USER.is_admin ? adminHome : clientHome, PHP_USER);
-console.log(PHP_USER.is_admin)
+
 // Load route respectively to user privileges
 app.use(PHP_USER.is_admin ? adminRouter : clientRouter);
 
@@ -29,9 +29,9 @@ app.use(PHP_USER.is_admin ? adminRouter : clientRouter);
  */
 
 // const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+// files.keys().map(key => app.component(key.split('/').pop().split('.')[0], files(key).default))
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// app.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

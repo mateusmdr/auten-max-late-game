@@ -1,3 +1,9 @@
+<script setup>
+    import Page from './Page.vue';
+</script>
+
 <template>
-    <div>sou admin</div>
+    <Page>
+        <div>sou admin</div>
+    </Page>
 </template>

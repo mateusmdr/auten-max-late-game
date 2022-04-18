@@ -27,11 +27,6 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-            @csrf
-            <button type="submit">Logout</button>
-        </form> --}}
-    </div>
+    <div id="app" class="container-fluid"></div>
 </body>
 </html>
