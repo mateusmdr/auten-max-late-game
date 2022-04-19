@@ -26,8 +26,6 @@ export default {
         padding: 2.25rem 1.5rem;
         background-color: #232323;
         border-radius: 8px;
-        display: inline-block;
-        min-width: 250px;
     }
 
     .custom-card-content {
@@ -50,5 +48,7 @@ export default {
         border-left: 2px solid transparent;
         padding-left: 16px;
         box-sizing: border-box;
+
+        min-height: 5.25rem;
     }
 </style>

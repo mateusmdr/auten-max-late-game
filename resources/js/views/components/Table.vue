@@ -1,5 +1,5 @@
 <template>
-    <div class="fluid-container table-container">
+    <div class="container-fluid">
         <div class="row table-header">
             <div class="col-1"></div>
 
@@ -60,10 +60,5 @@ export default {
     .table-header h4 {
         margin-bottom: 0;
         font-weight: 700;
-    }
-
-    .table-container {
-        width: calc(100% - 8em);
-        margin: auto;
     }
 </style>
