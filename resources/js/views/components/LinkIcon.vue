@@ -3,16 +3,19 @@
         :to="{name: this.url}"
         v-if="this.isRoute"
     >
-        <i :class="`bi ${this.icon}`"></i>
+        <icon :name="icon"></icon>
     </router-link>
     
     <a :href="this.url" v-else>
-        <i :class="`bi ${this.icon}`"></i>
+        <icon :name="icon"></icon>
     </a>
 </template>
 
 <script>
+import Icon from "./Icon.vue"
+
 export default {
+    components: { Icon },
     props: {
         icon: {
             type: String,
@@ -31,10 +34,6 @@ export default {
 </script>
 
 <style scoped>
-    i {
-        font-size: 1.5em;
-    }
-
     a, a:visited {
         color: #F2F5FA;
     }
