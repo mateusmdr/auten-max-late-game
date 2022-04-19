@@ -20,3 +20,6 @@ yarn-error.log
 /public/images
 /public/js
 /public/mix-manifest.json
+
+/resources/images/*
+!/resources/images/raw
