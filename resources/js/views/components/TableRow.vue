@@ -1,6 +1,6 @@
 <template>
     <div class="row px-3">
-        <table-col :key="'title'" :width="1">
+        <table-col :key="'title'" :width="2">
             <div class="title-col" :style="`border-left-color:${color};`">
                 <h4>{{ title }}</h4>
             </div>
@@ -14,8 +14,8 @@
 
         <table-col :key="'action'" :width="1">
             <div class="action-col" @click="action">
-                <icon :name="actionIcon" :color="color"/>
-                <h4> {{ actionText }} </h4>
+                <icon :name="actionIcon" :color="color" size="1.2rem"/>
+                <h4 :style="`color: ${color};`"> {{ actionText }} </h4>
             </div>
         </table-col>
     </div>
@@ -59,5 +59,17 @@ export default {
         padding-left: 16px;
         color: #BFC9DB;
         font-weight: 700;
+    }
+
+    .action-col {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .action-col h4{
+        font-weight: 600;
+        padding-left: 8px;
     }
 </style>

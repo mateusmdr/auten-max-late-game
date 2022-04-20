@@ -1,5 +1,9 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Home from "../views/client/Home.vue";
+import Home from '../views/client/Home.vue';
+import Notifications from '../views/client/Notifications.vue';
+import Tournaments from '../views/client/Tournaments.vue';
+import Profile from '../views/client/Profile.vue';
+import Settings from '../views/client/Settings.vue';
 
 const routes = [
   {
@@ -10,22 +14,22 @@ const routes = [
   {
     path: '/notificacoes',
     name: 'notifications',
-    component: Home,
+    component: Notifications,
   },
   {
     path: '/torneios',
     name: 'tournaments',
-    component: Home,
+    component: Tournaments,
   },
   {
     path: '/perfil',
     name: 'profile',
-    component: Home,
+    component: Profile,
   },
   {
     path: '/configuracoes',
     name: 'settings',
-    component: Home,
+    component: Settings,
   },
 ];
 

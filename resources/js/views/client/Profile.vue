@@ -1,9 +1,5 @@
 <template>
-    <div class="container d-flex justify-content-center mb-5">
-        <img src="@images/poker_chips_4.png" class="img-home">
-    </div>
-
-    <Section title="Notificações" description="Últimos avisos" icon="bi-bell">
+    <Section title="Perfil" icon="bi-person">
         <div class="row">
             <div class="col-3 card-col">
                 <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
@@ -27,42 +23,16 @@
             </div>
         </div>
     </Section>
-
-    <Section title="Agenda de hoje" description="Próximos torneios" icon="bi-calendar-week">
-        <Table
-            actionIcon='bi-alarm'
-            actionText='Desativar'
-            :fields="[
-                {name: 'Dia', width: 1},
-                {name: 'Inscrição', width: 2},
-                {name: 'Plataforma', width: 2},
-                {name: 'Tipo torneio', width: 1},
-                {name: 'Buy-in Mín', width: 1},
-                {name: 'Buy-in Máx', width: 1},
-                {name: 'Recorrência', width: 1}
-            ]"
-            :items="tournaments"
-        />
-    </Section>
 </template>
 
 <script>
     import Section from '../components/Section.vue';
-    import DynamicButton from '../components/DynamicButton.vue';
-    import StaticButton from '../components/StaticButton.vue';
-    import Table from '../components/Table.vue';
 
     import Card from '../components/Card.vue';
 
-    import Ad from '../components/client/Ad.vue';
-
     export default {
         components: {
-            DynamicButton,
-            StaticButton,
             Card,
-            Table,
-            Ad,
             Section
         },
         data: function() {

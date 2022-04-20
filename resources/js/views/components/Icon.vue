@@ -1,5 +1,5 @@
 <template>
-    <i :class="`bi ${name}`" :style="`color:${color};`"></i>
+    <i :class="`bi ${name}`" :style="`color:${color};font-size:${size};`"></i>
 </template>
 
 <script>
@@ -9,16 +9,16 @@ export default {
         color: {
             type: String,
             default: 'inherit'
+        },
+        size: {
+            type: String,
+            default: '1.5rem'
         }
     }
 }
 </script>
 
 <style scoped>
-    i {
-        font-size: 1.5em;
-    }
-
     i::before {
         color: inherit;
     }

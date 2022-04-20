@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
-        <div class="row table-header">
-            <div class="col-1"></div>
+        <div class="row table-header px-3">
+            <div class="col-2"></div>
 
             <table-col v-for="field in fields" :key="field.name" :width="field.width">
                 <div>
@@ -32,19 +32,11 @@ import TableCol from './TableCol.vue'
 
 export default {
   components: { TableRow, TableCol },
-    data: function() {
-        return {
-            items: [
-                {title: 'Título 1', color: '#B376F8', values: [1,2,3,4,5], action: () => console.log("fui clicado 1")},
-                {title: 'Título 2', color: 'green', values: [11,22,33,44,55], action: () => console.log("fui clicado 2")},
-                {title: 'Título 3', color: 'blue', values: [111,222,333,444,555], action: () => console.log("fui clicado 3")}
-            ],
-        }
-    },
     props: {
         actionIcon: String,
         actionText: String,
-        fields: Array
+        fields: Array,
+        items: Array
     }
 }
 </script>
