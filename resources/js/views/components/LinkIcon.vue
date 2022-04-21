@@ -3,11 +3,11 @@
         :to="{name: this.url}"
         v-if="this.isRoute"
     >
-        <icon :name="icon"></icon>
+        <Icon :name="icon"></Icon>
     </router-link>
     
     <a :href="this.url" v-else>
-        <icon :name="icon"></icon>
+        <Icon :name="icon"></Icon>
     </a>
 </template>
 

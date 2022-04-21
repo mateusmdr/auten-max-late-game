@@ -12,9 +12,18 @@ import clientRouter from './routes/client';
 
 import App from './views/App.vue';
 
+
 // Load root component respectively to user privileges
-// const app = createApp(PHP_USER.is_admin ? adminHome : clientHome, PHP_USER);
-const app = createApp(App, PHP_USER);
+const app = createApp(App);
+
+// Provide user info to globally
+app.mixin({
+    data: function() {
+        return {
+            user: PHP_USER
+        }
+    }
+})
 
 // Load route respectively to user privileges
 app.use(PHP_USER.is_admin ? adminRouter : clientRouter);

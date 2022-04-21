@@ -1,5 +1,5 @@
 <template>
-    <Section title="Perfil" icon="bi-person">
+    <Section title="Perfil" icon="person">
         <div class="row">
             <div class="col-3 card-col">
                 <Card color='yellow' title="Título do Card" corner-text="Texto do canto">

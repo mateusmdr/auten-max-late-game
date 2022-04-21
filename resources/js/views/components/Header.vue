@@ -1,9 +1,3 @@
-<script setup>
-    import LinkIcon from './LinkIcon.vue';
-
-    import axios from 'axios';
-</script>
-
 <template>
     <header class="row align-items-center">
             <router-link 
@@ -14,29 +8,33 @@
             </router-link>
             <nav class="col-10">
                 <ul v-if="isAdmin">
-                    <li><LinkIcon icon='bi-trophy' url='tournaments'/></li>
-                    <li><LinkIcon icon='bi-person' url='profile'/></li>
-                    <li><LinkIcon icon='bi-bell' url='notifications'/></li>
-                    <li><LinkIcon icon='bi-cash' url='payments'/></li>
-                    <li><LinkIcon icon='bi-pip' url='ads'/></li>
-                    <li><LinkIcon icon='bi-gear' url='settings'/></li>
+                    <li><LinkIcon icon='emoji_events' url='tournaments'/></li>
+                    <li><LinkIcon icon='person' url='profile'/></li>
+                    <li><LinkIcon icon='notifications' url='notifications'/></li>
+                    <li><LinkIcon icon='request_quote' url='payments'/></li>
+                    <li><LinkIcon icon='picture_in_picture' url='ads'/></li>
+                    <li><LinkIcon icon='settings' url='settings'/></li>
                 </ul>
 
                 <ul v-else>
-                    <li><LinkIcon icon='bi-bell' url='notifications'/></li>
-                    <li><LinkIcon icon='bi-trophy' url='tournaments'/></li>
-                    <li><LinkIcon icon='bi-person' url='profile'/></li>
-                    <li><LinkIcon icon='bi-gear' url='settings'/></li>
+                    <li><LinkIcon icon='notifications' url='notifications'/></li>
+                    <li><LinkIcon icon='emoji_events' url='tournaments'/></li>
+                    <li><LinkIcon icon='person' url='profile'/></li>
                 </ul>
             </nav>
             <div class="col-1">
-                <a @click="this.logout"><LinkIcon icon='bi-box-arrow-right' url='/' :isRoute="false"/></a>
+                <a @click="this.logout"><LinkIcon icon='logout' url='/' :isRoute="false"/></a>
             </div>
     </header>
 </template>
 
 <script>
+import LinkIcon from './LinkIcon.vue';
+
+import axios from 'axios';
+
 export default {
+    components: {LinkIcon},
     methods: {
         logout (e) {
             e.preventDefault();

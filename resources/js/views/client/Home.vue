@@ -3,7 +3,7 @@
         <img src="@images/poker_chips_4.png" class="img-home">
     </div>
 
-    <Section title="Notificações" description="Últimos avisos" icon="bi-bell">
+    <Section title="Notificações" description="Últimos avisos" icon="notifications">
         <div class="row">
             <div class="col-3 card-col">
                 <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
@@ -28,9 +28,9 @@
         </div>
     </Section>
 
-    <Section title="Agenda de hoje" description="Próximos torneios" icon="bi-calendar-week">
+    <Section title="Agenda de hoje" description="Próximos torneios" icon="date_range">
         <Table
-            actionIcon='bi-alarm'
+            actionIcon='alarm_off'
             actionText='Desativar'
             :fields="[
                 {name: 'Dia', width: 1},

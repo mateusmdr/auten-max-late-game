@@ -1,5 +1,5 @@
 <template>
-    <Section title="Notificações" description="Últimos avisos" icon="bi-bell">
+    <Section title="Notificações" description="Últimos avisos" icon="notifications">
         <div class="row">
             <div class="col-3 card-col">
                 <Card color='yellow' title="Título do Card" corner-text="Texto do canto">

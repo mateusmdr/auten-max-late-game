@@ -1,5 +1,5 @@
 <template>
-    <Section title="Torneios" description="Próximos Torneios" icon="bi-trophy">
+    <Section title="Torneios" description="Próximos Torneios" icon="emoji_events">
         <div class="row">
             <div class="col-3 card-col">
                 <Card color='yellow' title="Título do Card" corner-text="Texto do canto">

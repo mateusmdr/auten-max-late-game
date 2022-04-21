@@ -3,7 +3,6 @@ import Home from '../views/client/Home.vue';
 import Notifications from '../views/client/Notifications.vue';
 import Tournaments from '../views/client/Tournaments.vue';
 import Profile from '../views/client/Profile.vue';
-import Settings from '../views/client/Settings.vue';
 
 const routes = [
   {
@@ -25,11 +24,6 @@ const routes = [
     path: '/perfil',
     name: 'profile',
     component: Profile,
-  },
-  {
-    path: '/configuracoes',
-    name: 'settings',
-    component: Settings,
   },
 ];
 

@@ -1,10 +1,10 @@
 <template>
     <div>
-        <Header :is-admin="false"/>
+        <Header :is-admin="user.is_admin"/>
         <main class="mt-5">
             <router-view/>
         </main>
-        <Ad/>
+        <Ad v-if="!user.is_admin"/>
         <Footer/>
     </div>
 </template>

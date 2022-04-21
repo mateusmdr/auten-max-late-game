@@ -1,5 +1,7 @@
 <template>
-    <i :class="`bi ${name}`" :style="`color:${color};font-size:${size};`"></i>
+    <span class="material-icons-outlined" :style="`color:${color};font-size:${size};`">
+        {{ name }}
+    </span>
 </template>
 
 <script>
@@ -19,7 +21,8 @@ export default {
 </script>
 
 <style scoped>
-    i::before {
+    span {
         color: inherit;
+        vertical-align: middle;
     }
 </style>
