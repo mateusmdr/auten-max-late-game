@@ -2,7 +2,6 @@
     <div class="custom-card position-relative">
         <h6 class="position-absolute corner-text">{{ cornerText }}</h6>
         <div class="custom-card-content" :style="`border-left-color: ${ color };`">
-            <h5 class="custom-card-title mb-3">{{ title }}</h5>
             <slot/>
         </div>
     </div>
@@ -28,16 +27,6 @@ export default {
         border-radius: 8px;
     }
 
-    .custom-card-content {
-        color: #7F8896;
-    }
-
-    .custom-card-title{
-        color: #BFC9DB;
-        font-size: 1rem;
-        font-weight: 700;
-    }
-
     .corner-text {
         color: #58606C;
         right: 1.5rem;
@@ -48,7 +37,19 @@ export default {
         border-left: 2px solid transparent;
         padding-left: 16px;
         box-sizing: border-box;
+    }
 
-        min-height: 5.25rem;
+</style>
+
+<style>
+    .custom-card-body h3{
+        color: #BFC9DB;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    .custom-card-body h4{
+        color: #7F8896;
+        font-weight: 600;
     }
 </style>

@@ -5,7 +5,7 @@
             <router-view/>
         </main>
         <Ad v-if="!user.is_admin"/>
-        <Footer/>
+        <Footer v-if="!user.is_admin"/>
     </div>
 </template>
 
@@ -18,3 +18,11 @@
         components: {Header, Footer, Ad}
     }
 </script>
+
+<style>
+    .img-home {
+        width: 7vw;
+        height: auto;
+        min-width: 180px;
+    }
+</style>

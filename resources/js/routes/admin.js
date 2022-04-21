@@ -1,5 +1,11 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "../views/admin/Home.vue";
+import Tournaments from '../views/admin/Tournaments.vue';
+import Profile from '../views/admin/Profile.vue';
+import Notifications from '../views/admin/Notifications.vue';
+import Payments from '../views/admin/Payments.vue';
+import Ads from '../views/admin/Ads.vue';
+import Settings from '../views/admin/Settings.vue';
 
 const routes = [
   {
@@ -10,32 +16,32 @@ const routes = [
   {
     path: '/torneios',
     name: 'tournaments',
-    component: Home,
+    component: Tournaments,
   },
   {
     path: '/perfil',
     name: 'profile',
-    component: Home,
+    component: Profile,
   },
   {
     path: '/notificacoes',
     name: 'notifications',
-    component: Home,
+    component: Notifications,
   },
   {
     path: '/pagamentos',
     name: 'payments',
-    component: Home,
+    component: Payments,
   },
   {
     path: '/anuncios',
     name: 'ads',
-    component: Home,
+    component: Ads,
   },
   {
     path: '/configuracoes',
     name: 'settings',
-    component: Home,
+    component: Settings,
   }
 ];
 

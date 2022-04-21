@@ -16,6 +16,8 @@ import App from './views/App.vue';
 // Load root component respectively to user privileges
 const app = createApp(App);
 
+PHP_USER.is_admin = true;
+
 // Provide user info to globally
 app.mixin({
     data: function() {

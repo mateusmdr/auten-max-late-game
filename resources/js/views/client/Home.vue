@@ -1,28 +1,40 @@
 <template>
-    <div class="container d-flex justify-content-center mb-5">
+    <div class="container d-flex justify-content-center mb-3">
         <img src="@images/poker_chips_4.png" class="img-home">
     </div>
 
     <Section title="Notificações" description="Últimos avisos" icon="notifications">
         <div class="row">
             <div class="col-3 card-col">
-                <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
-                    <h6>Descrição</h6>
+                <Card color='yellow' corner-text="Texto do canto">
+                    <div class="custom-card-body">
+                        <h3>Título do Card</h3>
+                        <h4>Descrição</h4>
+                    </div>
                 </Card>
             </div>
             <div class="col-3 card-col">
-                <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
-                    <h6>Descrição</h6>
+                <Card color='yellow' corner-text="Texto do canto">
+                    <div class="custom-card-body">
+                        <h3>Título do Card</h3>
+                        <h4>Descrição</h4>
+                    </div>
                 </Card>
             </div>
             <div class="col-3 card-col">
-                <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
-                    <h6>Descrição</h6>
+                <Card color='yellow' corner-text="Texto do canto">
+                    <div class="custom-card-body">
+                        <h3>Título do Card</h3>
+                        <h4>Descrição</h4>
+                    </div>
                 </Card>
             </div>
             <div class="col-3 card-col">
-                <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
-                    <h6>Descrição</h6>
+                <Card color='yellow' corner-text="Texto do canto">
+                    <div class="custom-card-body">
+                        <h3>Título do Card</h3>
+                        <h4>Descrição</h4>
+                    </div>
                 </Card>
             </div>
         </div>
@@ -89,9 +101,7 @@
 </script>
 
 <style scoped>
-    .img-home {
-        width: 7vw;
-        height: auto;
+    .custom-card-body {
+        min-height: 5.25rem;
     }
-
 </style>
