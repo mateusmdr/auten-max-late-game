@@ -1,46 +1,22 @@
 <template>
     <Section title="Torneios" description="Próximos Torneios" icon="emoji_events">
-        <div class="row">
-            <div class="col-3 card-col">
-                <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
-                    <h6>Descrição</h6>
-                </Card>
-            </div>
-            <div class="col-3 card-col">
-                <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
-                    <h6>Descrição</h6>
-                </Card>
-            </div>
-            <div class="col-3 card-col">
-                <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
-                    <h6>Descrição</h6>
-                </Card>
-            </div>
-            <div class="col-3 card-col">
-                <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
-                    <h6>Descrição</h6>
-                </Card>
-            </div>
-        </div>
     </Section>
-    <Ad/>
 </template>
 
 <script>
     import Section from '../components/Section.vue';
-    import Card from '../components/Card.vue';
 
     export default {
         components: {
-            Card,
             Section
         },
         data: function() {
             return {
                 tournaments: Array(8).fill(
                     {
+                        id: 1,
                         title: 'Título do torneio',
-                        color: '#B376F8',
+                        color: '#05F28E',
                         values: [
                             '00/00/0000',
                             '00h00 às 00h00',
@@ -50,7 +26,7 @@
                             '$ 000000,00',
                             'R$ 00000,00'
                         ],
-                        action: () => console.log("fui clicado")
+                        defaultAction: () => console.log("fui clicado")
                     }
                 )
             }

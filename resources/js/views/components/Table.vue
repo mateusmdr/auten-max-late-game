@@ -13,15 +13,17 @@
         </div>
 
         <table-row 
-            v-for="(item, index) in items"
-            :key="index"
+            v-for="item in items"
+            :key="item.id"
             :fields="fields"
             :title="item.title"
             :color="item.color"
             :values="item.values"
-            :action="item.action"
-            :actionIcon="actionIcon"
-            :actionText="actionText"
+            :defaultAction="item.action"
+            :defaultActionIcon="defaultActionIcon"
+            :defaultActionText="defaultActionText"
+            :isEditable="item.isEditable"
+            :actions="item.actions"
         />
     </div>
 </template>
@@ -33,10 +35,11 @@ import TableCol from './TableCol.vue'
 export default {
   components: { TableRow, TableCol },
     props: {
-        actionIcon: String,
-        actionText: String,
+        defaultActionIcon: String,
+        defaultActionText: String,
         fields: Array,
-        items: Array
+        items: Array,
+        actions: Array,
     }
 }
 </script>

@@ -1,50 +1,52 @@
 <template>
-    <a :href="url" :class="primary ? 'primary':'secondary'">
+    <button @click="onClick" :class="primary ? 'primary':'secondary'">
         {{ text }}
-    </a>
+    </button>
 </template>
 
 <script>
 export default {
     props: {
         text: String,
-        url: String,
         primary: {
             type: Boolean,
             default: true
-        }
+        },
+        onClick: Function
     }
 }
 </script>
 
-<style scoped>
-    a {
+<style lang="scss" scoped>
+    button {
         font-weight: bold;
         padding: 12px 40px;
-        border-radius: 24px;        
+        border-radius: 24px;
         cursor: pointer;
         transition: .2s;
         text-decoration: none;
         display: inline-block;
-    }
+        outline: 0;
+        border: 0;
 
-    a.primary {
-        color: white;
-        background-color: #4040F4;
-    }
+        &.primary {
+            color: white;
+            background-color: #4040F4;
+        }
 
-    a.secondary {
-        color: #4040f4;
-        background-color: #BFC9DB;
-    }
+        &.secondary {
+            color: #4040f4;
+            background-color: #BFC9DB;
+        }
 
-    a.primary:hover {
-        color: #4040F4 !important;
-        background-color: #BFC9DB;
-    }
+        &.primary:hover {
+            color: #4040F4 !important;
+            background-color: #BFC9DB;
+        }
 
-    a.secondary:hover {
-        color: white;
-        background-color: #4040F4;
+        &.secondary:hover {
+            color: white;
+            background-color: #4040F4;
+        }
     }
 </style>

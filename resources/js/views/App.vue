@@ -20,9 +20,18 @@
 </script>
 
 <style>
+    
+
     .img-home {
         width: 7vw;
         height: auto;
         min-width: 180px;
     }
+
+    .absolute-top-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
 </style>

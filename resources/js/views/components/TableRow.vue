@@ -13,9 +13,21 @@
         </table-col>
 
         <table-col :key="'action'" :width="1">
-            <div class="action-col" @click="action">
-                <icon :name="actionIcon" :color="color" size="1.2rem"/>
-                <h4 :style="`color: ${color};`"> {{ actionText }} </h4>
+            <div class="action-col" @click="defaultAction" v-if="!isEditable">
+                <icon :name="defaultActionIcon" :color="color" size="1.2rem"/>
+                <h4 :style="`color: ${color};`"> {{ defaultActionText }} </h4>
+            </div>
+
+            <div class="action-col" v-else>
+                <span @click="actions.delete">
+                    <icon name="block" color="#EB4263" size="1.5rem"/>
+                </span>
+                <span @click="actions.edit" class="mx-3">
+                    <icon name="mode" color="#B376F8" size="1.5rem"/>
+                </span>
+                <span @click="actions.approve">
+                    <icon name="check" color="#05F28E" size="1.5rem"/>
+                </span>
             </div>
         </table-col>
     </div>
@@ -30,11 +42,16 @@ export default {
     props: {
         title: String,
         color: String,
-        action: Function,
-        actionIcon: String,
-        actionText: String,
+        defaultAction: Function,
+        defaultActionIcon: String,
+        defaultActionText: String,
         fields: Array,
-        values: Array
+        values: Array,
+        actions: Object,
+        isEditable: {
+            type: Boolean,
+            default: false
+        }
     }
 }
 </script>
@@ -66,6 +83,7 @@ export default {
         display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: center;
     }
 
     .action-col h4{

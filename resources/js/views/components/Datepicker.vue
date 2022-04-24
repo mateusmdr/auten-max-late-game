@@ -1,0 +1,76 @@
+<template>
+    <InputContainer name="Data">
+        <Datepicker 
+            placeholder="00/00/0000"
+            :enableTimePicker="false"
+            locale="pt-BR"
+            autoApply
+            :minDate="now"
+            dark
+            hideInputIcon
+            v-model="time"
+            format="dd/MM/yyyy"
+        />
+    </InputContainer>
+</template>
+
+<script>
+import { ref } from 'vue';
+import Datepicker from '@vuepic/vue-datepicker';
+
+import InputContainer from './InputContainer.vue';
+
+export default {
+    setup() {
+        const now = ref(new Date());
+
+        return {
+            now
+        }
+    },
+    components: {Datepicker, InputContainer},
+    props: {
+        value: Date
+    },
+    computed: {
+        time: {
+            get() {
+                return this.value;
+            },
+            set(val) {
+                console.log(val);
+                this.$emit('input',val);
+            }
+        }
+    }
+}
+</script>
+
+<style lang="scss">
+    @import '@vuepic/vue-datepicker/dist/main.css';
+    
+    .dp__theme_dark {
+        --dp-background-color: #4F4F4F;
+        --dp-text-color: #BFC9DB;
+        --dp-hover-color: #232323;
+        --dp-hover-text-color: #BFC9DB;
+        --dp-border-color: transparent;
+        --dp-border-color-hover: transparent;
+
+        --dp-primary-text-color: #BFC9DB;
+    }
+
+    .dp__input {
+        min-height: 3rem;
+        border-radius: .5rem;
+        &::placeholder {
+            color: #BFC9DB;
+        }
+        &:-ms-input-placeholder {
+            color: #BFC9DB;
+        }
+        &::-ms-input-placeholder{
+            color: #BFC9DB;
+        }
+    }
+</style>
