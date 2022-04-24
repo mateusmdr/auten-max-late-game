@@ -1,6 +1,6 @@
 <template>
     <InputContainer :name="name">
-        <input type="number" v-model.number="number" :min="positive && '0'"/>
+        <input type="number" v-model.number="value" @input="$emit('input',$event.target.value)" :min="positive && '0'"/>
     </InputContainer>
 </template>
 
@@ -18,16 +18,6 @@ export default {
         positive: {
             type: Boolean,
             default: true
-        }
-    },
-    computed: {
-        number: {
-            get(){
-                return this.value;
-            },
-            set(val) {
-                this.$emit('input',val)
-            }
         }
     }
 }

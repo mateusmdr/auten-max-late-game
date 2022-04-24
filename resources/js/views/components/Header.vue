@@ -9,7 +9,7 @@
             <nav class="col-10">
                 <ul v-if="isAdmin">
                     <li><LinkIcon icon='emoji_events' url='tournaments'/></li>
-                    <li><LinkIcon icon='person' url='profile'/></li>
+                    <li><LinkIcon icon='person' url='users'/></li>
                     <li><LinkIcon icon='notifications' url='notifications'/></li>
                     <li><LinkIcon icon='request_quote' url='payments'/></li>
                     <li><LinkIcon icon='picture_in_picture' url='ads'/></li>

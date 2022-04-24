@@ -6,9 +6,11 @@
             locale="pt-BR"
             dark
             hideInputIcon
-            v-model="date"
+            v-model="value"
+            @input="$emit('input',$event.target.value)"
             format="HH:mm"
-            autoApply
+            selectText="Selecionar"
+            cancelText="Cancelar"
         />
     </InputContainer>
 </template>
@@ -30,16 +32,6 @@ export default {
     components: { Datepicker, InputContainer },
     props: {
         value: Date
-    },
-    computed: {
-        date: {
-            get() {
-                return this.value;
-            },
-            set(val) {
-                this.$emit('input',val);
-            }
-        }
     }
 }
 </script>

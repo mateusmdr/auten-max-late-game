@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "../views/admin/Home.vue";
 import Tournaments from '../views/admin/Tournaments.vue';
-import Profile from '../views/admin/Profile.vue';
+import Users from '../views/admin/Users.vue';
 import Notifications from '../views/admin/Notifications.vue';
 import Payments from '../views/admin/Payments.vue';
 import Ads from '../views/admin/Ads.vue';
@@ -19,9 +19,9 @@ const routes = [
     component: Tournaments,
   },
   {
-    path: '/perfil',
-    name: 'profile',
-    component: Profile,
+    path: '/usuarios',
+    name: 'users',
+    component: Users,
   },
   {
     path: '/notificacoes',

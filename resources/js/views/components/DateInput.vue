@@ -8,7 +8,8 @@
             :minDate="now"
             dark
             hideInputIcon
-            v-model="time"
+            v-model="value"
+            @input="$emit('input',$event.target.value)"
             format="dd/MM/yyyy"
         />
     </InputContainer>
@@ -31,17 +32,6 @@ export default {
     components: {Datepicker, InputContainer},
     props: {
         value: Date
-    },
-    computed: {
-        time: {
-            get() {
-                return this.value;
-            },
-            set(val) {
-                console.log(val);
-                this.$emit('input',val);
-            }
-        }
     }
 }
 </script>
@@ -56,6 +46,7 @@ export default {
         --dp-hover-text-color: #BFC9DB;
         --dp-border-color: transparent;
         --dp-border-color-hover: transparent;
+        --dp-success-color: #05f28e;
 
         --dp-primary-text-color: #BFC9DB;
     }

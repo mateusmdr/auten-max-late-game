@@ -1,7 +1,7 @@
 <template>
     <InputContainer :name="name">
         <div class="position-relative">
-            <select v-model="option" ref="select">
+            <select v-model="value" @input="$emit('input',$event.target.value)" ref="select">
                 <option :value="null" selected hidden>Selecione</option>
                 <option v-for="item in options" :key="item.value" :value="item">{{item.name}}</option>
             </select>
@@ -23,17 +23,6 @@ export default {
         'options',
         'value'
     ],
-    computed: {
-        option: {
-            get() {
-                return this.value;
-            },
-            set(val) {
-                console.log(val);
-                this.$emit('input',val);
-            }
-        },
-    },
 }
 </script>
 
@@ -55,6 +44,7 @@ export default {
 
         -webkit-appearance: none;
         overflow: visible;
+        cursor: pointer;
     }
 
     select::-ms-expand {

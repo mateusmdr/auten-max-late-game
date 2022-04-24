@@ -33,6 +33,7 @@
         "laravel-mix-simple-image-processing": "^1.0.7",
         "material-icons": "^1.10.8",
         "normalize.css": "^8.0.1",
+        "vue-final-modal": "^3.4.3",
         "vue-router": "^4.0.14",
         "vue-template-compiler": "^2.6.14"
     }

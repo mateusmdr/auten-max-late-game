@@ -5,23 +5,22 @@
         </div>
 
         <RadioChips
-            :chips="chips"
-            :selectedIndex="selectedIndex"
-            :setIndex="(index) => {selectedIndex = index}"
+            :chips="tournamentStatuses"
+            :selectedIndex="tournamentStatusIndex"
+            :setIndex="(index) => {tournamentStatusIndex = index}"
         />
         <div class="input-container my-5">
             <div class="row">
                 <div class="col-1">
-                    <Datepicker :value="date" @input="(val) => date=val"/>
+                    <DateInput v-model="date"/>
                 </div>
                 <div class="col-1">
-                    <Timepicker :value="time" @input="(val) => time=val"/>
+                    <TimeInput v-model="time"/>
                 </div>
                 <div class="col-2">
                     <Select 
                         :options="platforms"
-                        :value="platform"
-                        @input="(val) => platform=val"
+                        v-model="platform"
                         name="Plataforma"
                     />
                 </div>
@@ -40,8 +39,7 @@
                 <div class="col-2">
                     <Select 
                         :options="tournamentTypes"
-                        :value="tournamentType"
-                        @input="(val) => tournamentType=val"
+                        v-model="tournamentType"
                         name="Tipo de torneio"
                     />
                 </div>
@@ -51,15 +49,7 @@
         <Table
             defaultActionIcon='add'
             defaultActionText='Ver mais'
-            :fields="[
-                {name: 'Dia', width: 1},
-                {name: 'Inscrição', width: 2},
-                {name: 'Plataforma', width: 2},
-                {name: 'Tipo torneio', width: 1},
-                {name: 'Buy-in Mín', width: 1},
-                {name: 'Buy-in Máx', width: 1},
-                {name: 'Recorrência', width: 1}
-            ]"
+            :fields="tournamentFields"
             :items="tournaments"
         />
     </Section>
@@ -71,15 +61,15 @@
     import Table from '../components/Table.vue';
     import RadioChips from '../components/RadioChips.vue';
     
-    import Datepicker from '../components/Datepicker.vue';
-    import Timepicker from '../components/Timepicker.vue';
+    import DateInput from '../components/DateInput.vue';
+    import TimeInput from '../components/TimeInput.vue';
     import NumberInput from '../components/NumberInput.vue';
     import Select from '../components/Select.vue';
 
     export default {
         components: {
-            Datepicker,
-            Timepicker,
+            DateInput,
+            TimeInput,
             Section,
             DynamicButton,
             Table,
@@ -89,9 +79,9 @@
         },
         data() {
             return {
-                selectedIndex: 0,
-                date: new Date(),
-                time: new Date(),
+                tournamentStatusIndex: 0,
+                date: null,
+                time: null,
                 minBuyIn: null,
                 maxBuyIn: null,
                 platform: null,
@@ -124,7 +114,7 @@
                         value: 2
                     },
                 ],
-                chips: [
+                tournamentStatuses: [
                     {
                         text:'Todos',
                         hasIcon: false,
@@ -141,6 +131,15 @@
                         text:'Não Recorrentes',
                         color:'#05F28E',
                     }
+                ],
+                tournamentFields : [
+                    {name: 'Dia', width: 1},
+                    {name: 'Inscrição', width: 2},
+                    {name: 'Plataforma', width: 2},
+                    {name: 'Tipo torneio', width: 1},
+                    {name: 'Buy-in Mín', width: 1},
+                    {name: 'Buy-in Máx', width: 1},
+                    {name: 'Recorrência', width: 1}
                 ],
                 tournaments: Array(4).fill(
                     {

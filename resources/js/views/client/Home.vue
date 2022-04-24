@@ -42,17 +42,9 @@
 
     <Section title="Agenda de hoje" description="Próximos torneios" icon="date_range">
         <Table
-            actionIcon='alarm_off'
-            actionText='Desativar'
-            :fields="[
-                {name: 'Dia', width: 1},
-                {name: 'Inscrição', width: 2},
-                {name: 'Plataforma', width: 2},
-                {name: 'Tipo torneio', width: 1},
-                {name: 'Buy-in Mín', width: 1},
-                {name: 'Buy-in Máx', width: 1},
-                {name: 'Recorrência', width: 1}
-            ]"
+            defaultActionIcon='alarm_off'
+            defaultActionText='Desativar'
+            :fields="tournamentFields"
             :items="tournaments"
         />
     </Section>
@@ -79,6 +71,15 @@
         },
         data: function() {
             return {
+                tournamentFields: [
+                    {name: 'Dia', width: 1},
+                    {name: 'Inscrição', width: 2},
+                    {name: 'Plataforma', width: 2},
+                    {name: 'Tipo torneio', width: 1},
+                    {name: 'Buy-in Mín', width: 1},
+                    {name: 'Buy-in Máx', width: 1},
+                    {name: 'Prêmio', width: 1}
+                ],
                 tournaments: Array(8).fill(
                     {
                         title: 'Título do torneio',
@@ -88,9 +89,9 @@
                             '00h00 às 00h00',
                             'Party Poker',
                             'Cash Game',
-                            '$ 0000,00',
-                            '$ 000000,00',
-                            'R$ 00000,00'
+                            '0000',
+                            '0000',
+                            '0000'
                         ],
                         action: () => console.log("fui clicado")
                     }
