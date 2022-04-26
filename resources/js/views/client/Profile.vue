@@ -1,58 +1,68 @@
 <template>
     <Section title="Perfil" icon="person">
-        <div class="row">
-            <div class="col-3 card-col">
-                <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
-                    <h6>Descrição</h6>
-                </Card>
-            </div>
-            <div class="col-3 card-col">
-                <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
-                    <h6>Descrição</h6>
-                </Card>
-            </div>
-            <div class="col-3 card-col">
-                <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
-                    <h6>Descrição</h6>
-                </Card>
-            </div>
-            <div class="col-3 card-col">
-                <Card color='yellow' title="Título do Card" corner-text="Texto do canto">
-                    <h6>Descrição</h6>
-                </Card>
-            </div>
+        <h1 class="mb-5">* Dados pessoais</h1>
+
+        <div class="form-1">
+            <EditForm
+                :showSubmitButton="true"
+                title="Dados pessoais"
+                submitText="Salvar edições"
+                :submitHandler="(e) => {e.preventDefault;}"
+            >
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <TextInput
+                            label="Nome"
+                            v-model="name"
+                        />
+                    </div>
+                    <div class="col-6">
+                        <TextInput
+                            label="CPF"
+                            v-model="cpf"
+                        />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <TextInput
+                            label="Telefone"
+                            v-model="phone"
+                        />
+                    </div>
+                    <div class="col-6">
+                        <EmailInput
+                            v-model="email"
+                        />
+                    </div>
+                </div>
+                <div class="text-end mt-2">
+                    <a class="change-password-link align-self-end" href="/password/reset">Alterar senha</a>
+                </div>
+            </EditForm>
         </div>
     </Section>
 </template>
 
 <script>
     import Section from '../components/Section.vue';
-
-    import Card from '../components/Card.vue';
+    import EditForm from '../components/EditForm.vue';
+    import TextInput from '../components/TextInput.vue';
+    import EmailInput from '../components/EmailInput.vue';
 
     export default {
         components: {
-            Card,
-            Section
+            Section,
+            EditForm,
+            TextInput,
+            EmailInput
         },
-        data: function() {
+        data() {
             return {
-                tournaments: Array(8).fill(
-                    {
-                        title: 'Título do torneio',
-                        color: '#B376F8',
-                        values: [
-                            '00/00/0000',
-                            '00h00 às 00h00',
-                            'Party Poker',
-                            'Cash Game',
-                            '$ 0000,00',
-                            '$ 000000,00',
-                            'R$ 00000,00'
-                        ],
-                        action: () => console.log("fui clicado")
-                    }
-                )
+                name: this.user.name,
+                cpf: this.user.cpf,
+                phone: this.user.phone,
+                email: this.user.email,
             }
         }
     }
@@ -62,6 +72,21 @@
     .img-home {
         width: 7vw;
         height: auto;
+    }
+
+    .form-1 {
+        width: max(55vw,850px);
+    }
+
+    .change-password-link {
+        text-decoration: none;
+        color: #BFC9DB;
+        font-weight: 600;
+        transition: .2s;
+    }
+
+    .change-password-link:hover {
+        color: white;
     }
 
 </style>

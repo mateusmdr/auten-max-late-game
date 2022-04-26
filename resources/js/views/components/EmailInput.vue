@@ -1,9 +1,9 @@
 <template>
-    <InputContainer name="Pesquisar">
+    <InputContainer name='Email'>
         <div class="position-relative">
-            <input type="text" @input="$emit('update:modelValue',$event.target.value)" :value="modelValue"/>
+            <input type="email" @input="$emit('update:modelValue',$event.target.value)" :value="modelValue"/>
             <div class="input-icon">
-                <Icon name="search"/>
+                <Icon name="mail"/>
             </div>
         </div>
     </InputContainer>

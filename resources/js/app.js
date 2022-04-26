@@ -19,15 +19,14 @@ const app = createApp(App);
 PHP_USER.is_admin = false;
 
 // Provide user info to globally
-app.mixin({
-    data: function() {
-        return {
-            user: PHP_USER
-        }
-    }
-})
+app.config.globalProperties.user = PHP_USER;
 
 // Load route respectively to user privileges
 app.use(PHP_USER.is_admin ? adminRouter : clientRouter);
+
+//Load modals plugin
+import { vfmPlugin } from 'vue-final-modal'
+
+app.use(vfmPlugin);
 
 app.mount('#app');

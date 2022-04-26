@@ -1,9 +1,9 @@
 <template>
-    <InputContainer name="Pesquisar">
+    <InputContainer :name="label">
         <div class="position-relative">
             <input type="text" @input="$emit('update:modelValue',$event.target.value)" :value="modelValue"/>
-            <div class="input-icon">
-                <Icon name="search"/>
+            <div class="input-icon" v-if="hasIcon">
+                <Icon :name="icon"/>
             </div>
         </div>
     </InputContainer>
@@ -20,6 +20,12 @@ export default {
     },
     props: {
         modelValue: String,
+        label: String,
+        hasIcon: {
+            type: Boolean,
+            default: false
+        },
+        icon: String
     },
 }
 </script>

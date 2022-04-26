@@ -11,7 +11,7 @@
 
 <script>
     import Header from './components/Header.vue';
-    import Footer from './components/Footer.vue';
+    import Footer from './components/client/Footer.vue';
     import Ad from './components/client/Ad.vue';
 
     export default {
@@ -33,5 +33,25 @@
         top: 0;
         right: 0;
     }
+
+    .input-icon {
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+
+        transform: translateY(-50%);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        color: #BFC9DB;
+        pointer-events: none;
+    }
+
+    input:autofill + .input-icon {
+        color: #4F4F4F
+    } 
 
 </style>

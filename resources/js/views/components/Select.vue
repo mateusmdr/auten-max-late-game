@@ -1,7 +1,7 @@
 <template>
     <InputContainer :name="name">
         <div class="position-relative">
-            <select v-model="value" @input="$emit('input',$event.target.value)" ref="select">
+            <select :value="modelValue" @change="this.$emit('update:modelValue', $event.target.value)">
                 <option :value="null" selected hidden>Selecione</option>
                 <option v-for="item in options" :key="item.value" :value="item">{{item.name}}</option>
             </select>
@@ -21,7 +21,7 @@ export default {
     props: [
         'name',
         'options',
-        'value'
+        'modelValue'
     ],
 }
 </script>

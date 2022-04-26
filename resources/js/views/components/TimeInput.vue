@@ -6,8 +6,8 @@
             locale="pt-BR"
             dark
             hideInputIcon
-            v-model="value"
-            @input="$emit('input',$event.target.value)"
+            v-model="modelValue"
+            @input="$emit('update:modelValue',$event.target.value)"
             format="HH:mm"
             selectText="Selecionar"
             cancelText="Cancelar"
@@ -31,7 +31,7 @@ export default {
     },
     components: { Datepicker, InputContainer },
     props: {
-        value: Date
+        modelValue: Date
     }
 }
 </script>

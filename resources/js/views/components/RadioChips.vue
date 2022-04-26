@@ -8,8 +8,8 @@
             :color="item.color"
             :hasIcon="item.hasIcon"
 
-            :selected="index === selectedIndex"
-            @click="() => setIndex(index)"
+            :selected="modelValue === index"
+            @click="$emit('update:modelValue', index)"
         />
     </div>
 </template>
@@ -21,8 +21,7 @@ export default {
     components: {Chip},
     props: {
         chips: Array,
-        selectedIndex: Number,
-        setIndex: Function
+        modelValue: Number
     },
 }
 </script>

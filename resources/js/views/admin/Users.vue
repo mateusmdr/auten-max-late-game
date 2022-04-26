@@ -2,8 +2,8 @@
     <Section title="Usuários cadastrados" icon="person">
         <RadioChips
             :chips="userStatuses"
-            :selectedIndex="userStatusIndex"
-            :setIndex="(index) => {userStatusIndex = index}"
+            :value="userStatusId"
+            @input="(id) => {userStatusId = id}"
         />
         <div class="input-container my-5">
             <div class="row">
@@ -50,17 +50,20 @@
         },
         data: function() {
             return {
-                userStatusIndex: 0,
+                userStatusId: 0,
                 userStatuses: [
                     {
+                        id: 0,
                         text:'Cadastrados',
                         color:'#B376F8',
                     },
                     {
+                        id: 1,
                         text:'Inativos',
                         color:'#F5A847',
                     },
                     {
+                        id: 2,
                         text:'Bloqueados',
                         color:'#EB4263',
                     }

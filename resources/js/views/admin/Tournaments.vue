@@ -6,8 +6,8 @@
 
         <RadioChips
             :chips="tournamentStatuses"
-            :selectedIndex="tournamentStatusIndex"
-            :setIndex="(index) => {tournamentStatusIndex = index}"
+            :value="tournamentStatusId"
+            @input="(id) => {tournamentStatusId = id}"
         />
         <div class="input-container my-5">
             <div class="row">
@@ -79,7 +79,7 @@
         },
         data() {
             return {
-                tournamentStatusIndex: 0,
+                tournamentStatusId: 0,
                 date: null,
                 time: null,
                 minBuyIn: null,
@@ -116,18 +116,22 @@
                 ],
                 tournamentStatuses: [
                     {
+                        id: 0,
                         text:'Todos',
                         hasIcon: false,
                     },
                     {
+                        id: 1,
                         text:'Em aprovação',
                         color:'#EB4263',
                     },
                     {
+                        id: 2,
                         text:'Recorrentes',
                         color:'#F5A847',
                     },
                     {
+                        id: 3,
                         text:'Não Recorrentes',
                         color:'#05F28E',
                     }
@@ -139,7 +143,7 @@
                     {name: 'Tipo torneio', width: 1},
                     {name: 'Buy-in Mín', width: 1},
                     {name: 'Buy-in Máx', width: 1},
-                    {name: 'Recorrência', width: 1}
+                    {name: 'Prêmio', width: 1}
                 ],
                 tournaments: Array(4).fill(
                     {
@@ -151,9 +155,9 @@
                             '00h00 às 00h00',
                             'Party Poker',
                             'Cash Game',
-                            '$ 0000,00',
-                            '$ 000000,00',
-                            'R$ 00000,00'
+                            '0000',
+                            '0000',
+                            '0000'
                         ],
                         isEditable: false,
                         defaultAction: () => console.log("fui clicado")
@@ -168,9 +172,9 @@
                             '00h00 às 00h00',
                             'Party Poker',
                             'Cash Game',
-                            '$ 0000,00',
-                            '$ 000000,00',
-                            'R$ 00000,00'
+                            '0000',
+                            '0000',
+                            '0000'
                         ],
                         isEditable: true,
                         actions: {

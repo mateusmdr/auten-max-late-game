@@ -7,7 +7,7 @@
 <style scoped>
     section {
         width: calc(100% - 8rem);
-        margin: auto;
+        margin: 8rem auto 6rem auto;
     }
 
     img {

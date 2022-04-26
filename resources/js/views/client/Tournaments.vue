@@ -6,8 +6,7 @@
 
         <RadioChips
             :chips="tournamentStatuses"
-            :selectedIndex="tournamentStatusIndex"
-            :setIndex="(index) => {tournamentStatusIndex = index}"
+            v-model="tournamentStatusIndex"
         />
         <div class="input-container my-5">
             <div class="row">
@@ -43,7 +42,7 @@
                         name="Tipo de torneio"
                     />
                 </div>
-            </div>            
+            </div>
         </div>
 
         <Table
@@ -80,6 +79,24 @@
         data() {
             return {
                 tournamentStatusIndex: 0,
+                tournamentStatuses: [
+                    {
+                        text:'Todos',
+                        hasIcon: false,
+                    },
+                    {
+                        text:'Notificação ativada',
+                        color:'#B376F8',
+                    },
+                    {
+                        text:'Recorrentes',
+                        color:'#F5A847',
+                    },
+                    {
+                        text:'Não Recorrentes',
+                        color:'#05F28E',
+                    }
+                ],
                 date: null,
                 time: null,
                 minBuyIn: null,
@@ -114,24 +131,6 @@
                         value: 2
                     },
                 ],
-                tournamentStatuses: [
-                    {
-                        text:'Todos',
-                        hasIcon: false,
-                    },
-                    {
-                        text:'Notificação ativada',
-                        color:'#B376F8',
-                    },
-                    {
-                        text:'Recorrentes',
-                        color:'#F5A847',
-                    },
-                    {
-                        text:'Não Recorrentes',
-                        color:'#05F28E',
-                    }
-                ],
                 tournamentFields : [
                     {name: 'Dia', width: 1},
                     {name: 'Inscrição', width: 2},
@@ -139,7 +138,7 @@
                     {name: 'Tipo torneio', width: 1},
                     {name: 'Buy-in Mín', width: 1},
                     {name: 'Buy-in Máx', width: 1},
-                    {name: 'Recorrência', width: 1}
+                    {name: 'Prêmio', width: 1}
                 ],
                 tournaments: Array(4).fill(
                     {
@@ -151,9 +150,9 @@
                             '00h00 às 00h00',
                             'Party Poker',
                             'Cash Game',
-                            '$ 0000,00',
-                            '$ 000000,00',
-                            'R$ 00000,00'
+                            '0000',
+                            '0000',
+                            '0000'
                         ],
                         isEditable: false,
                         defaultAction: () => console.log("fui clicado")

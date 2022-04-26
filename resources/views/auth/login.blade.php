@@ -30,7 +30,7 @@
         </div>
         <div class="clearfix">
             @if (Route::has('password.request'))
-                <a class="btn btn-link align-self-end float-end form-grey" href="{{ route('password.request') }}">
+                <a class="btn align-self-end float-end form-grey" href="{{ route('password.request') }}">
                     Esqueci minha senha
                 </a>
             @endif
