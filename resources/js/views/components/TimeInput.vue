@@ -19,8 +19,6 @@
 import { ref } from 'vue';
 import Datepicker from '@vuepic/vue-datepicker';
 
-import InputContainer from './InputContainer.vue';
-
 export default {
     setup() {
         const now = ref(new Date());
@@ -29,7 +27,6 @@ export default {
             now
         }
     },
-    components: { Datepicker, InputContainer },
     props: {
         modelValue: Date
     }

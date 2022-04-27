@@ -8,10 +8,7 @@
 </template>
 
 <script>
-import Icon from './Icon.vue';
-
 export default {
-    components: {Icon},
     props: {
         options: Array,
         modelValue: Number,

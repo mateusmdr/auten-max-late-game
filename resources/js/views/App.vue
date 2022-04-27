@@ -10,18 +10,10 @@
 </template>
 
 <script>
-    import Header from './components/Header.vue';
-    import Footer from './components/client/Footer.vue';
-    import Ad from './components/client/Ad.vue';
 
-    export default {
-        components: {Header, Footer, Ad}
-    }
 </script>
 
 <style>
-    
-
     .img-home {
         width: 7vw;
         height: auto;

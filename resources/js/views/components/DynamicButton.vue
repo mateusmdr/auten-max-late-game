@@ -1,5 +1,5 @@
 <template>
-    <button @click="onClick" :class="primary ? 'primary':'secondary'">
+    <button @click="$emit('click')" :class="primary ? 'primary':'secondary'">
         {{ text }}
     </button>
 </template>
@@ -11,8 +11,7 @@ export default {
         primary: {
             type: Boolean,
             default: true
-        },
-        onClick: Function
+        }
     }
 }
 </script>

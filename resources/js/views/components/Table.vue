@@ -30,11 +30,7 @@
 </template>
 
 <script>
-import TableRow from './TableRow.vue'
-import TableCol from './TableCol.vue'
-
 export default {
-  components: { TableRow, TableCol },
     props: {
         defaultActionIcon: String,
         defaultActionText: String,

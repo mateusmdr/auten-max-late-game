@@ -34,11 +34,7 @@
 </template>
 
 <script>
-import Icon from './Icon.vue'
-import TableCol from './TableCol.vue'
-
 export default {
-  components: { TableCol, Icon },
     props: {
         title: String,
         color: String,

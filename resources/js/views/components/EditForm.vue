@@ -15,10 +15,7 @@
 </template>
 
 <script>
-import DynamicButton from './DynamicButton.vue';
-
 export default {
-    components: {DynamicButton},
     props: {
         showSubmitButton: {
             type: Boolean,

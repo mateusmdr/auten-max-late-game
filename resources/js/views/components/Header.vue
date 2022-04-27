@@ -29,12 +29,9 @@
 </template>
 
 <script>
-import LinkIcon from './LinkIcon.vue';
-
 import axios from 'axios';
 
 export default {
-    components: {LinkIcon},
     methods: {
         logout (e) {
             e.preventDefault();

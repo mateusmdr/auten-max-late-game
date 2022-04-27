@@ -5,10 +5,7 @@
 </template>
 
 <script>
-import InputContainer from '../components/InputContainer.vue';
-
 export default {
-    components: {InputContainer},
     props: {
         name: {
             type: String,

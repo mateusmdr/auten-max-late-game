@@ -15,10 +15,7 @@
 </template>
 
 <script>
-import Chip from './Chip.vue';
-
 export default {
-    components: {Chip},
     props: {
         chips: Array,
         modelValue: Number

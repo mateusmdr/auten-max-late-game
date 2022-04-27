@@ -18,16 +18,7 @@
 </template>
 
 <script>
-    import Section from '../components/Section.vue';
-    import Card from '../components/Card.vue';
-    import RadioChips from '../components/RadioChips.vue';
-
     export default {
-        components: {
-            Card,
-            Section,
-            RadioChips
-        },
         methods: {
             getNotificationColor(notification) {
                 const notificationType = this.notificationTypes.find(item => item.id === notification.typeId);

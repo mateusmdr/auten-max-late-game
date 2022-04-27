@@ -106,14 +106,7 @@
 </template>
 
 <script>
-import Section from '../components/Section.vue';
-import Card from '../components/Card.vue';
-
 export default {
-    components: {
-        Section,
-        Card
-    }
 }
 </script>
 

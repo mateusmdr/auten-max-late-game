@@ -12,17 +12,20 @@ import clientRouter from './routes/client';
 
 import App from './views/App.vue';
 
-
 // Load root component respectively to user privileges
 const app = createApp(App);
 
-PHP_USER.is_admin = false;
+PHP_USER.is_admin = true;
 
 // Provide user info to globally
 app.config.globalProperties.user = PHP_USER;
 
 // Load route respectively to user privileges
 app.use(PHP_USER.is_admin ? adminRouter : clientRouter);
+
+//Register global components
+const files = require.context('./', true, /\.vue$/i)
+files.keys().map(key => app.component(key.split('/').pop().split('.')[0], files(key).default))
 
 //Load modals plugin
 import { vfmPlugin } from 'vue-final-modal'

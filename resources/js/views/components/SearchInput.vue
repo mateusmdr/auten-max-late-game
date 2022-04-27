@@ -10,14 +10,7 @@
 </template>
 
 <script>
-import InputContainer from './InputContainer.vue';
-import Icon from './Icon.vue';
-
 export default {
-    components: {
-        InputContainer,
-        Icon
-    },
     props: {
         modelValue: String,
     },

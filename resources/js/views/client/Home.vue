@@ -51,24 +51,7 @@
 </template>
 
 <script>
-    import Section from '../components/Section.vue';
-    import DynamicButton from '../components/DynamicButton.vue';
-    import StaticButton from '../components/StaticButton.vue';
-    import Table from '../components/Table.vue';
-
-    import Card from '../components/Card.vue';
-
-    import Ad from '../components/client/Ad.vue';
-
     export default {
-        components: {
-            DynamicButton,
-            StaticButton,
-            Card,
-            Table,
-            Ad,
-            Section
-        },
         data: function() {
             return {
                 tournamentFields: [

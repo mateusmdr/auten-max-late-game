@@ -1,8 +1,8 @@
 <template>
     <Section title="Próximos torneios" icon="emoji_events">
-        <div class="absolute-top-right">
-            <DynamicButton text="Cadastrar novo torneio"/>
-        </div>
+        <CreateTournamentModal
+            v-model="showModal"
+        />
 
         <RadioChips
             :chips="tournamentStatuses"
@@ -56,29 +56,10 @@
 </template>
 
 <script>
-    import Section from '../components/Section.vue';
-    import DynamicButton from '../components/DynamicButton.vue';
-    import Table from '../components/Table.vue';
-    import RadioChips from '../components/RadioChips.vue';
-    
-    import DateInput from '../components/DateInput.vue';
-    import TimeInput from '../components/TimeInput.vue';
-    import NumberInput from '../components/NumberInput.vue';
-    import Select from '../components/Select.vue';
-
     export default {
-        components: {
-            DateInput,
-            TimeInput,
-            Section,
-            DynamicButton,
-            Table,
-            RadioChips,
-            NumberInput,
-            Select
-        },
         data() {
             return {
+                showModal: false,
                 tournamentStatusId: 0,
                 date: null,
                 time: null,

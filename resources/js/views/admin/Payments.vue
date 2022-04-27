@@ -33,16 +33,7 @@
 </template>
 
 <script>
-import Section from '../components/Section.vue';
-import Table from '../components/Table.vue';
-import RadioChips from '../components/RadioChips.vue';
-
-import DateInput from '../components/DateInput.vue';
-import TimeInput from '../components/TimeInput.vue';
-import SearchInput from '../components/SearchInput.vue';
-
 export default {
-    components: {Section, Table, RadioChips, DateInput, TimeInput, SearchInput},
     data() {
         return {
             paymentStatuses: [

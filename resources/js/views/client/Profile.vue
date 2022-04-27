@@ -86,7 +86,11 @@
                     </div>
 
                     <div class="ticket-form" v-if="inputs.form3.paymentMethod === 0">
-                        Baixar boleto ?
+                        <a class="text-decoration-none" href="/ticket" download v-if="hasPendingTicket">
+                            Fazer download do boleto <Icon name="download"/>
+                        </a>
+
+                        <p v-else>Nenhuma fatura pendente encontrada.</p>
                     </div>
 
                     <div class="credit-card-form" v-else>
@@ -134,29 +138,11 @@
 </template>
 
 <script>
-    import Section from '../components/Section.vue';
-    import EditForm from '../components/EditForm.vue';
-    import TextInput from '../components/TextInput.vue';
-    import EmailInput from '../components/EmailInput.vue';
-    import FormStep from '../components/FormStep.vue';
-    import RadioGroup from '../components/RadioGroup.vue';
-    import DateInput from '../components/DateInput.vue';
-    import NumberInput from '../components/NumberInput.vue';
-
     export default {
-        components: {
-            Section,
-            EditForm,
-            TextInput,
-            EmailInput,
-            FormStep,
-            RadioGroup,
-            DateInput,
-            NumberInput
-        },
         data() {
             return {
                 formPage: 2,
+                hasPendingTicket: true,
                 inputs: {
                     form1: {
                         name: this.user.name,

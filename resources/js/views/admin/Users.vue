@@ -22,33 +22,14 @@
             </div>            
         </div>
 
-        <div class="thin-table">
-            <Table
-                defaultActionIcon='person'
-                defaultActionText='Ver perfil'
-                :actionWidth="2"
-                :fields="userFields"
-                :items="users"
-            />
-        </div>
+        <UserTable
+            :users="users"
+        />
     </Section>
 </template>
 
 <script>
-    import Section from '../components/Section.vue';
-    import RadioChips from '../components/RadioChips.vue';
-    import Select from '../components/Select.vue';
-    import SearchInput from '../components/SearchInput.vue';
-    import Table from '../components/Table.vue';
-
     export default {
-        components: {
-            Section,
-            RadioChips,
-            Select,
-            SearchInput,
-            Table
-        },
         data: function() {
             return {
                 userStatusId: 0,
@@ -89,13 +70,7 @@
                     }
                 ],
                 paymentPlan: null,
-                userFields: [                    
-                    {name: 'Email', width: 2},
-                    {name: 'CPF', width: 2},
-                    {name: 'Telefone', width: 2},
-                    {name: 'Plano', width: 2},
-                ],
-                users: Array(4).fill(
+                users: [
                     {
                         id: 1,
                         title: 'Nome do usuário',
@@ -107,9 +82,32 @@
                             'Mensal',
                         ],
                         isEditable: false,
-                        defaultAction: () => console.log("fui clicado")
+                    },
+                    {
+                        id: 2,
+                        title: 'Nome do usuário',
+                        color: '#B376F8',
+                        values: [
+                            'email@email.com',
+                            '000.000.000-00',
+                            '(00) 00000-0000',
+                            'Mensal',
+                        ],
+                        isEditable: false,
+                    },
+                    {
+                        id: 3,
+                        title: 'Nome do usuário',
+                        color: '#B376F8',
+                        values: [
+                            'email@email.com',
+                            '000.000.000-00',
+                            '(00) 00000-0000',
+                            'Mensal',
+                        ],
+                        isEditable: false,
                     }
-                )
+                ]
             }
         }
     }
@@ -120,8 +118,4 @@
         width: 7vw;
         height: auto;
     }
-    .thin-table {
-        width: 88%;
-    }
-
 </style>

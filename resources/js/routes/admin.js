@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "../views/admin/Home.vue";
 import Tournaments from '../views/admin/Tournaments.vue';
 import Users from '../views/admin/Users.vue';
+import User from '../views/admin/User.vue';
 import Notifications from '../views/admin/Notifications.vue';
 import Payments from '../views/admin/Payments.vue';
 import Ads from '../views/admin/Ads.vue';
@@ -22,6 +23,11 @@ const routes = [
     path: '/usuarios',
     name: 'users',
     component: Users,
+  },
+  {
+    path: '/usuarios/:id',
+    name: 'user',
+    component: User
   },
   {
     path: '/notificacoes',
