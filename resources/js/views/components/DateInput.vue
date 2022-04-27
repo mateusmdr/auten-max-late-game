@@ -1,7 +1,7 @@
 <template>
-    <InputContainer name="Data">
+    <InputContainer :name="label">
         <Datepicker 
-            placeholder="00/00/0000"
+            :placeholder="monthPicker ? '00/00' : '00/00/0000'"
             :enableTimePicker="false"
             locale="pt-BR"
             autoApply
@@ -10,7 +10,8 @@
             hideInputIcon
             v-model="value"
             @input="$emit('input',$event.target.value)"
-            format="dd/MM/yyyy"
+            :format="monthPicker ? 'MM/yyyy' : 'dd/MM/yyyy'"
+            :monthPicker="monthPicker"
         />
     </InputContainer>
 </template>
@@ -31,7 +32,15 @@ export default {
     },
     components: {Datepicker, InputContainer},
     props: {
-        value: Date
+        value: Date,
+        monthPicker: {
+            type: Boolean,
+            default: false
+        },
+        label: {
+            type: String,
+            default: "Data"
+        }
     }
 }
 </script>

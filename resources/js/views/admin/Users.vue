@@ -26,6 +26,7 @@
             <Table
                 defaultActionIcon='person'
                 defaultActionText='Ver perfil'
+                :actionWidth="2"
                 :fields="userFields"
                 :items="users"
             />
@@ -89,7 +90,7 @@
                 ],
                 paymentPlan: null,
                 userFields: [                    
-                    {name: 'Email', width: 3},
+                    {name: 'Email', width: 2},
                     {name: 'CPF', width: 2},
                     {name: 'Telefone', width: 2},
                     {name: 'Plano', width: 2},

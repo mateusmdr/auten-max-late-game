@@ -28,6 +28,12 @@
         min-width: 180px;
     }
 
+    .circle {
+        width: .75rem;
+        height: .75rem;
+        border-radius: 50%;
+    }
+
     .absolute-top-right {
         position: absolute;
         top: 0;
@@ -52,6 +58,15 @@
 
     input:autofill + .input-icon {
         color: #4F4F4F
-    } 
+    }
+
+    .unselectable {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
 
 </style>

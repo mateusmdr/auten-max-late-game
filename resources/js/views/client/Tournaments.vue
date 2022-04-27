@@ -1,44 +1,40 @@
 <template>
     <Section title="Próximos torneios" icon="emoji_events">
-        <div class="absolute-top-right">
-            <DynamicButton text="Cadastrar novo torneio"/>
-        </div>
-
         <RadioChips
             :chips="tournamentStatuses"
-            v-model="tournamentStatusIndex"
+            v-model="inputs.tournamentStatus"
         />
         <div class="input-container my-5">
             <div class="row">
                 <div class="col-1">
-                    <DateInput v-model="date"/>
+                    <DateInput v-model="inputs.date"/>
                 </div>
                 <div class="col-1">
-                    <TimeInput v-model="time"/>
+                    <TimeInput v-model="inputs.time"/>
                 </div>
                 <div class="col-2">
                     <Select 
                         :options="platforms"
-                        v-model="platform"
+                        v-model="inputs.platform"
                         name="Plataforma"
                     />
                 </div>
                 <div class="col-2">
                     <NumberInput 
-                        v-model.number="minBuyIn"
+                        v-model.number="inputs.minBuyIn"
                         name="Buy-in mínimo"
                     />
                 </div>
                 <div class="col-2">
                     <NumberInput 
-                        v-model.number="maxBuyIn"
+                        v-model.number="inputs.maxBuyIn"
                         name="Buy-in máximo"
                     />
                 </div>
                 <div class="col-2">
                     <Select 
                         :options="tournamentTypes"
-                        v-model="tournamentType"
+                        v-model="inputs.tournamentType"
                         name="Tipo de torneio"
                     />
                 </div>
@@ -78,30 +74,6 @@
         },
         data() {
             return {
-                tournamentStatusIndex: 0,
-                tournamentStatuses: [
-                    {
-                        text:'Todos',
-                        hasIcon: false,
-                    },
-                    {
-                        text:'Notificação ativada',
-                        color:'#B376F8',
-                    },
-                    {
-                        text:'Recorrentes',
-                        color:'#F5A847',
-                    },
-                    {
-                        text:'Não Recorrentes',
-                        color:'#05F28E',
-                    }
-                ],
-                date: null,
-                time: null,
-                minBuyIn: null,
-                maxBuyIn: null,
-                platform: null,
                 platforms: [
                     {
                         name: 'Party Poker',
@@ -116,7 +88,6 @@
                         value: 2
                     },
                 ],
-                tournamentType: null,
                 tournamentTypes: [
                     {
                         name: 'Tipo 1',
@@ -140,6 +111,33 @@
                     {name: 'Buy-in Máx', width: 1},
                     {name: 'Prêmio', width: 1}
                 ],
+                tournamentStatuses: [
+                    {
+                        text:'Todos',
+                        hasIcon: false,
+                    },
+                    {
+                        text:'Notificação ativada',
+                        color:'#B376F8',
+                    },
+                    {
+                        text:'Recorrentes',
+                        color:'#F5A847',
+                    },
+                    {
+                        text:'Não Recorrentes',
+                        color:'#05F28E',
+                    }
+                ],
+                inputs: {
+                    date: null,
+                    time: null,
+                    minBuyIn: null,
+                    maxBuyIn: null,
+                    platform: null,
+                    tournamentType: null,
+                    tournamentStatus: 0,
+                },
                 tournaments: Array(4).fill(
                     {
                         id: 1,

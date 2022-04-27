@@ -49,12 +49,6 @@ export default {
                 font-weight: 700;
             }
         }
-
-        .circle {
-            width: .75rem;
-            height: .75rem;
-            border-radius: 50%;
-        }
     }
 
     .custom-chip:hover {

@@ -9,7 +9,7 @@
                 </div>
             </table-col>
 
-            <div class="col-1"></div>
+            <div :class="`col-${actionWidth}`"></div>
         </div>
 
         <table-row 
@@ -24,6 +24,7 @@
             :defaultActionText="defaultActionText"
             :isEditable="item.isEditable"
             :actions="item.actions"
+            :actionWidth="actionWidth"
         />
     </div>
 </template>
@@ -40,6 +41,10 @@ export default {
         fields: Array,
         items: Array,
         actions: Array,
+        actionWidth: {
+            type: Number,
+            default: 1
+        }
     }
 }
 </script>

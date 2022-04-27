@@ -1,7 +1,7 @@
 <template>
     <form>
         <h4 class="form-title mb-5">{{title}}</h4>
-        <div class="input-container mb-4">
+        <div class="input-container mb-3">
             <slot/>
         </div>
         <div class="submit-button-container">
@@ -37,6 +37,7 @@ export default {
         border-radius: .5rem;
         padding: 4rem;
         position: relative;
+        height: 100%;
     }
 
     .form-title {

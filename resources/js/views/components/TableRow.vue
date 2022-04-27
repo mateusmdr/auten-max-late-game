@@ -12,7 +12,7 @@
             </div>
         </table-col>
 
-        <table-col :key="'action'" :width="1">
+        <table-col :key="'action'" :width="actionWidth" justifyEnd>
             <div class="action-col" @click="defaultAction" v-if="!isEditable">
                 <icon :name="defaultActionIcon" :color="color" size="1.5rem"/>
                 <h4 :style="`color: ${color};`"> {{ defaultActionText }} </h4>
@@ -51,7 +51,8 @@ export default {
         isEditable: {
             type: Boolean,
             default: false
-        }
+        },
+        actionWidth: Number
     }
 }
 </script>

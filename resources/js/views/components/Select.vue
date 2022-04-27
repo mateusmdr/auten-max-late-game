@@ -5,7 +5,7 @@
                 <option :value="null" selected hidden>Selecione</option>
                 <option v-for="item in options" :key="item.value" :value="item">{{item.name}}</option>
             </select>
-            <label class="select-icon">
+            <label class="select-icon unselectable">
                 <Icon name="keyboard_arrow_down"/>
             </label>
         </div>
@@ -61,12 +61,6 @@ export default {
         right: 1rem;
         top: 50%;
         transform: translateY(-50%);
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
         color: #BFC9DB;
         pointer-events: none;
     }

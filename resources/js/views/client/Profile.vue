@@ -1,8 +1,20 @@
 <template>
     <Section title="Perfil" icon="person">
-        <h1 class="mb-5">* Dados pessoais</h1>
+        <nav class="d-flex flex-row mb-5">
+            <FormStep
+                text="Dados pessoais"
+                v-model="formPage"
+                :pageNumber="1"
+            />
 
-        <div class="form-1">
+            <FormStep
+                text="Plano e Pagamento"
+                v-model="formPage"
+                :pageNumber="2"
+            />
+        </nav>
+
+        <div class="form-1" v-if="formPage === 1">
             <EditForm
                 :showSubmitButton="true"
                 title="Dados pessoais"
@@ -13,13 +25,13 @@
                     <div class="col-6">
                         <TextInput
                             label="Nome"
-                            v-model="name"
+                            v-model="inputs.form1.name"
                         />
                     </div>
                     <div class="col-6">
                         <TextInput
                             label="CPF"
-                            v-model="cpf"
+                            v-model="inputs.form1.cpf"
                         />
                     </div>
                 </div>
@@ -27,12 +39,12 @@
                     <div class="col-6">
                         <TextInput
                             label="Telefone"
-                            v-model="phone"
+                            v-model="inputs.form1.phone"
                         />
                     </div>
                     <div class="col-6">
                         <EmailInput
-                            v-model="email"
+                            v-model="inputs.form1.email"
                         />
                     </div>
                 </div>
@@ -40,6 +52,83 @@
                     <a class="change-password-link align-self-end" href="/password/reset">Alterar senha</a>
                 </div>
             </EditForm>
+        </div>
+
+        <div class="form-2 d-flex flex-row justify-content-stretch" v-if="formPage === 2">
+            <div class="plan-form">
+                <EditForm
+                    :showSubmitButton="true"
+                    title="Planos"
+                    submitText="Salvar edições"
+                    :submitHandler="(e) => {e.preventDefault;}"
+                >
+                    <p class="mb-5">
+                        Todos os planos liberam o acesso completo à plataforma
+                    </p>
+                    <RadioGroup
+                        :options="paymentPlans"
+                        v-model="inputs.form2.paymentPlan"
+                    />
+                </EditForm>
+            </div>
+            <div class="payment-form">
+                <EditForm
+                    :showSubmitButton="true"
+                    title="Pagamento"
+                    submitText="Salvar edições"
+                    :submitHandler="(e) => {e.preventDefault;}"
+                >   
+                    <div class="d-flex flex-row gap-4 mb-3">
+                        <RadioGroup
+                            :options="paymentMethods"
+                            v-model="inputs.form3.paymentMethod"
+                        />
+                    </div>
+
+                    <div class="ticket-form" v-if="inputs.form3.paymentMethod === 0">
+                        Baixar boleto ?
+                    </div>
+
+                    <div class="credit-card-form" v-else>
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <TextInput
+                                    label="Número do cartão"
+                                    v-model="inputs.form3.cardNumber"
+                                />
+                            </div>
+                            <div class="col-6">
+                                <TextInput
+                                    label="Nome do titular"
+                                    v-model="inputs.form3.ownerName"
+                                />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-6">
+                                <TextInput
+                                    label="CPF"
+                                    v-model="inputs.form3.cpf"
+                                />
+                            </div>
+                            <div class="col-3">
+                                <DateInput
+                                    label="Validade"
+                                    monthPicker
+                                    v-model="inputs.form3.expireDate"
+                                />
+                            </div>
+                            <div class="col-3">
+                                <NumberInput
+                                    name="CVV"
+                                    v-model="inputs.form3.cvv"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    
+                </EditForm>
+            </div>
         </div>
     </Section>
 </template>
@@ -49,20 +138,63 @@
     import EditForm from '../components/EditForm.vue';
     import TextInput from '../components/TextInput.vue';
     import EmailInput from '../components/EmailInput.vue';
+    import FormStep from '../components/FormStep.vue';
+    import RadioGroup from '../components/RadioGroup.vue';
+    import DateInput from '../components/DateInput.vue';
+    import NumberInput from '../components/NumberInput.vue';
 
     export default {
         components: {
             Section,
             EditForm,
             TextInput,
-            EmailInput
+            EmailInput,
+            FormStep,
+            RadioGroup,
+            DateInput,
+            NumberInput
         },
         data() {
             return {
-                name: this.user.name,
-                cpf: this.user.cpf,
-                phone: this.user.phone,
-                email: this.user.email,
+                formPage: 2,
+                inputs: {
+                    form1: {
+                        name: this.user.name,
+                        cpf: this.user.cpf,
+                        phone: this.user.phone,
+                        email: this.user.email,
+                    },
+                    form2: {
+                        paymentPlan: 0
+                    },
+                    form3: {
+                        paymentMethod: 0
+                    }
+                },
+                paymentPlans: [
+                    {
+                        value: 'yearly',
+                        text: 'Anual - R$ 199,00',
+                    },
+                    {
+                        value: 'biannual',
+                        text: 'Semestral - R$ 119,99',
+                    },
+                    {
+                        value: 'monthly',
+                        text: 'Mensal - R$ 29,99',
+                    }
+                ],
+                paymentMethods: [
+                    {
+                        value: 'bolbradesco',
+                        text: 'Boleto',
+                    },
+                    {
+                        value: 'credit_card',
+                        text: 'Cartão de crédito',
+                    }
+                ]
             }
         }
     }
@@ -75,7 +207,7 @@
     }
 
     .form-1 {
-        width: max(55vw,850px);
+        width: max(50vw,850px);
     }
 
     .change-password-link {
@@ -87,6 +219,21 @@
 
     .change-password-link:hover {
         color: white;
+    }
+
+    .plan-form {
+        width: calc(4/12 * 100% - 4rem);
+        margin-right: 4rem;
+    }
+
+    .plan-form p {
+        font-weight: 400;
+        color: #BFC9DB;
+        font-size: 1rem;
+    }
+
+    .payment-form {
+        width: calc(8/12 * 100%);
     }
 
 </style>

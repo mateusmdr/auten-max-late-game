@@ -1,5 +1,5 @@
 <template>
-    <div :class="'table-col col-' + width">
+    <div :class="`table-col col-${width} ${justifyEnd ? 'justify-content-end' : ''}`">
         <slot/>
     </div>
 </template>
@@ -7,7 +7,11 @@
 <script>
 export default {
     props: {
-        width: Number
+        width: Number,
+        justifyEnd: {
+            type: Boolean,
+            default: false
+        }
     }
 }
 </script>
