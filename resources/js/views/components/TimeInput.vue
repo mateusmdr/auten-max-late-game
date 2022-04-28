@@ -27,6 +27,7 @@ export default {
             now
         }
     },
+    components: {Datepicker},
     props: {
         modelValue: Date
     }

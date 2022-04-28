@@ -1,5 +1,6 @@
 <template>
     <Section title="Usuários cadastrados" icon="person">
+        <AdminCreateUserModal/>
         <RadioChips
             :chips="userStatuses"
             :value="userStatusId"
@@ -22,7 +23,7 @@
             </div>            
         </div>
 
-        <UserTable
+        <AdminUsersTable
             :users="users"
         />
     </Section>

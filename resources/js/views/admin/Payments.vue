@@ -7,27 +7,26 @@
         <div class="input-container my-5">
             <div class="row">
                 <div class="col-2">
-                    
+                    <TextInput
+                        label="Destinatário"
+                        v-model="inputs.username"
+                    />
                 </div>
                 <div class="col-1">
-                    <DateInput v-model="input.date"/>
+                    <DateInput v-model="inputs.date"/>
                 </div>
                 <div class="col-1">
-                    <TimeInput v-model="input.time"/>
+                    <TimeInput v-model="inputs.time"/>
                 </div>
                 <div class="col-2">
                     <SearchInput
-                        v-model="input.filter"
+                        v-model="inputs.filter"
                     />
                 </div>
             </div>
         </div>
-
-        <Table
-            defaultActionIcon='alarm_add'
-            defaultActionText='Ativar'
-            :fields="tournamentFields"
-            :items="tournaments"
+        <AdminPaymentsTable
+            :payments="payments"
         />
   </Section>
 </template>
@@ -62,7 +61,21 @@ export default {
                 date: null,
                 time: null,
                 filter: null,
+            },
+            payments: Array(8).fill(
+                {
+                id: 3,
+                title: 'Nome do Usuário',
+                values: [
+                    '00/00/0000',
+                    '00h00',
+                    'Mensal',
+                    'R$0000,00',
+                    'Cartão de crédito'
+                ],
+                color: '#F5A847'
             }
+            )
         }
     }
 }

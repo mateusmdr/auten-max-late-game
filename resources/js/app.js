@@ -24,8 +24,15 @@ app.config.globalProperties.user = PHP_USER;
 app.use(PHP_USER.is_admin ? adminRouter : clientRouter);
 
 //Register global components
-const files = require.context('./', true, /\.vue$/i)
-files.keys().map(key => app.component(key.split('/').pop().split('.')[0], files(key).default))
+const globalComponents = require.context('./views/components', false, /\.vue$/i)
+globalComponents.keys().map(key => app.component(key.split('/').pop().split('.')[0], globalComponents(key).default))
+
+//Register specific components
+const adminComponents = require.context('./views/components/admin', false, /\.vue$/i)
+adminComponents.keys().map(key => app.component('Admin' + key.split('/').pop().split('.')[0], adminComponents(key).default))
+
+const clientComponents = require.context('./views/components/client', false, /\.vue$/i)
+clientComponents.keys().map(key => app.component('Client' + key.split('/').pop().split('.')[0], clientComponents(key).default))
 
 //Load modals plugin
 import { vfmPlugin } from 'vue-final-modal'

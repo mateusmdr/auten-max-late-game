@@ -4,8 +4,8 @@
         <main class="mt-5">
             <router-view/>
         </main>
-        <Ad v-if="!user.is_admin"/>
-        <Footer v-if="!user.is_admin"/>
+        <ClientAd v-if="!user.is_admin"/>
+        <ClientFooter v-if="!user.is_admin"/>
     </div>
 </template>
 
@@ -59,6 +59,10 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+    }
+
+    .thin-table {
+        width: 80%;
     }
 
 </style>

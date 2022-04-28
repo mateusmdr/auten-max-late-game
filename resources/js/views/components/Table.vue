@@ -9,7 +9,7 @@
                 </div>
             </table-col>
 
-            <div :class="`col-${actionWidth}`"></div>
+            <div :class="`col-${actionWidth}`" v-if="!noAction"></div>
         </div>
 
         <table-row 
@@ -25,6 +25,7 @@
             :isEditable="item.isEditable"
             :actions="item.actions"
             :actionWidth="actionWidth"
+            :noAction="noAction"
         />
     </div>
 </template>
@@ -40,6 +41,10 @@ export default {
         actionWidth: {
             type: Number,
             default: 1
+        },
+        noAction: {
+            type: Boolean,
+            default: false
         }
     }
 }

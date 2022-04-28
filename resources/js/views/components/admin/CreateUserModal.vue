@@ -1,8 +1,8 @@
 <template>
 	<Modal
-		openModalText="Cadastrar novo torneio"
-        modalTitle= "Novo Torneio"
-        modalIcon= "emoji_events"
+		openModalText="Cadastrar novo usuário"
+        modalTitle= "Novo Usuário"
+        modalIcon= "person"
         submitModalText= "Cadastrar"
         :submitModal="() => true"
 	>

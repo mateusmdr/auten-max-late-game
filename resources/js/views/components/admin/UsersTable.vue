@@ -37,9 +37,3 @@ export default {
     }
 }
 </script>
-
-<style>
-    .thin-table {
-        width: 88%;
-    }
-</style>
