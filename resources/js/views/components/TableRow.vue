@@ -7,7 +7,10 @@
         </table-col>
 
         <table-col v-for="(field,index) in fields" :key="field.name" :width="field.width">
-            <div class="default-col">
+            <div v-if="field.hasImage">
+                <img class="ad-thumbnail" :src="values[index]"/>
+            </div>
+            <div class="default-col" v-else>
                 <h4>{{ values[index] }}</h4>
             </div>
         </table-col>
@@ -87,5 +90,10 @@ export default {
     .action-col h4{
         font-weight: 600;
         padding-left: 8px;
+    }
+
+    .ad-thumbnail {
+        height: 2.25rem;
+        width: auto;
     }
 </style>
