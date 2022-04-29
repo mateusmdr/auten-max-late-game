@@ -85,11 +85,6 @@
 </script>
 
 <style scoped>
-    .img-home {
-        width: 7vw;
-        height: auto;
-    }
-
     .card-col h3{
         color: #BFC9DB;
         font-weight: 700;

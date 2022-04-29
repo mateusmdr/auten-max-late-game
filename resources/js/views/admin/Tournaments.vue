@@ -65,10 +65,3 @@
         }
     }
 </script>
-
-<style scoped>
-    .img-home {
-        width: 7vw;
-        height: auto;
-    }
-</style>

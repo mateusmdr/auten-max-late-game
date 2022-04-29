@@ -1,17 +1,17 @@
 <template>
     <div class="form-step d-flex flex-row align-items-center me-4">
-        <div class="circle" v-if="modelValue === pageNumber"></div>
-        <a :class="modelValue===pageNumber ? 'currentPage' : ''" @click="$emit('update:modelValue',pageNumber)">{{text}}</a>
+        <div class="circle" v-if="selected"></div>
+        <a :class="selected ? 'currentPage' : ''" @click="$emit('click')">{{text}}</a>
     </div>
 </template>
 
 <script>
 export default {
     props: {
-        modelValue: Number,
-        pageNumber: Number,
+        selected: Boolean,
         text: String
-    }
+    },
+    emits: ['click']
 }
 </script>
 
