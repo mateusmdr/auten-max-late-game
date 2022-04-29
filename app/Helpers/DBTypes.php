@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 class DBTypes {
-    
-    const IDENTIFICATION_TYPE = ['CPF'];
+    const PAYMENT_PERIODS = ['monthly','biannual','yearly'];
+
+    const TOURNAMENT_STATUSES = [];
 }

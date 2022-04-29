@@ -9,7 +9,7 @@
             <div class="row mb-3">
                 <div class="col-5">
                     <DisabledInput
-                        label="Tipo"
+                        label="Período"
                         value="Mensal"
                     />
                 </div>
@@ -23,7 +23,7 @@
             <div class="row mb-3">
                 <div class="col-5">
                     <DisabledInput
-                        label="Tipo"
+                        label="Período"
                         value="Semestral"
                     />
                 </div>
@@ -37,7 +37,7 @@
             <div class="row mb-3">
                 <div class="col-5">
                     <DisabledInput
-                        label="Tipo"
+                        label="Período"
                         value="Anual"
                     />
                 </div>
