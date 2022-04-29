@@ -15,7 +15,7 @@ import App from './views/App.vue';
 // Load root component respectively to user privileges
 const app = createApp(App);
 
-PHP_USER.is_admin = false;
+PHP_USER.is_admin = true;
 
 // Provide user info to globally
 app.config.globalProperties.user = PHP_USER;
@@ -28,10 +28,10 @@ const globalComponents = require.context('./views/components', false, /\.vue$/i)
 globalComponents.keys().map(key => app.component(key.split('/').pop().split('.')[0], globalComponents(key).default))
 
 //Register specific components
-const adminComponents = require.context('./views/components/admin', false, /\.vue$/i)
+const adminComponents = require.context('./views/components/admin', true, /\.vue$/i)
 adminComponents.keys().map(key => app.component('Admin' + key.split('/').pop().split('.')[0], adminComponents(key).default))
 
-const clientComponents = require.context('./views/components/client', false, /\.vue$/i)
+const clientComponents = require.context('./views/components/client', true, /\.vue$/i)
 clientComponents.keys().map(key => app.component('Client' + key.split('/').pop().split('.')[0], clientComponents(key).default))
 
 //Load modals plugin
