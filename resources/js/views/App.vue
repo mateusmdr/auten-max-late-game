@@ -52,6 +52,15 @@
         color: #4F4F4F
     }
 
+    .input-button {
+        position: absolute;
+        top: 50%;
+        right: 1rem;
+
+        transform: translateY(-50%);
+        color: #F2F5FA;
+    }
+
     .unselectable {
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -59,10 +68,20 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+
+        user-drag: none;
+        -webkit-user-drag: none;
     }
 
     .thin-table {
         width: 80%;
+    }
+
+    button {
+        outline: 0;
+        border: 0;
+        background-color: transparent;
+        cursor: pointer;
     }
 
 </style>

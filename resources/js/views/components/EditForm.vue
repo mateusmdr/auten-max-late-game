@@ -1,5 +1,5 @@
 <template>
-    <form>
+    <form @submit.prevent="$emit('submit')">
         <h4 class="form-title mb-5">{{title}}</h4>
         <div class="input-container mb-3">
             <slot/>
@@ -16,6 +16,7 @@
 
 <script>
 export default {
+    emits: ['submit'],
     props: {
         showSubmitButton: {
             type: Boolean,

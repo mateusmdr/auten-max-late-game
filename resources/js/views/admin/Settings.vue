@@ -2,16 +2,16 @@
     <Section title="Configurações" icon="settings">
         <Stepper :steps="steps">
             <template #step-0>
-                Planos
+                <AdminSettingsFormPlans/>
             </template>
             <template #step-1>
-                Notificações
+                <AdminSettingsFormNotifications/>
             </template>
             <template #step-2>
-                Torneios
+                <AdminSettingsFormTournaments/>
             </template>
             <template #step-3>
-                Termos de uso
+                <AdminSettingsFormUseTerms/>
             </template>
         </Stepper>
     </Section>

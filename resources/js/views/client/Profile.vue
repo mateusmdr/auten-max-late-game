@@ -5,7 +5,10 @@
                 <ClientProfileFormPersonal/>
             </template>
             <template #step-1>
-                <ClientProfileFormPayment/>
+                <div class="d-flex flex-row justify-content-stretch">
+                    <ClientProfileFormPayment1/>
+                    <ClientProfileFormPayment2/>
+                </div>
             </template>
         </Stepper>
     </Section>

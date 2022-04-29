@@ -1,6 +1,6 @@
 <template>
     <div class="container d-flex justify-content-center mb-3">
-        <img src="@images/poker_chips_4.png" class="img-home">
+        <img src="@images/poker_chips_4.png" class="img-home unselectable">
     </div>
 
     <Section title="Notificações" description="Últimos avisos" icon="notifications">

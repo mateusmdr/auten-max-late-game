@@ -1,5 +1,5 @@
 <template>
-    <span class="material-icons-outlined" :style="`color:${color};font-size:${size};`">
+    <span class="material-icons-outlined unselectable" :style="`color:${color};font-size:${size};`">
         {{ name }}
     </span>
 </template>
