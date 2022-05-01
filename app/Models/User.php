@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use DateTime;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -30,7 +31,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $hidden = [
         'password',
-        'remember_token'
+        'remember_token',
+        'is_blocked'
     ];
 
     /**
@@ -42,7 +44,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    protected function PaymentPlan() {
+    protected function isPastTestPeriod() {
+        $verifiedAt = new DateTime($this->created_at);
+        
+        $days = now()->diff($verifiedAt)->format('%a');
+
+        return($days >= env('TEST_PERIOD_DURATION', 14));
+    }
+
+    protected function payment_plan() {
         return $this->hasOne(PaymentPlan::class);
     }
 }

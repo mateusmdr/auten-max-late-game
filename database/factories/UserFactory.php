@@ -26,7 +26,7 @@ class UserFactory extends Factory
             'phone'=> $this->faker->cellphone(false),
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),
-            'payment_plan_id' => 1,
+            'payment_plan_id' => null,
             
             'is_admin'=> false,
         ];

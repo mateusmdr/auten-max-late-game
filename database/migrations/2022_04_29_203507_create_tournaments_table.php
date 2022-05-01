@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\DBSizes;
+use App\Helpers\DBTypes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,10 +24,11 @@ return new class extends Migration
             $table->date('date');
             $table->time('subscription_begin_at');
             $table->time('subscription_end_at');
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
 
-            $table->foreignId('tournament_type_id')->constrained();;
-            $table->foreignId('tournament_platform_id')->constrained();;
+            $table->foreignId('tournament_type_id')->constrained();
+            $table->foreignId('tournament_platform_id')->constrained();
         });
     }
 

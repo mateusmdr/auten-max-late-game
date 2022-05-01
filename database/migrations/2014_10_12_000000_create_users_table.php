@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('cpf',DBSizes::STRING)->nullable()->unique();
             $table->string('phone',DBSizes::STRING)->nullable();
 
-            $table->boolean('is_blocked')->default(false);            
+            $table->boolean('is_blocked')->default(false);
             $table->boolean('is_admin')->default(false);
 
             $table->timestamps();
