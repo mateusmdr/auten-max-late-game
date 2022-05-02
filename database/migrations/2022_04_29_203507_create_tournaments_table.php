@@ -18,7 +18,7 @@ return new class extends Migration
         Schema::create('tournaments', function (Blueprint $table) {
             $table->id();
             $table->string('name', DBSizes::STRING);
-            $table->decimal('price')->unsigned();
+            $table->decimal('prize')->unsigned();
             $table->integer('min_buy_in')->unsigned();
             $table->integer('max_buy_in')->unsigned();
             $table->date('date');

@@ -35,8 +35,7 @@ class UpdateUserRequest extends BaseRequest
         return [
             'email' => 'email|unique:users,email,' . $id . '|max:' . DBSizes::STRING,
             'name'=> 'string|min:2|max:' . DBSizes::STRING,
-            'identification_type'=> Rule::in(DBTypes::IDENTIFICATION_TYPE),
-            'identification_value'=> 'cpf|required_with:identification_type|unique:users,identification_value,' . $id,
+            'cpf'=> 'required|cpf|unique:users,cpf,' . $id,
             'phone'=> 'integer|digits_between:10,14',
         ];
     }

@@ -37,7 +37,12 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        //
+    }
+
+    public function __invoke()
+    {
+        // ...
     }
 
     protected function authenticated(Request $request, $user)

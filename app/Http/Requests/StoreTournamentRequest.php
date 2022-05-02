@@ -9,16 +9,6 @@ use Illuminate\Foundation\Http\FormRequest;
 class StoreTournamentRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        true;
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -29,8 +19,8 @@ class StoreTournamentRequest extends FormRequest
             'name' => 'required|string|max:' . DBSizes::STRING,
             'prize' => 'required|numeric',
             'min_buy_in' => 'required|integer|min:0',
-            'max_buy_in' => 'required|integer|min:0|gte:min_but_in',
-            'date' => 'required|date_format:m/d/Y',
+            'max_buy_in' => 'required|integer|min:0|gte:min_buy_in',
+            'date' => 'required|date_format:m/d/Y|after:yesterday',
             'subscription_begin_at' => 'required|date_format:H:i',
             'subscription_end_at' => 'required|date_format:H:i|after:subscription_begin_at',
             'tournament_platform_id' => 'required|integer|min:0|exists:App\Models\TournamentPlatform,id',
