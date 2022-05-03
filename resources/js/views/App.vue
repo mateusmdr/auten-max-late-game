@@ -10,7 +10,8 @@
 </template>
 
 <script>
-
+    const tournaments = axios.get('/tournament');
+    tournaments.then(console.log);
 </script>
 
 <style>

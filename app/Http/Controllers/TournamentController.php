@@ -2,17 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use Cron\CronExpression;
 use App\Models\Tournament;
+use Illuminate\Support\Facades\DB;
+use App\Models\TournamentRecurrence;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\TournamentResource;
+use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Requests\StoreTournamentRequest;
 use App\Http\Requests\UpdateTournamentRequest;
-use App\Http\Resources\TournamentResource;
 
 class TournamentController extends Controller
 {
-
+    /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
-        // $this->authorizeResource(Tournament::class);
+        $this->authorizeResource(Tournament::class);
     }
 
     /**
@@ -23,8 +33,15 @@ class TournamentController extends Controller
     public function index()
     {
         $builder = Tournament::query();
+        if(!Auth::user()->is_admin) {
+            $builder->where('is_approved','=','true');
+        }
 
         return TournamentResource::collection($builder->get());
+    }
+
+    public function show(Tournament $tournament){
+        return new TournamentResource($tournament);
     }
 
     /**
@@ -46,13 +63,47 @@ class TournamentController extends Controller
             'tournament_platform_id',
             'tournament_type_id',
             'is_recurrent',
-            'recurrence_schedule',
+            'schedule',
             'ends_at',
         ]);
 
-        $tournament = Tournament::create($data);
+        if($data['is_recurrent']) {
+            DB::transaction(function () use ($data) {
+                $recurrence = TournamentRecurrence::create($data);
 
-        return new TournamentResource($tournament);
+                $cron = new CronExpression($data['schedule'],);
+                $ends_at = new DateTime($data['ends_at']);
+
+                $date = new DateTime($data['date']);
+                
+                $tournamentData = [];
+
+                unset($data['is_recurrent']);
+                unset($data['schedule']);
+                unset($data['ends_at']);
+                do {
+                    $tournamentData[] = array_merge(
+                        $data,
+                        [
+                            'tournament_recurrence_id' => $recurrence->id,
+                            'date' => $date->format('Y-m-d')
+                        ]
+                    );
+                    
+                    $date = $cron->getNextRunDate($date);
+
+                }while($date->diff($ends_at)->format('%R') == '+');
+
+                $chunks = array_chunk($tournamentData,100,true);
+
+                foreach ($chunks as $chunk)
+                {
+                    Tournament::insert($chunk);
+                }
+            });
+        }else {
+            Tournament::create($data);
+        }
     }
 
     /**

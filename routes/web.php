@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TournamentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,13 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/plataforma/{any?}', [App\Http\Controllers\HomeController::class, 'index'])
+Route::middleware('auth')->group(function () {
+    Route::get('/plataforma/{any?}', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home')
     ->where('any','.*');
+
+    Route::group(['prefix' => 'api'], function () {
+        Route::apiResource('user',UserController::class);
+        Route::apiResource('tournament',TournamentController::class);
+    });
+});

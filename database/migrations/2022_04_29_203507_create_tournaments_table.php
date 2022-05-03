@@ -25,7 +25,8 @@ return new class extends Migration
             $table->time('subscription_begin_at');
             $table->time('subscription_end_at');
             $table->boolean('is_approved')->default(false);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreignId('tournament_type_id')->constrained();
             $table->foreignId('tournament_platform_id')->constrained();

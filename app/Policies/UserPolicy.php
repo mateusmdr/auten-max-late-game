@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class UserPolicy
@@ -15,9 +16,9 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny()
     {
-        return $user->is_admin;
+        return Auth::user()->is_admin;
     }
 
     /**
@@ -27,9 +28,9 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, User $model)
+    public function view(User $model)
     {
-        return $user->id === $model->id || $user->is_admin;
+        return Auth::user()->id === $model->id || Auth::user()->is_admin;
     }
 
     /**
@@ -50,9 +51,9 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update(User $model)
     {
-        return $user->id === $model->id || $user->is_admin;
+        return Auth::user()->id === $model->id || Auth::user()->is_admin;
     }
 
     /**
@@ -64,6 +65,6 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        return $user->is_admin;
+        return Auth::user()->is_admin;
     }
 }

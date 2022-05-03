@@ -2,22 +2,29 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\TournamentRecurrence;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tournament extends Model
 {
     use HasFactory;
 
+    public $timestamps = true;
+
     protected $guarded = [
         'is_approved'
     ];
 
-    protected function tournament_type() {
-        return $this->hasOne(TournamentType::class);
+    public function tournament_type() {
+        return $this->belongsTo(TournamentType::class);
     }
 
-    protected function tournament_platform() {
-        return $this->hasOne(TournamentPlatform::class);
+    public function tournament_platform() {
+        return $this->belongsTo(TournamentPlatform::class);
+    }
+
+    public function tournament_recurrence() {
+        return $this->belongsTo(TournamentRecurrence::class);
     }
 }
