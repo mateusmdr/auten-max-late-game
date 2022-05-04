@@ -87,19 +87,19 @@
                 'color' => '#EB4263',
                 'title' => 'Anual',
                 'description' => 'acesso completo à plataforma',
-                'price' => '199,99'
+                'price' => $payment_plans[2]->price
             ])
             @include('components.plan_card',[
                 'color' => '#B376F8',
                 'title' => 'Semestral',
                 'description' => 'acesso completo à plataforma',
-                'price' => '119,99'
+                'price' => $payment_plans[1]->price
             ])
             @include('components.plan_card',[
                 'color' => '#05F28E',
                 'title' => 'Mensal',
                 'description' => 'acesso completo à plataforma',
-                'price' => '29,99'
+                'price' => $payment_plans[0]->price
             ])
     </div>
     </section>

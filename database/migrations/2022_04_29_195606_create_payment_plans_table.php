@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('name',DBSizes::STRING);
             $table->decimal('price')->unsigned();
             $table->enum('period',DBTypes::PAYMENT_PERIODS)->unique();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
 
         Schema::table('users', function (Blueprint $table) {

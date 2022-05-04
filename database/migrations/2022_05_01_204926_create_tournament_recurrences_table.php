@@ -18,7 +18,8 @@ return new class extends Migration
             $table->id();
             $table->string('schedule',DBSizes::STRING);
             $table->date('ends_at');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
 
         Schema::table('tournaments', function (Blueprint $table) {

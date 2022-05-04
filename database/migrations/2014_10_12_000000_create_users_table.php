@@ -27,7 +27,8 @@ return new class extends Migration
             $table->boolean('is_blocked')->default(false);
             $table->boolean('is_admin')->default(false);
 
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
         });

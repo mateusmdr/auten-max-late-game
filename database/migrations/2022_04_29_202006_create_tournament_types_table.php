@@ -17,7 +17,8 @@ return new class extends Migration
         Schema::create('tournament_types', function (Blueprint $table) {
             $table->id();
             $table->string('name',DBSizes::STRING);
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
