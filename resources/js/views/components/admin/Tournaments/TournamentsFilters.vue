@@ -14,8 +14,8 @@
             </div>
             <div class="col-2">
                 <Select 
-                    :options="platforms"
-                    v-model="inputs.platform"
+                    :options="tournamentPlatforms"
+                    v-model="inputs.tournamentPlatform"
                     name="Plataforma"
                 />
             </div>
@@ -43,7 +43,22 @@
 </template>
 
 <script>
+import {useTournamentTypeStore, useTournamentPlatformStore} from '../../../../stores/admin';
+import {storeToRefs} from 'pinia';
+
 export default {
+    setup() {
+        const tournamentTypeStore = useTournamentTypeStore();
+        const tournamentPlatformStore = useTournamentPlatformStore();
+
+        const {tournamentTypes} = storeToRefs(tournamentTypeStore);
+        const {tournamentPlatforms} = storeToRefs(tournamentPlatformStore);
+
+        return {
+            tournamentTypes,
+            tournamentPlatforms
+        }
+    },
     emits: ['change'],
     created() {
         this.tournamentStatuses = [
@@ -68,36 +83,6 @@ export default {
                 color:'#05F28E',
             }
         ];
-
-        this.tournamentTypes = [
-            {
-                name: 'Tipo 1',
-                value: 0
-            },
-            {
-                name: 'Tipo 2',
-                value: 1
-            },
-            {
-                name: 'Tipo 3',
-                value: 2
-            },
-        ];
-
-        this.platforms = [
-            {
-                name: 'Party Poker',
-                value: 0
-            },
-            {
-                name: 'Pokerstars',
-                value: 1
-            },
-            {
-                name: 'WPN',
-                value: 2
-            },
-        ];
     },
     watch: {
         inputs(before, now) {
@@ -113,7 +98,7 @@ export default {
                 time: null,
                 minBuyIn: null,
                 maxBuyIn: null,
-                platform: null,
+                tournamentPlatform: null,
                 tournamentType: null,
             }
         }

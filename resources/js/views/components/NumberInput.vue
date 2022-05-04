@@ -1,6 +1,6 @@
 <template>
     <InputContainer :name="name">
-        <input type="number" v-model.number="modelValue" @input="$emit('update:modelValue',$event.target.value)" :min="positive && '0'"/>
+        <input type="number" v-model.number="modelValue" @input="$emit('update:modelValue',$event.target.value)" />
     </InputContainer>
 </template>
 

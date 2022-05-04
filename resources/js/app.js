@@ -34,6 +34,11 @@ adminComponents.keys().map(key => app.component('Admin' + key.split('/').pop().s
 const clientComponents = require.context('./views/components/client', true, /\.vue$/i)
 clientComponents.keys().map(key => app.component('Client' + key.split('/').pop().split('.')[0], clientComponents(key).default))
 
+//Load pinia root store
+import { createPinia } from 'pinia'
+
+app.use(createPinia());
+
 //Load modals plugin
 import { vfmPlugin } from 'vue-final-modal'
 

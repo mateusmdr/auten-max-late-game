@@ -8,7 +8,6 @@
             <DynamicButton
                 v-if="showSubmitButton"
                 :text="submitText"
-                :onClick="submitHandler"
             />
         </div>
     </form>

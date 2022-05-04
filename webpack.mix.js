@@ -15,7 +15,7 @@ mix
     .sass('resources/sass/public.scss', 'public/css')
     .sass('resources/sass/global.scss', 'public/css')
     .alias({
-        '@images': path.join(__dirname, 'resources/images')
+        '@images': path.join(__dirname, 'resources/images'),
     });
 
 if (mix.inProduction()) {

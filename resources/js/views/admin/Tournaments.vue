@@ -5,7 +5,7 @@
         <AdminTournamentsFilters
             @change="(filter) => this.filter = filter"
         />
-
+        
         <AdminTournamentsTable
             :tournaments="tournaments"
         />
@@ -13,27 +13,32 @@
 </template>
 
 <script>
-    export default {
-        computed: {
-            filteredTournaments() {
-                return tournaments && this.tournaments.filter(this.filter);
-            }
-        },
-        mounted() {
-            axios
-                .get('/api/tournament')
-                .then(response => {
-                    this.tournaments = response.data.data;
-                })
-                .catch(error => {
-                    console.error(error)
-                });
-        },
-        data() {
-            return {
-                filter: () => true,
-                tournaments: null
-            }
+import { storeToRefs } from 'pinia';
+import {useTournamentPlatformStore, useTournamentTypeStore, useTournamentStore} from '../../stores/admin';
+
+export default {
+    setup() {
+        const tournamentTypeStore = useTournamentTypeStore();
+        const tournamentPlatformStore = useTournamentPlatformStore();
+        const tournamentStore = useTournamentStore();
+        tournamentTypeStore.refresh();
+        tournamentPlatformStore.refresh();
+        tournamentStore.refresh();
+
+        const {tournaments} = storeToRefs(tournaments);
+        return {
+            tournaments
+        }
+    },
+    computed: {
+        filteredTournaments() {
+            return tournaments && this.tournaments.filter(this.filter);
+        }
+    },
+    data() {
+        return {
+            filter: () => true,
         }
     }
+}
 </script>
