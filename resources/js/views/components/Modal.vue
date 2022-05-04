@@ -1,5 +1,5 @@
 <template>
-	<vue-final-modal v-model="showModal" classes="modal-container" content-class="modal-content">
+	<vue-final-modal v-model="showModal" classes="modal-container" :styles="`width: ${width};`" content-class="modal-content">
 		<a class="modal__close" @click="showModal = false">
 			<Icon name="close"/>
 		</a>
@@ -7,11 +7,11 @@
 			<Icon :name="modalIcon"/>
 			<h4 class="px-2 m-0">{{modalTitle}}</h4>
 		</span>
-		<div class="modal__content">
+		<div class="modal__content mb-5">
 			<slot/>
-            <div class="submit-button">
-                <DynamicButton :text="submitModalText" @click="submitModal"/>
-            </div>
+		</div>
+		<div class="submit-button">
+			<DynamicButton :text="submitModalText" @click="submitModal"/>
 		</div>
 	</vue-final-modal>
 	<div class="absolute-top-right">
@@ -26,11 +26,15 @@ export default {
         modalTitle: String,
         modalIcon: String,
         submitModalText: String,
-        submitModal: Function
+        submitModal: Function,
+		width: {
+			type: String,
+			default: "75vw"
+		}
     },
 	data() {
 		return {
-			showModal: true
+			showModal: false
 		}
 	}
 }
@@ -46,7 +50,6 @@ export default {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		width: 75vw;
 		margin: auto;
 	}
 
@@ -78,6 +81,7 @@ export default {
     .submit-button {
         position: absolute;
         left: 50%;
+		bottom: 0;
         transform: translate(-50%, -50%);
     }
 </style>

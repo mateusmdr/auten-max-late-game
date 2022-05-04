@@ -1,5 +1,5 @@
 <template>
-    <InputContainer name="Hora">
+    <InputContainer :name="label">
         <Datepicker
             timePicker
             placeholder="00h00"
@@ -29,7 +29,11 @@ export default {
     },
     components: {Datepicker},
     props: {
-        modelValue: Date
+        modelValue: Date,
+        label: {
+            type: String,
+            default: "Hora"
+        }
     }
 }
 </script>

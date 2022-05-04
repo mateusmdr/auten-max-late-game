@@ -1,7 +1,7 @@
 <template>
     <InputContainer :name="label">
         <div class="position-relative">
-            <input type="text" @input="$emit('update:modelValue',$event.target.value)" :value="modelValue"/>
+            <input type="text" @input="$emit('update:modelValue',$event.target.value)" :value="modelValue" :placeholder="placeholder"/>
             <div class="input-icon" v-if="hasIcon">
                 <Icon :name="icon"/>
             </div>
@@ -14,6 +14,10 @@ export default {
     props: {
         modelValue: String,
         label: String,
+        placeholder: {
+            type: String,
+            default: ""
+        },
         hasIcon: {
             type: Boolean,
             default: false

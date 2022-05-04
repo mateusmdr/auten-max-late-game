@@ -19,9 +19,13 @@
                 return this.tournaments.filter(this.filter);
             }
         },
+        mounted() {
+
+        },
         data() {
             return {
                 filter: () => true,
+                data: null,
                 tournaments: Array(4).fill(
                     {
                         id: 1,

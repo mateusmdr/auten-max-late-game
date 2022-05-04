@@ -2,7 +2,7 @@
     <InputContainer :name="name">
         <div class="position-relative">
             <select :value="modelValue" @change="this.$emit('update:modelValue', $event.target.value)">
-                <option :value="null" selected hidden>Selecione</option>
+                <option value="" selected disabled hidden>Selecione</option>
                 <option v-for="item in options" :key="item.value" :value="item">{{item.name}}</option>
             </select>
             <label class="select-icon unselectable">

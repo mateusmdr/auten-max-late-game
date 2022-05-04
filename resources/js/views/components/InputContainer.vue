@@ -19,5 +19,6 @@ export default {
         color: #F2F5FA;
         font-weight: 700;
         font-size: .75rem;
+        height: 1.125rem;
     }
 </style>
