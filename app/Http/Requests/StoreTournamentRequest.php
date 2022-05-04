@@ -17,7 +17,7 @@ class StoreTournamentRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:' . DBSizes::STRING,
-            'prize' => 'required|numeric',
+            'prize' => 'required|integer|min:1',
             'min_buy_in' => 'integer|min:0',
             'max_buy_in' => 'integer|min:0|gte:min_buy_in',
             'date' => 'required|date_format:Y-m-d|after:yesterday',

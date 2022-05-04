@@ -37,7 +37,7 @@ class TournamentController extends Controller
             $builder->where('is_approved','=','true');
         }
 
-        return TournamentResource::collection($builder->get());
+        return TournamentResource::collection($builder->orderBy('date')->get());
     }
 
     public function show(Tournament $tournament){

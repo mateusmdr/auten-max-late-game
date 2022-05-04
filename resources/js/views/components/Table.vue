@@ -1,8 +1,6 @@
 <template>
     <div class="container-fluid">
         <div class="row table-header px-3">
-            <div class="col-2"></div>
-
             <table-col v-for="field in fields" :key="field.name" :width="field.width">
                 <div>
                     <h4>{{ field.name }}</h4>
@@ -17,12 +15,12 @@
             :key="item.id"
             :fields="fields"
             :title="item.title"
-            :color="item.color"
-            :values="item.values"
-            :defaultAction="item.action"
+            :color="colorPicker(item)"
+            :item="item"
+            :defaultAction="action(item)"
             :defaultActionIcon="defaultActionIcon"
             :defaultActionText="defaultActionText"
-            :isEditable="item.isEditable"
+            :isEditable="isEditable(item)"
             :actions="item.actions"
             :actionWidth="actionWidth"
             :noAction="noAction"
@@ -45,7 +43,10 @@ export default {
         noAction: {
             type: Boolean,
             default: false
-        }
+        },
+        colorPicker: Function,
+        action: Function,
+        isEditable: Function
     }
 }
 </script>

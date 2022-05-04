@@ -1,17 +1,14 @@
 <template>
     <div class="row px-3">
-        <table-col :key="'title'" :width="2">
-            <div class="title-col" :style="`border-left-color:${color};`">
-                <h4>{{ title }}</h4>
+        <table-col v-for="(field, index) in fields" :key="field.name" :width="field.width">
+            <div class="title-col" :style="`border-left-color:${color};`" v-if="index === 0">
+                <h4>{{ item[field.value] }}</h4>
             </div>
-        </table-col>
-
-        <table-col v-for="(field,index) in fields" :key="field.name" :width="field.width">
-            <div v-if="field.hasImage">
-                <img class="ad-thumbnail" :src="values[index]"/>
+            <div v-else-if="field.hasImage">
+                <img class="ad-thumbnail" :src="item[field.value]"/>
             </div>
             <div class="default-col" v-else>
-                <h4>{{ values[index] }}</h4>
+                <h4>{{ item[field.value] }}</h4>
             </div>
         </table-col>
 
@@ -45,7 +42,7 @@ export default {
         defaultActionIcon: String,
         defaultActionText: String,
         fields: Array,
-        values: Array,
+        item: Object,
         actions: Object,
         isEditable: {
             type: Boolean,
