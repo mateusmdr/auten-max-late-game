@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\DBSizes;
 use App\Helpers\DBTypes;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,6 +17,7 @@ return new class extends Migration
     {
         Schema::create('payment_plans', function (Blueprint $table) {
             $table->id();
+            $table->string('name',DBSizes::STRING);
             $table->decimal('price')->unsigned();
             $table->enum('period',DBTypes::PAYMENT_PERIODS)->unique();
             $table->timestamps();

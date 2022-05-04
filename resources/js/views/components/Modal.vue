@@ -1,5 +1,5 @@
 <template>
-	<vue-final-modal v-model="showModal" classes="modal-container" :styles="`width: ${width};`" content-class="modal-content">
+	<vue-final-modal v-model="showModal" classes="modal-container" :styles="{width: width}" content-class="modal-content">
 		<a class="modal__close" @click="showModal = false">
 			<Icon name="close"/>
 		</a>

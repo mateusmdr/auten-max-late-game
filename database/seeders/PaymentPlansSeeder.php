@@ -16,9 +16,9 @@ class PaymentPlansSeeder extends Seeder
     public function run()
     {
         DB::table('payment_plans')->insert([
-            ['period' => 'monthly', 'price' => 29.99],
-            ['period' => 'biannual', 'price' => 119.99],
-            ['period' => 'yearly', 'price' => 199.99],
+            ['period' => 'monthly', 'name' => 'Mensal', 'price' => 29.99],
+            ['period' => 'biannual', 'name' => 'Semestral', 'price' => 119.99],
+            ['period' => 'yearly', 'name' => 'Anual', 'price' => 199.99],
         ]);
     }
 }

@@ -23,10 +23,7 @@
             axios
                 .get('/api/tournament')
                 .then(response => {
-                    // this.data = response;
                     this.tournaments = response.data.data;
-                    
-                    console.log(response);
                 })
                 .catch(error => {
                     console.error(error)

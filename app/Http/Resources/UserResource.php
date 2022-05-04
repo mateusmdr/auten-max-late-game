@@ -14,6 +14,12 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
+        if(is_null($this->payment_plan)) {
+            $plan = 'Gratuito';
+        }else {
+            $plan = $this->payment_plan->name;
+        }
+
         return([
             'id' => $this->id,
 
@@ -21,8 +27,10 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'cpf' => $this->cpf,
             'phone' => $this->phone,
-            'is_verified' => !!$this->is_verified,
-            'verified_at' => $this->verified_at,
+            'plan' => $plan,
+            'isVerified' => !is_null($this->email_verified_at),
+            'isBlocked' => $this->is_blocked,
+            'isInactive' => false
         ]);
     }
 }

@@ -28,6 +28,7 @@ class UserController extends Controller
     public function index()
     {
         $builder = User::query();
+        $builder->where('is_admin','!=','true');
 
         return UserResource::collection($builder->get());
     }

@@ -55,6 +55,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     protected function payment_plan() {
-        return $this->hasOne(PaymentPlan::class);
+        return $this->belongsTo(PaymentPlan::class);
     }
 }

@@ -17,7 +17,7 @@
             :title="item.title"
             :color="colorPicker(item)"
             :item="item"
-            :defaultAction="action(item)"
+            :defaultAction="() => action(item)"
             :defaultActionIcon="defaultActionIcon"
             :defaultActionText="defaultActionText"
             :isEditable="isEditable(item)"
@@ -44,9 +44,18 @@ export default {
             type: Boolean,
             default: false
         },
-        colorPicker: Function,
-        action: Function,
-        isEditable: Function
+        colorPicker: {
+            type: Function,
+            default: () => null
+        },
+        action: {
+            type: Function,
+            default: () => null
+        },
+        isEditable: {
+            type: Function,
+            default: () => null
+        },
     }
 }
 </script>

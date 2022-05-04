@@ -12,46 +12,20 @@
 
 <script>
     export default {
+        mounted() {
+            axios
+                .get('/api/user')
+                .then(response => {
+                    console.log(response);
+                    this.users = response.data.data;                    
+                })
+                .catch(error => {
+                    console.error(error)
+                });
+        },
         data: function() {
             return {
-                users: [
-                    {
-                        id: 1,
-                        title: 'Nome do usuário',
-                        color: '#B376F8',
-                        values: [
-                            'email@email.com',
-                            '000.000.000-00',
-                            '(00) 00000-0000',
-                            'Mensal',
-                        ],
-                        isEditable: false,
-                    },
-                    {
-                        id: 2,
-                        title: 'Nome do usuário',
-                        color: '#B376F8',
-                        values: [
-                            'email@email.com',
-                            '000.000.000-00',
-                            '(00) 00000-0000',
-                            'Mensal',
-                        ],
-                        isEditable: false,
-                    },
-                    {
-                        id: 3,
-                        title: 'Nome do usuário',
-                        color: '#B376F8',
-                        values: [
-                            'email@email.com',
-                            '000.000.000-00',
-                            '(00) 00000-0000',
-                            'Mensal',
-                        ],
-                        isEditable: false,
-                    }
-                ]
+                users: null
             }
         }
     }

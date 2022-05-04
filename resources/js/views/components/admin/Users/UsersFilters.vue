@@ -28,15 +28,20 @@ export default {
             {
                 id: 0,
                 text:'Cadastrados',
-                color:'#B376F8',
+                color:'#05F28E',
             },
             {
                 id: 1,
+                text:'Email não verificado',
+                color:'#B376F8',
+            },
+            {
+                id: 2,
                 text:'Inativos',
                 color:'#F5A847',
             },
             {
-                id: 2,
+                id: 3,
                 text:'Bloqueados',
                 color:'#EB4263',
             }
