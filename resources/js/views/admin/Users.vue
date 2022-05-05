@@ -11,22 +11,23 @@
 </template>
 
 <script>
-    export default {
-        mounted() {
-            axios
-                .get('/api/user')
-                .then(response => {
-                    console.log(response);
-                    this.users = response.data.data;                    
-                })
-                .catch(error => {
-                    console.error(error)
-                });
-        },
-        data: function() {
-            return {
-                users: null
-            }
+import { storeToRefs } from 'pinia';
+import {useUserStore} from '../../stores/admin';
+
+export default {
+    setup() {
+        const userStore = useUserStore();
+        userStore.refresh();
+
+        const {users} = storeToRefs(userStore);
+        return {
+            users
+        }
+    },
+    data: function() {
+        return {
+            users: null
         }
     }
+}
 </script>

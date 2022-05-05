@@ -25,7 +25,7 @@ export default {
         tournamentPlatformStore.refresh();
         tournamentStore.refresh();
 
-        const {tournaments} = storeToRefs(tournaments);
+        const {tournaments} = storeToRefs(tournamentStore);
         return {
             tournaments
         }
