@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use App\Helpers\DBSizes;
 use App\Rules\CronRule;
-use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTournamentRequest extends FormRequest
+class StoreTournamentRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.

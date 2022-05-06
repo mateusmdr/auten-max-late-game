@@ -3,9 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Helpers\DBSizes;
-use App\Helpers\DBTypes;
-use Illuminate\Support\Str;
-use Illuminate\Validation\Rule;
 use App\Http\Requests\BaseRequest;
 
 class UpdateUserRequest extends BaseRequest

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotificationController;
 use App\Models\PaymentPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,5 +39,7 @@ Route::middleware('auth')->group(function () {
         Route::apiResource('payment_plan', PaymentPlanController::class);
         Route::apiResource('tournament_platform',TournamentPlatformController::class);
         Route::apiResource('tournament_type',TournamentTypeController::class);
+        Route::apiResource('notification', NotificationController::class);
+        Route::get('user/{user}/notification', [NotificationController::class, 'showFromUser']);
     });
 });
