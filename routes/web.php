@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\NotificationController;
 use App\Models\PaymentPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EULAController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\PaymentPlanController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TournamentTypeController;
 use App\Http\Controllers\TournamentPlatformController;
 
@@ -41,5 +42,6 @@ Route::middleware('auth')->group(function () {
         Route::apiResource('tournament_type',TournamentTypeController::class);
         Route::apiResource('notification', NotificationController::class);
         Route::get('user/{user}/notification', [NotificationController::class, 'showFromUser']);
+        Route::post('eula',[EULAController::class,'update']);
     });
 });

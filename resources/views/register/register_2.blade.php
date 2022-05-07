@@ -26,7 +26,7 @@
                 <input class="form-check-input me-2" type="checkbox" name="eula" id="eula" required>
 
                 <label class="form-check-label form-grey" for="eula">
-                    Li e aceito os <a href="{{asset('eula.txt')}}" class="fw-bold text-decoration-underline" target="_blank">Termos de Uso</a>
+                    Li e aceito os <a href="{{asset('storage/eula.pdf')}}" class="fw-bold text-decoration-underline" target="_blank">Termos de Uso</a>
                 </label>
             </div>
             @error('eula')

@@ -1,17 +1,15 @@
 <template>
     <div class="form-container">
         <EditForm
-            :showSubmitButton="fileSelected"
+            :showSubmitButton="!!inputs.file"
             submitText="Atualizar termos"
-            :submitHandler="(e) => {e.preventDefault;}"
+            @submit="upload"
         >
             <div class="row">
                 <div class="col-12 mb-4">
-                    <TextInput
+                    <FileInput
                         label="Termos de uso"
-                        v-model="inputs.file"
-                        :hasIcon="true"
-                        icon="attach_file"
+                        @change="(file) => inputs.file = file"
                     />
                 </div>
             </div>
@@ -23,12 +21,26 @@
 export default {
     data() {
         return {
-            fileSelected: true,
             inputs: {
-                file: 'termos_de_uso.pdf'
+                file: null
             }
         }
     },
+    methods: {
+        upload() {
+            console.log(this.inputs.file);
+            const formData = new FormData();
+            formData.append('file', this.inputs.file);
+            axios
+                .post('/api/eula', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(() => this.inputs.file = null)
+                .then(() => alert("Termos de uso atualizados com sucesso!"))
+        }
+    }
 }
 </script>
 

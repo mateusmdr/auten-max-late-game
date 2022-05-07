@@ -9,5 +9,5 @@
         @include('register.register_3')
         @break
     @default
-        @include('register.register_1')
+        @include('register.register_2')
 @endswitch
