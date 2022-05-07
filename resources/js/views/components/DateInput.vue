@@ -8,8 +8,8 @@
             :minDate="now"
             dark
             hideInputIcon
-            v-model="value"
-            @input="$emit('input',$event.target.value)"
+            v-model="modelValue"
+            @input="$emit('update:modelValue',$event.target.value)"
             :format="monthPicker ? 'MM/yyyy' : 'dd/MM/yyyy'"
             :monthPicker="monthPicker"
         />
@@ -30,7 +30,7 @@ export default {
     },
     components: {Datepicker},
     props: {
-        value: Date,
+        modelValue: Date,
         monthPicker: {
             type: Boolean,
             default: false

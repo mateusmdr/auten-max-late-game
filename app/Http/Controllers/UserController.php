@@ -29,6 +29,7 @@ class UserController extends Controller
     {
         $builder = User::query();
         $builder->where('is_admin','!=','true');
+        $builder->orderBy('name');
 
         return UserResource::collection($builder->get());
     }

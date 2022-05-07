@@ -4,7 +4,8 @@
         defaultActionText=''
         :actionWidth="1"
         :fields="fields"
-        :items="notificationRows"
+        :items="notifications"
+        :colorPicker="() => '#B376F8'"
     />
 </template>
 
@@ -13,24 +14,12 @@ export default {
     props: {
         notifications: Array
     },
-    computed: {
-        notificationRows() {
-            return this.notifications.map(notification => {
-                return(
-                    {
-                        ...notification,
-                        color: '#B376F8',
-                        action: () => console.log(notification)
-                    }
-                );
-            })
-        }
-    },
     created() {
-        this.fields = [                    
-            {name: 'Data', width: 1},
-            {name: 'Hora', width: 1},
-            {name: 'Descrição', width: 7},
+        this.fields = [       
+            {name: 'Destinatário', value:'user_name', width: 2},             
+            {name: 'Data', value:'date', width: 1},
+            {name: 'Hora', value:'time', width: 1},
+            {name: 'Descrição', value:'description', width: 7},
         ];
     }
 }

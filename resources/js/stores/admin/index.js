@@ -123,7 +123,7 @@ const useAdStore = defineStore('ad', {
     }
 });
 
-// Ads
+// NotificationIntervals
 const useNotificationIntervalStore = defineStore('notificationInterval', {
     state: () => ({
         notificationIntervals: [],
@@ -140,8 +140,25 @@ const useNotificationIntervalStore = defineStore('notificationInterval', {
     }
 });
 
+// Notifications
+const useNotificationStore = defineStore('notification', {
+    state: () => ({
+        notifications: [],
+    }),
+    actions: {
+        refresh() {
+            return (
+                axios
+                .get('/api/notification')
+                .then((res) => this.notifications = res.data.data)
+                .catch(e => console.error(e))
+            );
+        }
+    }
+});
+
 export {
     useTournamentTypeStore, useTournamentPlatformStore, useTournamentStore,
     useUserStore, usePaymentPlanStore, usePaymentStore,
-    useAdStore, useNotificationIntervalStore
+    useAdStore, useNotificationIntervalStore, useNotificationStore
 };

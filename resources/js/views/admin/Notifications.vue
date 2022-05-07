@@ -11,21 +11,18 @@
 </template>
 
 <script>
-    export default {
-        data: function() {
-            return {
-                notifications: Array(8).fill(
-                    {
-                        id: 3,
-                        title: 'Nome do Destinatário',
-                        values: [
-                            '00/00/0000',
-                            '00h00',
-                            'descrição da mensagem descrição da mensagem descrição da mensagem descrição',
-                        ],
-                    }
-                )
-            }
+import { storeToRefs } from 'pinia';
+import {useNotificationStore} from '../../stores/admin';
+
+export default {
+    setup() {
+        const notificationStore = useNotificationStore();
+        notificationStore.refresh();
+
+        const {notifications} = storeToRefs(notificationStore);
+        return {
+            notifications
         }
-    }
+    },
+}
 </script>

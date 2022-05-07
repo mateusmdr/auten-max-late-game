@@ -2,8 +2,8 @@
     <InputContainer :name="name">
         <div class="position-relative">
             <select :value="modelValue" @change="this.$emit('update:modelValue', $event.target.value)">
-                <option value="" selected disabled hidden>Selecione</option>
-                <option v-for="item in options" :key="item.value" :value="item.id">{{item.name}}</option>
+                <option value="" selected :disabled="!defaultText" :hidden="!defaultText">{{defaultText ? defaultText : 'Selecione'}}</option>
+                <option v-for="item in options" :key="item.id" :value="item.id">{{item.name}}</option>
             </select>
             <label class="select-icon unselectable">
                 <Icon name="keyboard_arrow_down"/>
@@ -17,7 +17,8 @@ export default {
     props: [
         'name',
         'options',
-        'modelValue'
+        'modelValue',
+        'defaultText'
     ],
 }
 </script>

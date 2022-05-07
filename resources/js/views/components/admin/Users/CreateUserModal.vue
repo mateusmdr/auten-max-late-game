@@ -99,6 +99,16 @@ export default {
             axios
                 .post('/api/user', this.inputs)
                 .then(this.$refs.modal.closeModal)
+                .then(() => {
+					this.inputs = {
+                        name: null,
+                        email: null,
+                        cpf: null,
+                        phone: null,
+                        password: null,
+                        password_confirmation: null
+                    }
+				})
                 .catch(res => this.errors = res.response.data.errors)
                 .finally(this.userStore.refresh);
         }
