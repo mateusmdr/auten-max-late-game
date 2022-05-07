@@ -106,4 +106,21 @@ const usePaymentStore = defineStore('payment', {
     }
 });
 
-export {useTournamentTypeStore, useTournamentPlatformStore, useTournamentStore, useUserStore, usePaymentPlanStore, usePaymentStore};
+// Ads
+const useAdStore = defineStore('ad', {
+    state: () => ({
+        ads: [],
+    }),
+    actions: {
+        refresh() {
+            return (
+                axios
+                .get('/api/ad')
+                .then((res) => this.ads = res.data.data)
+                .catch(e => console.error(e))
+            );
+        }
+    }
+});
+
+export {useTournamentTypeStore, useTournamentPlatformStore, useTournamentStore, useUserStore, usePaymentPlanStore, usePaymentStore, useAdStore};

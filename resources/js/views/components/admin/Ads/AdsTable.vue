@@ -3,7 +3,7 @@
         <Table
             defaultActionIcon='edit'
             :fields="fields"
-            :items="adRows"
+            :items="ads"
         />
     </div>
 </template>
@@ -17,19 +17,6 @@ export default {
             {name: 'Data fim', width: 2},
             {name: 'Valor', width: 1},
         ];
-    },
-    computed: {
-        adRows() {
-            return this.ads.map(ad => {
-                return(
-                    {
-                        ...ad,
-                        color: '#B376F8',
-                        action: () => console.log(ad)
-                    }
-                );
-            })
-        }
     },
     props: {
         ads: Array

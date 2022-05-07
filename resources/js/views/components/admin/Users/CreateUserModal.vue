@@ -5,7 +5,7 @@
         modalIcon= "person"
         submitModalText= "Cadastrar"
         @submit="submit"
-        width="50vw"
+        :width="50"
         ref="modal"
 	>
         <div class="row mb-3">

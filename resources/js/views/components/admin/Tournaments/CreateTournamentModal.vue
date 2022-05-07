@@ -4,8 +4,7 @@
         modalTitle= "Novo Torneio"
         modalIcon= "emoji_events"
         submitModalText= "Cadastrar"
-        :submitModal="() => true"
-        width="55vw"
+        :width="55"
 	>
         <div class="row mb-3">
             <div class="col-4">

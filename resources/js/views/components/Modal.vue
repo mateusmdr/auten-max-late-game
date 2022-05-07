@@ -1,5 +1,5 @@
 <template>
-	<vue-final-modal v-model="showModal" classes="modal-container" :styles="{width: width}" content-class="modal-content">
+	<vue-final-modal v-model="showModal" classes="modal-container" :styles="{padding: `0 ${(100-width)/2}vw`}" content-class="modal-content">
 		<form @submit.prevent="$emit('submit')" autocomplete="off">
 			<a class="modal__close" @click="closeModal">
 				<Icon name="close"/>
@@ -30,8 +30,8 @@ export default {
         modalIcon: String,
         submitModalText: String,
 		width: {
-			type: String,
-			default: "75vw"
+			type: Number,
+			default: 75
 		},
     },
 	data() {

@@ -5,21 +5,21 @@
         <AdminAdsFilters/>
 
         <AdminAdsTable
-            :ads="filteredAds"
+            :ads="ads"
         />
     </Section>
 </template>
 
 <script>
 import { storeToRefs } from 'pinia';
-import {useAdsStore} from '../../stores/admin';
+import {useAdStore} from '../../stores/admin';
 
 export default {
     setup() {
-        const adsStore = useAdsStore();
-        adsStore.refresh();
+        const adStore = useAdStore();
+        adStore.refresh();
 
-        const {ads} = storeToRefs(adsStore);
+        const {ads} = storeToRefs(adStore);
         return {
             ads
         }

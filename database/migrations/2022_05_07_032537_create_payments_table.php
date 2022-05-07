@@ -21,7 +21,8 @@ return new class extends Migration
             $table->enum('payment_method',DBTypes::PAYMENT_METHODS);
             $table->boolean('is_pending')->default(true);
 
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreignId('payment_plan_id')->constrained();
             $table->foreignId('user_id')->constrained();

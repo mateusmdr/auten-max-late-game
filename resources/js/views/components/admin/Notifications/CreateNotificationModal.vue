@@ -4,7 +4,6 @@
         modalTitle= "Nova notificação"
         modalIcon= "notifications"
         submitModalText= "Enviar"
-        :submitModal="() => true"
 	>
 
 	</Modal>

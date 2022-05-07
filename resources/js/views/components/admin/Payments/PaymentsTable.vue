@@ -29,9 +29,9 @@ export default {
     },
     created() {
         this.fields = [
-            {name: 'Usuário', value: 'user_name', width: 2},               
+            {name: 'Usuário', value: 'user_name', width: 3},               
             {name: 'Data', value: 'date', width: 2},
-            {name: 'Hora', value: 'time', width: 2},
+            {name: 'Hora', value: 'time', width: 1},
             {name: 'Plano', value: 'plan', width: 2},
             {name: 'Valor', value: 'price', width: 2},
             {name: 'Forma de Pagamento', value: 'payment_method', width: 2},

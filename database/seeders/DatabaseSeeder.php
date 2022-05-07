@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             TournamentPlatformsSeeder::class,
             TournamentTypesSeeder::class,
-            PaymentSeeder::class
+            PaymentSeeder::class,
+            NotificationIntervalSeeder::class
         ]);
     }
 }

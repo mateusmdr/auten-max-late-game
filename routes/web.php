@@ -9,6 +9,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\PaymentPlanController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\NotificationIntervalController;
 use App\Http\Controllers\TournamentTypeController;
 use App\Http\Controllers\TournamentPlatformController;
 
@@ -45,5 +46,6 @@ Route::middleware('auth')->group(function () {
         Route::get('user/{user}/notification', [NotificationController::class, 'showFromUser']);
         Route::post('eula',[EULAController::class,'update']);
         Route::apiResource('payment',PaymentController::class,['only' => ['index', 'show']]);
+        Route::apiResource('notification_interval',NotificationIntervalController::class,['only' => ['index', 'store', 'show', 'destroy']]);
     });
 });

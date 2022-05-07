@@ -4,7 +4,6 @@
         modalTitle= "Novo Anúncio"
         modalIcon= "picture_in_picture"
         submitModalText= "Cadastrar"
-        :submitModal="() => true"
 	>
 
 	</Modal>

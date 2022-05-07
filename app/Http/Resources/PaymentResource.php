@@ -19,13 +19,15 @@ class PaymentResource extends JsonResource
 
         $time = (new DateTime($this->datetime))->format('H:i');
 
+        $payment_method = $this->payment_method === 'bolbradesco' ? 'Boleto' : 'Cartão de Crédito';
+
         return [
             'user_name' => $this->user->name,
             'plan' => $this->payment_plan->name,
             'date' => $date,
             'time' => $time,
             'price' => 'R$ '. $this->price,
-            'payment_method' => $this->payment_method,
+            'payment_method' => $payment_method,
             'is_pending' => !!$this->is_pending
         ];
     }
