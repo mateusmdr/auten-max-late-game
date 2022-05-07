@@ -27,6 +27,7 @@ class NotificationIntervalController extends Controller
     public function index()
     {
         $builder = NotificationInterval::query();
+        $builder->orderBy('minutes');
 
         return NotificationIntervalResource::collection($builder->get());
     }
