@@ -24,6 +24,7 @@ class AdResource extends JsonResource
 
             return [
                 'id' => $this->id,
+                'company_name' => $this->company_name,
                 'link_url' => $this->link_url,
                 'begin_at' => $begin,
                 'end_at' => $end,

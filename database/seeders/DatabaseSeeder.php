@@ -16,11 +16,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             PaymentPlansSeeder::class,
-            UserSeeder::class,
-            TournamentPlatformsSeeder::class,
-            TournamentTypesSeeder::class,
-            PaymentSeeder::class,
             NotificationIntervalSeeder::class
         ]);
+
+        if(env('APP_DEBUG', false)) {
+            $this->call([
+                UserSeeder::class,
+                TournamentPlatformsSeeder::class,
+                TournamentTypesSeeder::class,
+                PaymentSeeder::class,
+            ]);
+        }
     }
 }

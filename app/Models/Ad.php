@@ -14,5 +14,6 @@ class Ad extends Model
         'end_at',
         'price',
         'img_filename',
+        'company_name'
     ];
 }

@@ -14,6 +14,7 @@ class StoreAdRequest extends BaseRequest
     public function rules()
     {
         return [
+            'company_name' => 'required|string|max:' . DBSizes::STRING,
             'img' => 'required|mimes:png,jpg|max:' . DBSizes::IMG,
             'link_url' => 'required|url|max:'. DBSizes::STRING,
             'begin_at' => 'required|date_format:Y-m-d|after:yesterday',

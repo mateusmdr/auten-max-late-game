@@ -54,6 +54,7 @@ class AdController extends Controller
             'begin_at',
             'end_at',
             'price',
+            'company_name'
         ]);
 
         $data['img_filename'] = $request->file('img')->hashName();
@@ -63,17 +64,6 @@ class AdController extends Controller
 
         $ad = Ad::create($data);
 
-        return new AdResource($ad);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Ad  $ad
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Ad $ad)
-    {
         return new AdResource($ad);
     }
 

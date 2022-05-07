@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('ads', function (Blueprint $table) {
             $table->id();
+            $table->string('company_name', DBSizes::STRING);
             $table->string('link_url',DBSizes::STRING);
             $table->date('begin_at');
             $table->date('end_at');
