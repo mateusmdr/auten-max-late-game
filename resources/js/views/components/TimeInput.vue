@@ -7,7 +7,7 @@
             dark
             hideInputIcon
             v-model="modelValue"
-            @input="$emit('update:modelValue',$event.target.value)"
+            @internalModelChange="(date) => this.$emit('update:modelValue',date)"
             format="HH:mm"
             selectText="Selecionar"
             cancelText="Cancelar"

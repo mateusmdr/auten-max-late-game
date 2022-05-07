@@ -5,11 +5,11 @@
             :enableTimePicker="false"
             locale="pt-BR"
             autoApply
-            :minDate="minDate && now"
+            :minDate="minDate ? now : null"
             dark
             hideInputIcon
             v-model="modelValue"
-            @input="$emit('update:modelValue',$event.target.value)"
+            @internalModelChange="(date) => this.$emit('update:modelValue',date)"
             :format="monthPicker ? 'MM/yyyy' : 'dd/MM/yyyy'"
             :monthPicker="monthPicker"
         />

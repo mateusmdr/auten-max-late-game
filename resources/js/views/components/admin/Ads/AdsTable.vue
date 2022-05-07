@@ -4,6 +4,7 @@
             defaultActionIcon='edit'
             :fields="fields"
             :items="ads"
+            :colorPicker="() => '#B376F8'"
         />
     </div>
 </template>
@@ -12,10 +13,11 @@
 export default {
     created() {
         this.fields = [
-            {name: 'Imagem', width: 4, hasImage: true},
-            {name: 'Data início', width: 2},
-            {name: 'Data fim', width: 2},
-            {name: 'Valor', width: 1},
+            {name: 'Cliente', value: 'company_name', width: 2},
+            {name: 'Imagem', value: 'img_url', width: 4, hasImage: true},
+            {name: 'Data início', value: 'begin_at',width: 2},
+            {name: 'Data fim', value: 'end_at',width: 2},
+            {name: 'Valor', value: 'price',width: 1},
         ];
     },
     props: {

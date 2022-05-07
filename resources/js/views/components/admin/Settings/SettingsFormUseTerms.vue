@@ -10,6 +10,8 @@
                     <FileInput
                         label="Termos de uso"
                         @change="(file) => inputs.file = file"
+                        hint="Apenas arquivos .pdf"
+                        mime="application/pdf"
                     />
                 </div>
             </div>
@@ -28,7 +30,6 @@ export default {
     },
     methods: {
         upload() {
-            console.log(this.inputs.file);
             const formData = new FormData();
             formData.append('file', this.inputs.file);
             axios

@@ -1,14 +1,14 @@
 <template>
     <InputContainer :name="label">
         <div class="position-relative">
-            <input id="file" type="file" @change="this.$emit('change',$event.target.files[0]); this.selected = true; this.filename = $event.target.files[0].name" accept="application/pdf"/>
+            <input id="file" type="file" @change="this.$emit('change',$event.target.files[0]); this.selected = true; this.filename = $event.target.files[0].name" :accept="mime"/>
             <label for="file" class="position-relative">
                 {{selected ? filename : 'Selecionar arquivo'}}
                 <div class="input-icon">
                     <Icon name="attach_file"/>
                 </div>
             </label>
-            <h5 class="mt-2 fw-light">Apenas arquivos .pdf</h5>
+            <h5 class="mt-2 fw-light">{{hint}}</h5>
         </div>
     </InputContainer>
 </template>
@@ -18,6 +18,14 @@ export default {
     emits: ['change'],
     props: {
         label: String,
+        hint: {
+            type: String,
+            default: null
+        },
+        mime: {
+            type: String,
+            default: null
+        }
     },
     data() {
         return {

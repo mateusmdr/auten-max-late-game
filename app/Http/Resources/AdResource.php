@@ -28,7 +28,7 @@ class AdResource extends JsonResource
                 'link_url' => $this->link_url,
                 'begin_at' => $begin,
                 'end_at' => $end,
-                'price' => $this->price,
+                'price' => 'R$ ' . $this->price,
                 'img_url' => $url,
             ];
         }
