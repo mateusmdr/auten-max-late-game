@@ -30,7 +30,7 @@ class NotificationController extends Controller
     public function index()
     {
         $builder = Notification::query();
-        // $builder->with('users');
+        $builder->with('user:id,name');
 
         return NotificationResource::collection($builder->get());
     }
@@ -45,14 +45,14 @@ class NotificationController extends Controller
     {
         $data = $request->only([
             'datetime',
-            'message',
+            'description',
             'type',
             'user_id'
         ]);
 
         // Create notification for specified user
-        if(!is_null($data['user_id'])){
-            $notification = new Notification($data);
+        if(isset($data['user_id'])){
+            $notification = Notification::create($data);
 
             return new NotificationResource($notification);
         }
@@ -63,10 +63,10 @@ class NotificationController extends Controller
         DB::transaction(function() use ($data) {
             $builder = User::query();
 
-            foreach ($builder->get('id') as $userId) {
-                $data['user_id'] = $userId;
+            foreach ($builder->get('id') as $user) {
+                $data['user_id'] = $user->id;
 
-                User::insert($data);
+                Notification::insert($data);
             }
         });
     }

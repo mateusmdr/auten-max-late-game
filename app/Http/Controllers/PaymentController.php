@@ -26,8 +26,8 @@ class PaymentController extends Controller
     public function index()
     {
         $builder = Payment::query();
-        $builder->with('user');
-        $builder->with('payment_plan');
+        $builder->with('user:id,name');
+        $builder->with('payment_plan:id,name');
 
         return PaymentResource::collection($builder->get());
     }

@@ -16,8 +16,8 @@ class StoreNotificationRequest extends BaseRequest
     {
         return [
             'datetime' => 'required|date_format:Y-m-d H:i|after:yesterday',
-            'message' => 'required|string|max:'.DBSizes::STRING,
-            'type' => 'required|in:' . DBTypes::NOTIFICATION_TYPES .'|max:'.DBSizes::STRING,
+            'description' => 'required|string|max:'.DBSizes::STRING,
+            'type' => 'required|in:' . implode(',',DBTypes::NOTIFICATION_TYPES) .'|max:'.DBSizes::STRING,
             'user_id' => 'integer|exists:App\Models\User,id'
         ];
     }
