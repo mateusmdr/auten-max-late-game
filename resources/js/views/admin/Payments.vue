@@ -10,23 +10,21 @@
 </template>
 
 <script>
+import { storeToRefs } from 'pinia';
+import {usePaymentStore} from '../../stores/admin';
+
 export default {
+    setup() {
+        const paymentStore = usePaymentStore();
+        paymentStore.refresh();
+
+        const {payments} = storeToRefs(paymentStore);
+        return {
+            payments
+        }
+    },
     data() {
         return {
-            payments: Array(8).fill(
-                {
-                id: 3,
-                title: 'Nome do Usuário',
-                values: [
-                    '00/00/0000',
-                    '00h00',
-                    'Mensal',
-                    'R$0000,00',
-                    'Cartão de crédito'
-                ],
-                color: '#F5A847'
-            }
-            )
         }
     }
 }
