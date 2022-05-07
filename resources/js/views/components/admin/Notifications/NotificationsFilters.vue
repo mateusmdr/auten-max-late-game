@@ -8,7 +8,7 @@
                 />
             </div>
             <div class="col-1">
-                <DateInput v-model="inputs.date"/>
+                <DateInput v-model="inputs.date" :minDate="false"/>
             </div>
             <div class="col-1">
                 <TimeInput v-model="inputs.time"/>

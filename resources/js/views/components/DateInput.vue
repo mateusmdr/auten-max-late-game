@@ -5,7 +5,7 @@
             :enableTimePicker="false"
             locale="pt-BR"
             autoApply
-            :minDate="now"
+            :minDate="minDate && now"
             dark
             hideInputIcon
             v-model="modelValue"
@@ -38,6 +38,10 @@ export default {
         label: {
             type: String,
             default: "Data"
+        },
+        minDate : {
+            type: Boolean,
+            default: true
         }
     }
 }

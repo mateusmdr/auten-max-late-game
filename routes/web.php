@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdController;
 use App\Models\PaymentPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -47,5 +48,6 @@ Route::middleware('auth')->group(function () {
         Route::post('eula',[EULAController::class,'update']);
         Route::apiResource('payment',PaymentController::class,['only' => ['index', 'show']]);
         Route::apiResource('notification_interval',NotificationIntervalController::class,['only' => ['index', 'store', 'show', 'destroy']]);
+        Route::apiResource('ad',AdController::class,['only' => ['index', 'store', 'destroy']]);
     });
 });

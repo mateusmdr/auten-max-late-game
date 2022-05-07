@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\DBSizes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +14,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('notification_intervals', function (Blueprint $table) {
+        Schema::create('ads', function (Blueprint $table) {
             $table->id();
-            $table->integer('minutes')->unsigned()->unique();
+            $table->string('link_url',DBSizes::STRING);
+            $table->date('begin_at');
+            $table->date('end_at');
+            $table->decimal('price')->unsigned();
+            $table->string('img_filename', DBSizes::STRING);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -28,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notification_intervals');
+        Schema::dropIfExists('ads');
     }
 };

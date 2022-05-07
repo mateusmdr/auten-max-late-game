@@ -8,10 +8,8 @@ use Illuminate\Support\Facades\Storage;
 class EULAController extends Controller
 {
     
-    public function update(Request $request){
+    public function update(StoreEULARequest $request){
         $this->authorize('viewAny', User::class);
-
-        $this->validate($request, ['file' => 'required|mimes:pdf|max:10000']);
 
         $content = $request->file;
         $disk = Storage::disk('public');
