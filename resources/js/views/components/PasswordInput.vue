@@ -1,9 +1,9 @@
 <template>
     <InputContainer :name="label">
         <div class="position-relative">
-            <input type="email" @input="$emit('update:modelValue',$event.target.value)" :value="modelValue" :placeholder="placeholder" autocomplete="username"/>
+            <input type="password" @input="$emit('update:modelValue',$event.target.value)" :value="modelValue" :placeholder="placeholder" autocomplete="new-password"/>
             <div class="input-icon">
-                <Icon name="mail"/>
+                <Icon name="vpn_key"/>
             </div>
         </div>
     </InputContainer>
@@ -15,11 +15,11 @@ export default {
         modelValue: String,
         label: {
             type: String,
-            default: "Email",
+            default: "Password",
         },
         placeholder: {
             type: String,
-            default: null
+            default: ""
         }
     },
 }

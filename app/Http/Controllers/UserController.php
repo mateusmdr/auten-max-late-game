@@ -44,9 +44,8 @@ class UserController extends Controller
         $data = $request->only([
             'email',
             'password',
+            'cpf',
             'name',
-            'identification_type',
-            'identification_value',
             'phone',
         ]);
         $data['password'] = Hash::make($data['password']);
@@ -79,8 +78,7 @@ class UserController extends Controller
         $data = $request->only([
             'email',
             'name',
-            'identification_type',
-            'identification_value',
+            'cpf',
             'phone',
         ]);
         

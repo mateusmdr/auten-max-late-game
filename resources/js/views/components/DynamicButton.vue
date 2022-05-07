@@ -7,6 +7,7 @@
 <script>
 export default {
     props: {
+        emits: ['click'],
         text: String,
         primary: {
             type: Boolean,

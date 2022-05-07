@@ -1,18 +1,20 @@
 <template>
 	<vue-final-modal v-model="showModal" classes="modal-container" :styles="{width: width}" content-class="modal-content">
-		<a class="modal__close" @click="showModal = false">
-			<Icon name="close"/>
-		</a>
-		<span class="modal__title mb-5">
-			<Icon :name="modalIcon"/>
-			<h4 class="px-2 m-0">{{modalTitle}}</h4>
-		</span>
-		<div class="modal__content mb-5">
-			<slot/>
-		</div>
-		<div class="submit-button">
-			<DynamicButton :text="submitModalText" @click="submitModal"/>
-		</div>
+		<form @submit.prevent="$emit('submit')" autocomplete="off">
+			<a class="modal__close" @click="closeModal">
+				<Icon name="close"/>
+			</a>
+			<span class="modal__title mb-5">
+				<Icon :name="modalIcon"/>
+				<h4 class="px-2 m-0">{{modalTitle}}</h4>
+			</span>
+			<div class="modal__content mb-5">
+				<slot/>
+			</div>
+			<div class="submit-button">
+				<DynamicButton :text="submitModalText"/>
+			</div>
+		</form>
 	</vue-final-modal>
 	<div class="absolute-top-right">
 		<DynamicButton :text="openModalText" @click="showModal = true"/>
@@ -21,20 +23,25 @@
 
 <script>
 export default {
+	emits: ['submit'],
     props: {
         openModalText: String,
         modalTitle: String,
         modalIcon: String,
         submitModalText: String,
-        submitModal: Function,
 		width: {
 			type: String,
 			default: "75vw"
-		}
+		},
     },
 	data() {
 		return {
 			showModal: false
+		}
+	},
+	methods: {
+		closeModal() {
+			this.showModal = false;
 		}
 	}
 }

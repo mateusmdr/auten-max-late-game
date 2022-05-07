@@ -12,6 +12,7 @@
                 <TextInput
                     label="Nome *"
                     placeholder="Nome do torneio"
+                    v-model="inputs.name"
                 />
             </div>
             <div class="col-4">
@@ -144,6 +145,7 @@ export default {
     data() {
         return {
             inputs: {
+                name: null,
                 date: null,
                 time: null,
                 minBuyIn: null,
