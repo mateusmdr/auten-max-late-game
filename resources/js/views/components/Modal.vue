@@ -1,5 +1,5 @@
 <template>
-	<vue-final-modal v-model="showModal" classes="modal-container" :styles="{padding: `0 ${(100-width)/2}vw`}" content-class="modal-content">
+	<vue-final-modal v-model="showModal" classes="modal-container" :styles="{padding: `0 ${(100-width)/2}vw`}" content-class="modal-content" @before-close="$emit('close')">
 		<form @submit.prevent="$emit('submit')" autocomplete="off">
 			<a class="modal__close" @click="closeModal">
 				<Icon name="close"/>
@@ -16,14 +16,14 @@
 			</div>
 		</form>
 	</vue-final-modal>
-	<div class="absolute-top-right">
+	<div class="absolute-top-right" v-if="!noButton">
 		<DynamicButton :text="openModalText" @click="showModal = true"/>
 	</div>
 </template>
 
 <script>
 export default {
-	emits: ['submit'],
+	emits: ['submit','open','close'],
     props: {
         openModalText: String,
         modalTitle: String,
@@ -33,6 +33,10 @@ export default {
 			type: Number,
 			default: 75
 		},
+		noButton: {
+			type: Boolean,
+			default: false
+		}
     },
 	data() {
 		return {
@@ -42,6 +46,11 @@ export default {
 	methods: {
 		closeModal() {
 			this.showModal = false;
+			this.$emit('close');
+		},
+		openModal() {
+			this.showModal = true;
+			this.$emit('open');
 		}
 	}
 }

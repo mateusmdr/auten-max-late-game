@@ -85,6 +85,7 @@ class UserController extends Controller
         
         if(!empty($data)) {
             $user->update($data);
+            $user->save();
         }
 
         return new UserResource($user);

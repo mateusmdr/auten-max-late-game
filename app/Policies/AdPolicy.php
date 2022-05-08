@@ -22,6 +22,18 @@ class AdPolicy
     }
 
     /**
+     * Determine whether the user can update the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Ad  $ad
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function update(User $user, Ad $ad)
+    {
+        return $user->is_admin;
+    }
+
+    /**
      * Determine whether the user can create models.
      *
      * @param  \App\Models\User  $user

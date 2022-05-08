@@ -1,7 +1,7 @@
 <template>
     <InputContainer :name="label">
         <div class="position-relative">
-            <input id="file" type="file" @change="this.$emit('change',$event.target.files[0]); this.selected = true; this.filename = $event.target.files[0].name" :accept="mime"/>
+            <input id="file" type="file" @change="$emit('change',$event.target.files[0]); this.selected = true; this.filename = $event.target.files[0].name" :accept="mime"/>
             <label for="file" class="position-relative">
                 {{selected ? filename : 'Selecionar arquivo'}}
                 <div class="input-icon">

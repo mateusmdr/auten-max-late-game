@@ -1,11 +1,19 @@
 <template>
     <Section title="Anúncios cadastrados" icon="picture_in_picture">
-        <AdminCreateAdModal/>
+        <AdminCreateAdModal
+            v-if="!selectedAd"
+        />
+        <AdminEditAdModal
+            v-else
+            :ad="selectedAd"
+            @close="selectedAd = null"
+        />
 
         <AdminAdsFilters/>
 
         <AdminAdsTable
             :ads="ads"
+            @select="editAd"
         />
     </Section>
 </template>
@@ -32,6 +40,13 @@ export default {
     data() {
         return {
             filter: () => true,
+            selectedAd: null,
+        }
+    },
+    methods: {
+        editAd(ad) {
+            this.selectedAd = ad;
+            console.log(this.selectedAd);
         }
     }
 }

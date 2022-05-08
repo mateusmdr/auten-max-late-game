@@ -5,6 +5,7 @@
             :fields="fields"
             :items="ads"
             :colorPicker="() => '#B376F8'"
+            :action="action"
         />
     </div>
 </template>
@@ -22,6 +23,12 @@ export default {
     },
     props: {
         ads: Array
+    },
+    emits: ['select'],
+    methods: {
+        action(ad) {
+            this.$emit('select', ad);
+        }
     }
 }
 </script>
