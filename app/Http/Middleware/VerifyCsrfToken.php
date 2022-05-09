@@ -13,15 +13,20 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array<int, string>
      */
-    protected $except = [
-        '/api/*'
-    ];
+    protected $except = [];
 
     public function __construct(Application $app, Encrypter $encrypter)
     {
         parent::__construct($app, $encrypter);
         $this->except = [
-            route('logout')
+            route('logout'),
         ];
+
+        if(env('APP_DEBUG',false)) {
+            $this->except = [
+                route('logout'),
+                '/api/*'
+            ];
+        }
     }
 }

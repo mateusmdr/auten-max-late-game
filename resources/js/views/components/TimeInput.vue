@@ -6,9 +6,9 @@
             locale="pt-BR"
             dark
             hideInputIcon
-            v-model="modelValue"
-            @internalModelChange="(date) => this.$emit('update:modelValue',date)"
             format="HH:mm"
+            v-model="date"
+            @internalModelChange="updateValue"
             selectText="Selecionar"
             cancelText="Cancelar"
         />
@@ -20,11 +20,16 @@ import { ref } from 'vue';
 import Datepicker from '@vuepic/vue-datepicker';
 
 export default {
-    setup() {
-        const now = ref(new Date());
+    setup(props, context) {
+        const date = ref();
+
+        const updateValue = (date) => {
+            context.emit('update:modelValue', date);
+        }
 
         return {
-            now
+            date,
+            updateValue
         }
     },
     components: {Datepicker},

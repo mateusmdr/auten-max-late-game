@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::create('tournament_platforms', function (Blueprint $table) {
             $table->id();
             $table->string('name',DBSizes::STRING);
+            $table->string('img_filename', DBSizes::STRING);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TournamentPlatformResource extends JsonResource
@@ -14,6 +15,12 @@ class TournamentPlatformResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $url = Storage::disk('public')->url($this->img_filename);
+
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'img_url' => $url,
+        ];
     }
 }

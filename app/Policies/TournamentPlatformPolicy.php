@@ -67,28 +67,4 @@ class TournamentPlatformPolicy
     {
         return $user->is_admin;
     }
-
-    /**
-     * Determine whether the user can restore the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\TournamentPlatform  $tournamentPlatform
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function restore(User $user, TournamentPlatform $tournamentPlatform)
-    {
-        return $user->is_admin;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\TournamentPlatform  $tournamentPlatform
-     * @return \Illuminate\Auth\Access\Response|bool
-     */
-    public function forceDelete(User $user, TournamentPlatform $tournamentPlatform)
-    {
-        return $user->is_admin;
-    }
 }

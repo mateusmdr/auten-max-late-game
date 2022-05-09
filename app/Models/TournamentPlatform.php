@@ -10,6 +10,7 @@ class TournamentPlatform extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'img_filename'
     ];
 }

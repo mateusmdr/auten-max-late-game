@@ -8,8 +8,8 @@
             :minDate="minDate ? now : null"
             dark
             hideInputIcon
-            v-model="modelValue"
-            @internalModelChange="(date) => this.$emit('update:modelValue',date)"
+            v-model="date"
+            @internalModelChange="updateValue"
             :format="monthPicker ? 'MM/yyyy' : 'dd/MM/yyyy'"
             :monthPicker="monthPicker"
         />
@@ -21,16 +21,22 @@ import { ref } from 'vue';
 import Datepicker from '@vuepic/vue-datepicker';
 
 export default {
-    setup() {
+    setup(props, context) {
         const now = ref(new Date());
+        const date = ref();
+
+        const updateValue = (date) => {
+            context.emit('update:modelValue', date);
+        }
 
         return {
-            now
+            now,
+            date,
+            updateValue
         }
     },
     components: {Datepicker},
     props: {
-        modelValue: Date,
         monthPicker: {
             type: Boolean,
             default: false
@@ -43,7 +49,7 @@ export default {
             type: Boolean,
             default: true
         }
-    }
+    },
 }
 </script>
 
