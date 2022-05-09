@@ -28,8 +28,8 @@ return new class extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 
-            $table->foreignId('tournament_type_id')->constrained();
-            $table->foreignId('tournament_platform_id')->constrained();
+            $table->foreignId('tournament_type_id')->nullable()->constrained()->onDelete('SET NULL');
+            $table->foreignId('tournament_platform_id')->nullable()->constrained()->onDelete('SET NULL');
         });
     }
 

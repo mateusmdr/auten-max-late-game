@@ -4,10 +4,9 @@
             :showSubmitButton="false"
             title="Intervalos de tempo de aviso"
             submitText="Salvar edições"
-            :submitHandler="(e) => {e.preventDefault;}"
         >
             <div class="row">
-                <div class="col-4 mb-3" v-for="interval, index in intervals" :key="index">
+                <div class="col-5 mb-3" v-for="interval, index in intervals" :key="index">
                     <DisabledInput
                         label=""
                         :value="`${interval} minutos`"
@@ -17,7 +16,7 @@
                     />
                 </div>
 
-                <div class="col-4 mb-3" v-if="confirm">
+                <div class="col-7 mb-3" v-if="confirm">
                     <NumberInput
                         name=""
                         v-model.number="inputs.interval"
@@ -71,6 +70,6 @@ export default {
 
 <style scoped>
     .form-container {
-        width: 45vw;
+        width: 35vw;
     }
 </style>
