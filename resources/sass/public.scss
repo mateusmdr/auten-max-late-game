@@ -39,6 +39,15 @@ a {
     z-index: 2;
 }
 
+.header-link {
+    text-decoration: none;
+    transition: none;
+}
+
+.header-link:focus {
+    box-shadow: none;
+}
+
 .blurry-circle svg{
     width: 100%;
     height: 100%;

@@ -1,4 +1,4 @@
-<form method="{{$method ?? 'POST'}}" action="{{ $action }}" class="{{$formClasses}}">
+<form method="{{$method ?? 'POST'}}" action="{{ $action }}" class="{{$formClasses}}" autocomplete="off">
     @csrf
     <div class="form-title mb-5">
         <h2 class="fw-normal">{{$title}}</h2>

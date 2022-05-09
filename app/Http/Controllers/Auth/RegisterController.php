@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 use App\Http\Requests\StoreUserRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
@@ -31,7 +33,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::VERIFY;
 
     /**
      * Create a new controller instance.
@@ -52,6 +54,72 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, (new StoreUserRequest())->rules());
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showRegistrationForm(Request $request)
+    {
+        $current_step = $request->route('step',1);
+        
+        switch($current_step) {
+            case 1:
+                return view('auth.register.register_1');
+                break;
+            case 2:
+                return view('auth.register.register_2');
+                break;
+            case 3:
+                return view('auth.register.register_3');
+                break;
+            default:
+                return abort(404);
+        }
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        $current_step = $request->route('step',1);
+
+        if($current_step == 1) {
+            $this->validator($request->all())->validate();
+
+            $request->session()->put('form',$request->all());
+            return to_route('register', ['step' => 2]);
+        }
+        
+        if($current_step == 2) {
+            Validator::make($request->only(['eula']),[
+                'eula' => 'required|in:true,on,1'
+            ])->validate();
+
+            $data = $request->session()->get('form');
+
+            $this->validator($data)->validate();
+
+            event(new Registered($user = $this->create($data)));
+
+            $this->guard()->login($user);
+
+            if ($response = $this->registered($request, $user)) {
+                return $response;
+            }
+
+            return $request->wantsJson()
+                ? new JsonResponse([], 201)
+                : redirect($this->redirectPath());
+        }
+
+        return abort(404);
     }
 
     /**

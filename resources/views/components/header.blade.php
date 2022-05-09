@@ -4,7 +4,7 @@
             <a href="/" class="d-flex align-items-center me-4 me-sm-0 text-decoration-none me-lg-auto">
                 <img class="img-header-logo"/>
             </a>
-            <nav class="hidden">
+            <nav class="hidden d-flex flex-row align-items-center">
                 @if (Route::has('login'))
                     @auth
                         <a href="{{ route('home') }}" class="header-link">Acessar Plataforma</a>
@@ -15,6 +15,12 @@
                             <a href="{{ route('register') }}" class="ms-2 ms-sm-4 header-link{{ Route::currentRouteName() !== 'register' ? '': ' fw-bold' }}">Cadastrar-se</a>
                         @endif
                     @endauth
+                @endif
+
+                @if (Auth::check())
+                    <form method="POST" action="{{ route('logout') }}" class="d-inline-block">
+                        <button type="submit" class="btn btn-link ms-2 ms-sm-4 header-link">Logout</button>
+                    </form>
                 @endif
             </nav>
         </div>

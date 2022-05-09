@@ -20,7 +20,7 @@
             <div class="col-6">
                 <label for="name" class="h5 fw-bold">Nome *</label>
                 <div class="input-container">
-                    <input id="name" placeholder="Nome completo" type="text" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus>
+                    <input id="name" placeholder="Nome completo" type="text" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="username" autofocus>
                     <i class="bi bi-tag input-icon @error('name') d-none @enderror"></i>
                     @error('name')
                         <span class="invalid-feedback" role="alert">
@@ -32,7 +32,7 @@
             <div class="mb-4 col-6">
                 <label for="cpf" class="h5 fw-bold">CPF *</label>
                 <div class="input-container">
-                    <input id="cpf" placeholder="000.000.000-00" type="text" class="form-control @error('cpf') is-invalid @enderror" name="cpf" value="{{ old('cpf') }}" required autocomplete="cpf">
+                    <input id="cpf" placeholder="000.000.000-00" type="text" value="{{ old('cpf') }}"" class="form-control @error('cpf') is-invalid @enderror" name="cpf" value="{{ old('cpf') }}" required >
                     <i class="bi bi-person input-icon @error('cpf') d-none @enderror"></i>
                     @error('cpf')
                         <span class="invalid-feedback" role="alert">
@@ -47,7 +47,7 @@
             <div class="col-6">
                 <label for="phone" class="h5 fw-bold">Telefone *</label>
                 <div class="input-container">
-                    <input id="phone" placeholder="(00) 00000-0000" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" required autocomplete="tel">
+                    <input id="phone" placeholder="(00) 00000-0000" type="text" value="{{ old('phone') }}"" class="form-control @error('phone') is-invalid @enderror" name="phone" required autocomplete="tel">
                     <i class="bi bi-telephone input-icon @error('phone') d-none @enderror"></i>
                     @error('phone')
                         <span class="invalid-feedback" role="alert">

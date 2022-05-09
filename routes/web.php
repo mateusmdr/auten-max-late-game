@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Models\PaymentPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,11 @@ Route::get('/', function () {
     return view('welcome', ['payment_plans' => $builder->get()]);
 });
 
-Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true, 'register' => false]);
+
+// Registration Routes...
+Route::get('register/{step?}', [RegisterController::class,'showRegistrationForm'])->name('register');
+Route::post('register/{step?}', [RegisterController::class,'register']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/plataforma/{any?}', [App\Http\Controllers\HomeController::class, 'index'])
