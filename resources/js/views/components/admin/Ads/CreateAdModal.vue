@@ -78,7 +78,7 @@ export default {
 		return {
 			inputs: {
 				company_name: "",
-				begin_at: new Date(),
+				begin_at: null,
 				end_at: null,
 				price: "",
 				link_url: "",

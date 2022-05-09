@@ -22,7 +22,7 @@
                     <TextInput
                         name=""
                         v-model="inputs.name"
-                        :error-message="errors.minutes"
+                        :error-message="errors.name"
                     />
                 </div>
             </div>
@@ -57,7 +57,7 @@ export default {
                 name: null
             },
             errors: {
-                tournamentType: null
+                name: null
             }
         }
     },
@@ -70,12 +70,12 @@ export default {
 
             axios
                 .post('/api/tournament_type', {name: this.inputs.name})
-                .then(() => {this.inputs.interval = 0; this.confirm = false})
+                .then(() => {this.inputs.name = null; this.confirm = false})
                 .catch(res => this.errors = res.response.data.errors)
                 .finally(this.tournamentTypeStore.refresh);
         },
         handleDelete(tournamentType) {
-            const res = confirm("Tem certeza que quer remover o tipo " + tournamentType.name + " ?");
+            const res = confirm("Tem certeza que quer remover o tipo \"" + tournamentType.name + "\" ?");
 
             if(!res) {
                 return;

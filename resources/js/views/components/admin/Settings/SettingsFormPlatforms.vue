@@ -7,7 +7,7 @@
             :submitHandler="(e) => {e.preventDefault;}"
         >
             <div class="row">
-                <div class="col-4 mb-3" v-for="interval, index in intervals" :key="index">
+                <div class="col-4 mb-3" v-for="interval, index in intervals" :key="interval.id">
                     <DisabledInput
                         label=""
                         :value="`${interval} minutos`"
@@ -41,7 +41,6 @@ export default {
             inputs: {
                 interval: 0
             },
-            intervals: [60, 30, 15, 10, 5]
         }
     },
     methods: {
