@@ -19,7 +19,7 @@ class TournamentFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->sentence(4),
             'prize'=> rand(0,350),
             'min_buy_in'=> rand(0,50),
             'max_buy_in'=> rand(50,100),

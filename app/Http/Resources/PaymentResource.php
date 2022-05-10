@@ -22,6 +22,7 @@ class PaymentResource extends JsonResource
         $payment_method = $this->payment_method === 'bolbradesco' ? 'Boleto' : 'Cartão de Crédito';
 
         return [
+            'id' => $this->id,
             'user_name' => $this->user->name,
             'plan' => $this->payment_plan->name,
             'date' => $date,

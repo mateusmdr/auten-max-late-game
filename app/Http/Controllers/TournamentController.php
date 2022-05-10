@@ -36,7 +36,7 @@ class TournamentController extends Controller
         if(!Auth::user()->is_admin) {
             $builder->where('is_approved','=','true');
         }
-        // $builder->where('date','>=',now());
+        $builder->where('date','>=',now());
 
         return TournamentResource::collection($builder->orderBy('date')->get());
     }
@@ -116,7 +116,16 @@ class TournamentController extends Controller
      */
     public function update(UpdateTournamentRequest $request, Tournament $tournament)
     {
-        //
+        $data = $request->only([
+            'is_approved',
+        ]);
+        
+        if(!empty($data)) {
+            $tournament->update($data);
+            $tournament->save();
+        }
+
+        return new TournamentResource($tournament);
     }
 
     /**

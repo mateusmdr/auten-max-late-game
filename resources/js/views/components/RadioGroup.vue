@@ -1,7 +1,7 @@
 <template>
-    <div class="radio-container unselectable" v-for="option, index in options" :key="option.value" @click="$emit('update:modelValue', index)">
+    <div class="radio-container unselectable" v-for="option in options" :key="option.value" @click="$emit('update:modelValue', option.value)">
         <span class="radio-icon">
-            <Icon :name="modelValue === index ? 'radio_button_checked' : 'radio_button_unchecked'" color="#4040F4" size="1.75rem"/>
+            <Icon :name="modelValue === option.value ? 'radio_button_checked' : 'radio_button_unchecked'" color="#4040F4" size="1.75rem"/>
         </span>
         <label>{{option.text}}</label>
     </div>
@@ -9,10 +9,7 @@
 
 <script>
 export default {
-    props: {
-        options: Array,
-        modelValue: Number,
-    }
+    props: ['options','modelValue']
 }
 </script>
 
@@ -26,7 +23,7 @@ export default {
 
     .radio-icon {
         cursor: pointer;
-        margin-right: .75rem;
+        padding-right: .5rem;
     }
 
     label {

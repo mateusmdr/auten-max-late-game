@@ -5,6 +5,8 @@
         modalIcon= "emoji_events"
         submitModalText= "Cadastrar"
         :width="55"
+        @submit="submit"
+        ref="modal"
 	>
         <div class="row mb-3">
             <div class="col-4">
@@ -32,13 +34,13 @@
         <div class="row mb-3">
             <div class="col-2">
                 <NumberInput 
-                    v-model.number="inputs.minBuyIn"
+                    v-model.number="inputs.min_buy_in"
                     name="Buy-in mínimo"
                 />
             </div>
             <div class="col-2">
                 <NumberInput 
-                    v-model.number="inputs.maxBuyIn"
+                    v-model.number="inputs.max_buy_in"
                     name="Buy-in máximo"
                 />
             </div>
@@ -72,26 +74,87 @@
                 />
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-4">
                 <Checkbox
                     label="Torneio Recorrente"
-                    v-model="inputs.isRecurrent"
+                    v-model="inputs.is_recurrent"
                 />
             </div>
         </div>
 
-        <div class="mt-4" v-if="inputs.isRecurrent">
-            <h4>Como funcionará a recorrência?</h4>
-            <div class="row my-3">
-                <div class="col-4">
-                    
+        <div class="mt-4" v-if="inputs.is_recurrent">
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <h4>Como funcionará a recorrência?</h4>
+                </div>
+                <div class="col-12 d-flex flex-row gap-5">
+                    <RadioGroup
+                        :options="recurrence_types"
+                        v-model="inputs.recurrence_type"
+                    />
                 </div>
             </div>
-            <div class="row">
+            <div v-if="inputs.recurrence_type === 'monthly'">
+                <h5 class="fw-bold">*O torneio se repetirá mensalmente, a partir do dia do mês informado acima.</h5>
+            </div>
+            <div class="row weekdays-container gy-3" v-else-if="inputs.recurrence_type === 'weekly' || inputs.recurrence_type === 'biweekly'">
+                <div class="col-12">
+                    <h4>Quando?</h4>
+                </div>
+                <div class="col-3">
+                    <Checkbox
+                        v-model="inputs.weekDays[0]"
+                        label="Domingo"
+                    />
+                </div>
+                <div class="col-3">
+                    <Checkbox
+                        v-model="inputs.weekDays[1]"
+                        label="Segunda"
+                    />
+                </div>
+                <div class="col-3">
+                    <Checkbox
+                        v-model="inputs.weekDays[2]"
+                        label="Terça"
+                    />
+                </div>
+                <div class="col-3">
+                    <Checkbox
+                        v-model="inputs.weekDays[3]"
+                        label="Quarta"
+                    />
+                </div>
+                <div class="col-3">
+                    <Checkbox
+                        v-model="inputs.weekDays[4]"
+                        label="Quinta"
+                    />
+                </div>
+                <div class="col-3">
+                    <Checkbox
+                        v-model="inputs.weekDays[5]"
+                        label="Sexta"
+                    />
+                </div>
+                <div class="col-3">
+                    <Checkbox
+                        v-model="inputs.weekDays[6]"
+                        label="Sábado"
+                    />
+                </div>
+            </div>
+            <div v-else>
+                <h5 class="fw-bold">*O torneio acontecerá todos os dias da semana.</h5>
+            </div>
+            <div class="mt-3" v-if="inputs.recurrence_type === 'biweekly'">
+                <h5 class="fw-bold">*O torneio se repetirá na primeira e terceira semana de todo mês, nos dias informados acima.</h5>
+            </div>
+            <div class="row mt-4">
                 <div class="col-3">
                     <DateInput 
-                        v-model="inputs.date"
+                        v-model="inputs.ends_at"
                         label="Data final da recorrência *"
                     />
                 </div>
@@ -101,63 +164,163 @@
 </template>
 
 <script>
-import {useTournamentTypeStore, useTournamentPlatformStore} from '../../../../stores/admin';
+import {useTournamentTypeStore, useTournamentPlatformStore, useTournamentStore} from '../../../../stores/admin';
 import {storeToRefs} from 'pinia';
+
+import {format} from 'date-format-parse';
 
 export default {
     setup() {
         const tournamentTypeStore = useTournamentTypeStore();
         const tournamentPlatformStore = useTournamentPlatformStore();
+        const tournamentStore = useTournamentStore();
 
         const {tournamentTypes} = storeToRefs(tournamentTypeStore);
         const {tournamentPlatforms} = storeToRefs(tournamentPlatformStore);
 
         return {
             tournamentTypes,
-            tournamentPlatforms
+            tournamentPlatforms,
+            tournamentStore
         }
     },
     created() {
-        this.tournamentStatuses = [
-            {
-                id: 0,
-                text:'Todos',
-                hasIcon: false,
-            },
-            {
-                id: 1,
-                text:'Em aprovação',
-                color:'#EB4263',
-            },
-            {
-                id: 2,
-                text:'Recorrentes',
-                color:'#F5A847',
-            },
-            {
-                id: 3,
-                text:'Não Recorrentes',
-                color:'#05F28E',
-            }
-        ];
+        this.recurrence_types = [
+            {text: 'Mensal', value: 'monthly'},
+            {text: 'Quinzenal', value: 'biweekly'},
+            {text: 'Semanal', value: 'weekly'},
+            {text: 'Diária', value: 'daily'},
+        ]
     },
     data() {
         return {
             inputs: {
                 name: null,
                 date: null,
-                time: null,
-                minBuyIn: null,
-                maxBuyIn: null,
+                subscription_begin: null,
+                subscription_end: null,
+                prize: null,
+                min_buy_in: null,
+                max_buy_in: null,
                 tournamentPlatform: null,
                 tournamentType: null,
-                isRecurrent: false
+                is_recurrent: false,
+                recurrence_type: 'monthly',
+                weekDays: Array(6).fill(false),
+                ends_at: null
+            },
+            errors: {
+                name: null,
+                date: null,
+                subscription_begin: null,
+                subscription_end: null,
+                prize: null,
+                min_buy_in: null,
+                max_buy_in: null,
+                tournament_platform_id: null,
+                tournament_type_id: null,
+                is_recurrent: false,
+                recurrence_type: null,
+                weekDays: null,
+                ends_at: null
             }
+        }
+    },
+    methods: {
+        getSchedule() {
+            let schedule = "0 0 ";
+            if(this.inputs.is_recurrent) {
+                switch(this.inputs.recurrence_type){
+                    case 'daily':
+                        schedule += "* * *";
+                        break;
+                    case 'weekly':
+                        schedule += "* * ";
+                        schedule += this.inputs.weekDays
+                            .map((item, index) => index)
+                            .filter((index) => this.inputs.weekDays[index])
+                            .join(',');
+                        break;
+                    case 'biweekly':
+                        // Weeks of the month
+                        // monthDay = this.inputs.date.getDate();
+                        // if(monthDay <= 7 || (monthDay >=15 && monthday<=21)) {
+                        //     schedule += "1-7,15-21";
+                        // }else {
+                        //     schedule += "1-7,15-21";
+                        // }
+                        schedule += "1-7,15-21";
+
+                        schedule += " * ";
+
+                        // Days of the week
+                        schedule += this.inputs.weekDays
+                            .map((item, index) => index)
+                            .filter((index) => this.inputs.weekDays[index])
+                            .join(',');
+
+                        break;
+                    default:
+                        const monthDay = this.inputs.date?.getDate();
+                        schedule += monthDay + " * *";
+                }
+            }
+
+            return schedule;
+        },
+        submit() {
+            axios
+                .post('/api/tournament', {
+					'name': this.inputs.name,
+                    'prize': this.inputs.prize,
+                    'min_buy_in': this.inputs.min_buy_in,
+                    'max_buy_in': this.inputs.max_buy_in,
+                    'date': format(this.inputs.date, 'YYYY-MM-DD'),
+                    'subscription_begin_at': format(this.inputs.subscription_begin, 'HH:mm'),
+                    'subscription_end_at': format(this.inputs.subscription_end, 'HH:mm'),
+                    'tournament_platform_id': this.inputs.tournamentPlatform,
+                    'tournament_type_id': this.inputs.tournamentType,
+                    'is_recurrent': this.inputs.is_recurrent,
+
+                    'schedule': this.inputs.is_recurrent ? this.getSchedule() : undefined,
+                    'ends_at': this.inputs.is_recurrent ? format(this.inputs.ends_at, 'YYYY-MM-DD') : undefined,
+				})
+                .then(this.$refs.modal.closeModal)
+				.then(() => {
+					this.inputs = {
+                        name: null,
+                        date: null,
+                        subscription_begin: null,
+                        subscription_end: null,
+                        prize: null,
+                        min_buy_in: null,
+                        max_buy_in: null,
+                        tournamentPlatform: null,
+                        tournamentType: null,
+                        is_recurrent: false,
+                        recurrence_type: 'monthly',
+                        weekDays: Array(6).fill(false),
+                        ends_at: null
+                    }
+				})
+                .catch(res => this.errors = res.response.data.errors)
+                .finally(this.tournamentStore.refresh);
         }
     }
 }
 </script>
 
 <style scoped>
-    
+    h4 {
+        font-weight: 400;
+        color: #E2E2FF;
+    }
+
+    h5 {
+        color: #E2E2FF;
+    }
+
+    .weekdays-container {
+        width: 60%;
+    }
 </style>

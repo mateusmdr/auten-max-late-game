@@ -12,9 +12,7 @@ class Tournament extends Model
 
     public $timestamps = true;
 
-    protected $guarded = [
-        'is_approved'
-    ];
+    protected $guarded = [];
 
     public function tournament_type() {
         return $this->belongsTo(TournamentType::class);

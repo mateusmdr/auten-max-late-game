@@ -22,11 +22,14 @@ class TournamentResource extends JsonResource
         $subscription = $subscription_begin . ' às ' . $subscription_end;
 
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'date' => $date,
             'subscription' => $subscription,
-            'platform' => $this->tournament_platform->name,
-            'type' => $this->tournament_type->name,
+            'platform_name' => $this->tournament_platform?->name,
+            'platform_id' => $this->tournament_platform_id,
+            'type_name' => $this->tournament_type?->name,
+            'type_id' => $this->tournament_type_id,
             'min' => $this->min_buy_in,
             'max' => $this->max_buy_in,
             'prize' => $this->prize,

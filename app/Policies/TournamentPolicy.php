@@ -63,7 +63,7 @@ class TournamentPolicy
      * @param  \App\Models\Tournament  $tournament
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Tournament $tournament)
+    public function delete(User $user, Tournament $tournament)
     {
         return $user->is_admin;
     }

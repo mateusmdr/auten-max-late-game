@@ -21,7 +21,11 @@
             :defaultActionIcon="defaultActionIcon"
             :defaultActionText="defaultActionText"
             :isEditable="isEditable(item)"
-            :actions="item.actions"
+            :actions="{
+                'delete': () => deleteAction(item),
+                'edit': () => editAction(item),
+                'approve': () => approveAction(item),
+            }"
             :actionWidth="actionWidth"
             :noAction="noAction"
         />
@@ -35,7 +39,18 @@ export default {
         defaultActionText: String,
         fields: Array,
         items: Array,
-        actions: Array,
+        approveAction: {
+            type: Function,
+            default: () => null
+        },
+        editAction: {
+            type: Function,
+            default: () => null
+        },
+        deleteAction: {
+            type: Function,
+            default: () => null
+        },
         actionWidth: {
             type: Number,
             default: 1
