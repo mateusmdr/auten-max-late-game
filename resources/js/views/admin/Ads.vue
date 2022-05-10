@@ -46,7 +46,6 @@ export default {
     methods: {
         editAd(ad) {
             this.selectedAd = ad;
-            console.log(this.selectedAd);
         }
     }
 }

@@ -23,7 +23,7 @@ class TournamentFactory extends Factory
             'prize'=> rand(0,350),
             'min_buy_in'=> rand(0,50),
             'max_buy_in'=> rand(50,100),
-            'date' => $this->faker->date(),
+            'date' => now(),
             'subscription_begin_at' => $this->faker->time(),
             'subscription_end_at' => $this->faker->time(),
             'is_approved'=> $this->faker->boolean(25),

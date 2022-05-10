@@ -21,7 +21,7 @@ import Datepicker from '@vuepic/vue-datepicker';
 
 export default {
     setup(props, context) {
-        const date = ref();
+        const date = ref(props.modelValue);
 
         const updateValue = (date) => {
             context.emit('update:modelValue', date);
@@ -34,7 +34,7 @@ export default {
     },
     components: {Datepicker},
     props: {
-        modelValue: Date,
+        modelValue: Object,
         label: {
             type: String,
             default: "Hora"

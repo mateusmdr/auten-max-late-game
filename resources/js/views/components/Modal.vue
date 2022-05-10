@@ -4,7 +4,7 @@
 			<a class="modal__close" @click="closeModal">
 				<Icon name="close"/>
 			</a>
-			<span class="modal__title mb-5">
+			<span class="modal__title mb-5" :style="`color: ${titleColor};`">
 				<Icon :name="modalIcon"/>
 				<h4 class="px-2 m-0">{{modalTitle}}</h4>
 			</span>
@@ -29,6 +29,10 @@ export default {
         modalTitle: String,
         modalIcon: String,
         submitModalText: String,
+		titleColor: {
+			type: String,
+			default: '#05F28E',
+		},
 		width: {
 			type: Number,
 			default: 75
@@ -70,7 +74,6 @@ export default {
 	}
 
 	.modal__title {
-		color: #05F28E;
 		display: flex;
 		flex-direction: row;
 		align-items: center;

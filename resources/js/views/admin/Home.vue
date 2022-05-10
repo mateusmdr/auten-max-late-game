@@ -25,7 +25,7 @@
                     <Card color='#B376F8'>
                         <div class="custom-card-body">
                             <h3>000000</h3>
-                            <h4>Torneios cadastrados</h4>
+                            <h4>Torneios aprovados</h4>
                         </div>
                     </Card>
                 </div>

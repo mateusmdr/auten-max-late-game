@@ -38,7 +38,7 @@ class TournamentController extends Controller
         }
         $builder->where('date','>=',now());
 
-        return TournamentResource::collection($builder->orderBy('date')->get());
+        return TournamentResource::collection($builder->orderBy('date')->orderBy('name')->get());
     }
 
     public function show(Tournament $tournament){
@@ -118,6 +118,15 @@ class TournamentController extends Controller
     {
         $data = $request->only([
             'is_approved',
+            'name',
+            'prize',
+            'min_buy_in',
+            'max_buy_in',
+            'date',
+            'subscription_begin_at',
+            'subscription_end_at',
+            'tournament_platform_id',
+            'tournament_type_id',
         ]);
         
         if(!empty($data)) {

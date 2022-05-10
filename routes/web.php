@@ -6,6 +6,7 @@ use App\Models\PaymentPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EULAController;
+use App\Http\Controllers\InsightsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TournamentController;
@@ -54,5 +55,6 @@ Route::middleware('auth')->group(function () {
         Route::apiResource('payment',PaymentController::class,['only' => ['index', 'show']]);
         Route::apiResource('notification_interval',NotificationIntervalController::class,['only' => ['index', 'store', 'show', 'destroy']]);
         Route::apiResource('ad',AdController::class,['only' => ['index', 'store', 'update', 'destroy']]);
+        Route::get('insights',[InsightsController::class,'index']);
     });
 });

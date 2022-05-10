@@ -1,6 +1,14 @@
 <template>
     <Section title="Próximos torneios" icon="emoji_events">
-        <AdminCreateTournamentModal/>
+        <AdminCreateTournamentModal
+            v-if="!selectedTournament"
+        />
+
+        <AdminEditTournamentModal
+            v-else
+            :tournament="selectedTournament"
+            @close="selectedTournament = null"
+        />
 
         <AdminTournamentsFilters
             @change="(filter) => this.filter = filter"
@@ -8,6 +16,7 @@
         
         <AdminTournamentsTable
             :tournaments="tournaments"
+            @select="editTournament"
         />
     </Section>
 </template>
@@ -38,6 +47,13 @@ export default {
     data() {
         return {
             filter: () => true,
+            selectedTournament: null,
+        }
+    },
+    methods: {
+        editTournament(tournament) {
+            console.log(tournament);
+            this.selectedTournament = tournament;
         }
     }
 }
