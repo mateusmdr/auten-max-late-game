@@ -2,10 +2,12 @@
     <Section title="Últimas notificações" icon="notifications">
         <AdminCreateNotificationModal/>
 
-        <AdminNotificationsFilters/>
+        <AdminNotificationsFilters
+            @change="(newFilter) => this.filter = newFilter"
+        />
 
         <AdminNotificationsTable
-            :notifications="notifications"
+            :notifications="filteredNotifications"
         />
     </Section>
 </template>
@@ -22,6 +24,16 @@ export default {
         const {notifications} = storeToRefs(notificationStore);
         return {
             notifications
+        }
+    },
+    data() {
+        return {
+            filter: () => true,
+        }
+    },
+    computed: {
+        filteredNotifications() {
+            return this.notifications.filter(this.filter);
         }
     },
 }

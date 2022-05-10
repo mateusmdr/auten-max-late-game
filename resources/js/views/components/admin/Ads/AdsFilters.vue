@@ -15,14 +15,10 @@
 </template>
 
 <script>
+import {format, parse} from 'date-format-parse';
+
 export default {
     emits: ['change'],
-    watch: {
-        inputs(before, now) {
-            console.log(now);
-            this.$emit('change',now);
-        }
-    },
     data() {
         return {
             inputs: {
@@ -30,7 +26,25 @@ export default {
                 name: null
             }
         }
-    }
+    },
+    watch: {
+        inputs: {
+            handler(before, now) {
+                const newFilter = (ad) => {
+
+                    const search = (ad.company_name).toLowerCase();
+
+                    return (
+                        (now.name ? search.includes(now.name.toLowerCase()) : true) &&
+                        (now.date ? parse(ad.begin_at, 'DD/MM/YYYY') <= now.date && parse(ad.end_at, 'DD/MM/YYYY') >= now.date : true)
+                    );
+                };
+
+                this.$emit('change',newFilter);
+            },
+            deep: true
+        }
+    },
 }
 </script>
 

@@ -46,6 +46,8 @@
 import {useTournamentTypeStore, useTournamentPlatformStore} from '../../../../stores/admin';
 import {storeToRefs} from 'pinia';
 
+import {parse, format} from 'date-format-parse';
+
 export default {
     setup() {
         const tournamentTypeStore = useTournamentTypeStore();
@@ -85,9 +87,39 @@ export default {
         ];
     },
     watch: {
-        inputs(before, now) {
-            console.log(now);
-            this.$emit('change',now);
+        inputs: {
+            handler(before, now) {
+                const newFilter = (tournament) => {
+                    const subscription = tournament.subscription.split(' ');
+                    const begin = parse(subscription[0], 'HH:mm');
+                    const end = parse(subscription[2], 'HH:mm');
+
+                    let tournamentStatusFilter = true;
+                    switch(now.tournamentStatus) {
+                        case 1:
+                            tournamentStatusFilter = !tournament.isApproved;
+                            break;
+                        case 2:
+                            tournamentStatusFilter = tournament.isApproved && tournament.isRecurrent;
+                            break;
+                        case 3:
+                            tournamentStatusFilter = tournament.isApproved && !tournament.isRecurrent;
+                    }
+
+                    return (
+                        tournamentStatusFilter &&
+                        (now.date ? tournament.date === format(now.date, 'DD/MM/YYYY') : true) &&
+                        (now.time ? (now.time <= end || now.time >= begin) : true) &&
+                        (now.tournamentPlatform ? tournament.platform_id == now.tournamentPlatform : true) &&
+                        (now.minBuyIn ? (now.minBuyIn == tournament.min) : true) &&
+                        (now.maxBuyIn ? (now.maxBuyIn == tournament.max) : true) &&
+                        (now.tournamentType ? tournament.type_id == now.tournamentType : true)
+                    );
+                };
+
+                this.$emit('change',newFilter);
+            },
+            deep: true
         }
     },
     data() {

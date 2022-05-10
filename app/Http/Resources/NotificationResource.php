@@ -24,6 +24,7 @@ class NotificationResource extends JsonResource
             'user_name' => $this->user->name,
             'date' => $date,
             'time' => $time,
+            'type' => $this->type,
             'description' => $this->description
         ];
     }

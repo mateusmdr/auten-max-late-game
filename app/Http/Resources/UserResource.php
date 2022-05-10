@@ -14,12 +14,6 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        if(is_null($this->payment_plan)) {
-            $plan = 'Gratuito';
-        }else {
-            $plan = $this->payment_plan->name;
-        }
-
         return([
             'id' => $this->id,
 
@@ -27,7 +21,8 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'cpf' => $this->cpf,
             'phone' => $this->phone,
-            'plan' => $plan,
+            'plan_name' => is_null($this->payment_plan) ? 'Gratuito' : $this->payment_plan->name,
+            'plan_period' => is_null($this->payment_plan) ? 'free' : $this->payment_plan->period,
             'isVerified' => !is_null($this->email_verified_at),
             'isBlocked' => $this->is_blocked,
             'isInactive' => false

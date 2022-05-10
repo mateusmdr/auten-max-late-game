@@ -2,7 +2,7 @@
     <InputContainer :name="label">
         <Datepicker
             timePicker
-            placeholder="00h00"
+            placeholder="00:00"
             locale="pt-BR"
             dark
             hideInputIcon

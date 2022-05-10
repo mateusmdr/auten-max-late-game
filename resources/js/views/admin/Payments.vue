@@ -1,10 +1,12 @@
 <template>
   <Section title="Últimos Pagamentos" icon="request_quote">
         
-        <AdminPaymentsFilters/>
+        <AdminPaymentsFilters
+            @change="(newFilter) => this.filter = newFilter"
+        />
 
         <AdminPaymentsTable
-            :payments="payments"
+            :payments="filteredPayments"
         />
   </Section>
 </template>
@@ -25,8 +27,14 @@ export default {
     },
     data() {
         return {
+            filter: () => true
         }
-    }
+    },
+    computed: {
+        filteredPayments() {
+            return this.payments.filter(this.filter);
+        }
+    },
 }
 </script>
 

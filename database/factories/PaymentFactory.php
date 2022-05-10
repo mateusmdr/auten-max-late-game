@@ -25,6 +25,7 @@ class PaymentFactory extends Factory
             'payment_method' => DBTypes::PAYMENT_METHODS[rand(0,1)],
             'payment_plan_id' => PaymentPlan::all()->random()->id,
             'user_id' => User::all()->random()->id,
+            'is_pending' => $this->faker->boolean()
         ];
     }
 }

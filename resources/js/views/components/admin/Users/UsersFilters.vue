@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-2">
                 <SearchInput
-                    v-model="inputs.filter"
+                    v-model="inputs.search"
                 />
             </div>
             <div class="col-2">
@@ -23,6 +23,7 @@
 
 <script>
 export default {
+    emits: ['change'],
     created() {
         this.userStatuses = [
             {
@@ -50,27 +51,60 @@ export default {
         this.paymentPlans = [
             {
                 name: 'Gratuito',
-                value:'free'
+                id:'free'
             },
             {
                 name: 'Mensal',
-                value:'monthly'
+                id: 'monthly'
             },
             {
                 name: 'Semestral',
-                value:'biannual'
+                id: 'biannual'
             },
             {
                 name: 'Anual',
-                value:'yearly'
+                id: 'yearly'
             }
         ];
+    },
+    watch: {
+        inputs: {
+            handler(before, now) {
+                const newFilter = (user) => {
+
+                    let userStatusFilter = true;
+                    switch(now.userStatus) {
+                        case 0:
+                            userStatusFilter = user.isVerified;
+                            break;
+                        case 1:
+                            userStatusFilter = !user.isVerified;
+                            break;
+                        case 2:
+                            userStatusFilter = user.isInactive;
+                            break;
+                        case 3:
+                            userStatusFilter = user.isBlocked;
+                    }
+
+                    const search = (user.name + user.email + user.cpf + user.phone).toLowerCase();
+                    return (
+                        userStatusFilter &&
+                        (now.search ? search.includes(now.search.toLowerCase()) : true) &&
+                        (now.paymentPlan ? user.plan_period == now.paymentPlan : true)
+                    );
+                };
+
+                this.$emit('change',newFilter);
+            },
+            deep: true
+        }
     },
     data() {
         return {
             inputs: {
                 userStatus: 0,
-                filter: null,                
+                search: null,                
                 paymentPlan: null,
             }
         }

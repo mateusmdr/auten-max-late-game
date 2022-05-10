@@ -9,10 +9,12 @@
             @close="selectedAd = null"
         />
 
-        <AdminAdsFilters/>
+        <AdminAdsFilters
+            @change="(newFilter) => this.filter = newFilter"
+        />
 
         <AdminAdsTable
-            :ads="ads"
+            :ads="filteredAds"
             @select="editAd"
         />
     </Section>

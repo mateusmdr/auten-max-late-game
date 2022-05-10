@@ -11,11 +11,11 @@
         />
 
         <AdminTournamentsFilters
-            @change="(filter) => this.filter = filter"
+            @change="(newFilter) => this.filter = newFilter"
         />
         
         <AdminTournamentsTable
-            :tournaments="tournaments"
+            :tournaments="filteredTournaments"
             @select="editTournament"
         />
     </Section>
@@ -41,7 +41,7 @@ export default {
     },
     computed: {
         filteredTournaments() {
-            return tournaments && this.tournaments.filter(this.filter);
+            return this.tournaments.filter(this.filter);
         }
     },
     data() {

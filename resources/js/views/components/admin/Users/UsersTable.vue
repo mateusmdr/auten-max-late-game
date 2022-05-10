@@ -35,7 +35,7 @@ export default {
             {name: 'Email', value: 'email', width: 3},
             {name: 'CPF', value: 'cpf', width: 2},
             {name: 'Telefone', value: 'phone', width: 2},
-            {name: 'Plano', value: 'plan', width: 1},
+            {name: 'Plano', value: 'plan_name', width: 1},
         ];
     }
 }

@@ -2,10 +2,12 @@
     <Section title="Usuários cadastrados" icon="person">
         <AdminCreateUserModal/>
         
-        <AdminUsersFilters/>
+        <AdminUsersFilters
+            @change="(newFilter) => this.filter = newFilter"
+        />
 
         <AdminUsersTable
-            :users="users"
+            :users="filteredUsers"
         />
     </Section>
 </template>
@@ -26,8 +28,14 @@ export default {
     },
     data: function() {
         return {
-            users: null
+            users: null,
+            filter: () => true
         }
-    }
+    },
+    computed: {
+        filteredUsers() {
+            return this.users.filter(this.filter);
+        }
+    },
 }
 </script>

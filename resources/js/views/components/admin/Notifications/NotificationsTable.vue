@@ -6,7 +6,16 @@
         :fields="fields"
         :items="notifications"
         :action="removeNotification"
-        :colorPicker="() => '#B376F8'"
+        :colorPicker="(notification) => {
+            switch(notification.type){
+                case 'tournament': 
+                    return '#B376F8'
+                case 'administrative':
+                    return '#F5A847'
+                default:
+                    return '#05F28E';
+            }
+        }"
     />
 </template>
 
@@ -14,6 +23,7 @@
 import { useNotificationStore } from '../../../../stores/admin';
 
 export default {
+    emits: ['change'],
     setup() {
         const notificationStore = useNotificationStore();
 

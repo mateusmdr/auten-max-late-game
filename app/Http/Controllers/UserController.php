@@ -30,6 +30,7 @@ class UserController extends Controller
         $builder = User::query();
         $builder->where('is_admin','!=','true');
         $builder->orderBy('name');
+        $builder->with('payment_plan:id,name,period');
 
         return UserResource::collection($builder->get());
     }

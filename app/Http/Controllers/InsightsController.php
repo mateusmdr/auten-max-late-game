@@ -29,7 +29,7 @@ class InsightsController extends Controller
         $todayUsers = $users->whereDate('created_at', '>=', $today)->count();
         $monthUsers = $users->whereDate('created_at', '>=', $startOfMonth)->count();
 
-        $payments = Payment::query()->where('is_pending','!=','false');
+        $payments = Payment::query()->where('is_pending','=','false');
 
         $totalPayments = $payments->sum('price');
         $todayPayments = $payments->whereDate('datetime', '>=', $today)->sum('price');

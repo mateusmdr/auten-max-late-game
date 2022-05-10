@@ -15,7 +15,7 @@
             </div>
             <div class="col-2">
                 <SearchInput
-                    v-model="inputs.filter"
+                    v-model="inputs.search"
                 />
             </div>
         </div>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import {format} from 'date-format-parse';
+
 export default {
     data() {
         return {
@@ -30,10 +32,31 @@ export default {
                 name: null,
                 date: null,
                 time: null,
-                filter: null
+                search: null
             }
         }
-    }
+    },
+    watch: {
+        inputs: {
+            handler(before, now) {
+                const newFilter = (notification) => {
+
+                    const search1 = (notification.user_name).toLowerCase();
+                    const search2 = (notification.description).toLowerCase();
+
+                    return (
+                        (now.username ? search1.includes(now.username.toLowerCase()) : true) &&
+                        (now.search ? search2.includes(now.search.toLowerCase()) : true) &&
+                        (now.date ? notification.date === format(now.date, 'DD/MM/YYYY') : true) &&
+                        (now.time ? notification.time === format(now.time, 'HH:mm') : true)
+                    );
+                };
+
+                this.$emit('change',newFilter);
+            },
+            deep: true
+        }
+    },
 }
 </script>
 

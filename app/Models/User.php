@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    protected function isPastTestPeriod() {
+    public function isPastTestPeriod() {
         $verifiedAt = new DateTime($this->created_at);
         
         $days = now()->diff($verifiedAt)->format('%a');
@@ -54,7 +54,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return($days >= env('TEST_PERIOD_DURATION', 14));
     }
 
-    protected function payment_plan() {
+    public function payment_plan() {
         return $this->belongsTo(PaymentPlan::class);
     }
 }
