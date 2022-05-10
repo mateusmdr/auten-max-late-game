@@ -157,8 +157,26 @@ const useNotificationStore = defineStore('notification', {
     }
 });
 
+// Insights
+const useInsightsStore = defineStore('insights', {
+    state: () => ({
+        insights: null,
+    }),
+    actions: {
+        refresh() {
+            return (
+                axios
+                .get('/api/insights')
+                .then((res) => this.insights = res.data)
+                .catch(e => console.error(e))
+            );
+        }
+    }
+});
+
 export {
     useTournamentTypeStore, useTournamentPlatformStore, useTournamentStore,
     useUserStore, usePaymentPlanStore, usePaymentStore,
-    useAdStore, useNotificationIntervalStore, useNotificationStore
+    useAdStore, useNotificationIntervalStore, useNotificationStore,
+    useInsightsStore
 };
