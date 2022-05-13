@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Models\TournamentRecurrence;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tournament extends Model
 {
-    use HasFactory;
 
     public $timestamps = true;
+
+    protected $dates = ['created_at', 'updated_at', 'date'];
 
     protected $guarded = [];
 

@@ -20,28 +20,60 @@ class InsightsController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
-        $today = today()->format('Y-m-d');
-        $startOfMonth = today()->startOfMonth()->format('Y-m-d');
-
-        $users = User::query()->where('is_blocked','=','false');
+        $today = today()->toDateString();
+        $tomorrow = today()->addDay()->toDateString();
+        $startOfMonth = today()->startOfMonth()->toDateString();
+        $endOfMonth = today()->endOfMonth()->toDateString();
         
-        $totalUsers = $users->count();
-        $todayUsers = $users->whereDate('created_at', '>=', $today)->count();
-        $monthUsers = $users->whereDate('created_at', '>=', $startOfMonth)->count();
+        $totalUsers = 
+            User::where('is_blocked','=','false')
+                ->where('is_admin','=','false')
+                ->count();
+        $todayUsers = 
+            User::where('is_blocked','=','false')
+                ->where('is_admin','=','false')
+                ->whereDate('created_at', '>=', $today)
+                ->whereDate('created_at','<',$tomorrow)
+                ->count();
+        $monthUsers = 
+            User::where('is_blocked','=','false')
+                ->where('is_admin','=','false')
+                ->whereDate('created_at', '>=', $startOfMonth)
+                ->whereDate('created_at', '<', $endOfMonth)
+                ->count();
 
-        $payments = Payment::query()->where('is_pending','=','false');
+        $totalPayments = 
+            Payment::where('is_pending','=','false')
+                ->sum('price');
+        $todayPayments = 
+            Payment::where('is_pending','=','false')
+                ->whereDate('datetime', '>=', $today)
+                ->whereDate('datetime', '<', $tomorrow)
+                ->sum('price');
+        $monthPayments = 
+            Payment::where('is_pending','=','false')
+                ->whereDate('datetime', '>=', $startOfMonth)
+                ->whereDate('datetime', '<', $endOfMonth)
+                ->sum('price');
 
-        $totalPayments = $payments->sum('price');
-        $todayPayments = $payments->whereDate('datetime', '>=', $today)->sum('price');
-        $monthPayments = $payments->whereDate('datetime', '>=', $startOfMonth)->sum('price');
+        $totalTournaments = 
+            Tournament::where('is_approved','=','true')
+                ->count();
+        $todayTournaments = 
+            Tournament::where('is_approved','=','true')
+                ->whereDate('date', '>=', $today)
+                ->whereDate('date', '<', $tomorrow)
+                ->count();
+        $monthTournaments = 
+            Tournament::where('is_approved','=','true')
+                ->whereDate('date', '>=', $startOfMonth)
+                ->whereDate('date', '<=', $endOfMonth)
+                ->count();
 
-        $tournaments = Tournament::query()->where('is_approved','=','true');
-
-        $totalTournaments = $tournaments->count();
-        $todayTournaments = $tournaments->whereDate('date', '>=', $today)->count();
-        $monthTournaments = $tournaments->whereDate('date', '>=', $startOfMonth)->count();
-
-        $totalAds = Ad::query()->where('end_at','<=',$today)->sum('price');
+        $totalAds = 
+            Ad::query()
+                ->where('begin_at','>=',$today)
+                ->sum('price');
 
         return new Response([
             'total' => [
