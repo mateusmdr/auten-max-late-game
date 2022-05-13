@@ -273,8 +273,8 @@ export default {
                 .post('/api/tournament', {
 					'name': this.inputs.name,
                     'prize': this.inputs.prize,
-                    'min_buy_in': this.inputs.min_buy_in,
-                    'max_buy_in': this.inputs.max_buy_in,
+                    'min_buy_in': this.inputs.min_buy_in ? this.inputs.min_buy_in : undefined,
+                    'max_buy_in': this.inputs.max_buy_in ? this.inputs.max_buy_in : undefined,
                     'date': format(this.inputs.date, 'YYYY-MM-DD'),
                     'subscription_begin_at': format(this.inputs.subscription_begin, 'HH:mm'),
                     'subscription_end_at': format(this.inputs.subscription_end, 'HH:mm'),

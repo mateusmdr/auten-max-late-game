@@ -9,7 +9,7 @@
             dark
             hideInputIcon
             v-model="date"
-            @internalModelChange="updateValue"
+            @update:modelValue="updateValue"
             :format="monthPicker ? 'MM/yyyy' : 'dd/MM/yyyy'"
             :monthPicker="monthPicker"
         />
@@ -27,6 +27,7 @@ export default {
 
         const updateValue = (date) => {
             context.emit('update:modelValue', date);
+            console.log(date);
         }
 
         return {

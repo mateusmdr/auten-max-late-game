@@ -8,7 +8,7 @@
             hideInputIcon
             format="HH:mm"
             v-model="date"
-            @internalModelChange="updateValue"
+            @update:modelValue="updateValue"
             selectText="Selecionar"
             cancelText="Cancelar"
         />
@@ -18,13 +18,19 @@
 <script>
 import { ref } from 'vue';
 import Datepicker from '@vuepic/vue-datepicker';
+import { parse, format } from 'date-format-parse';
 
 export default {
     setup(props, context) {
-        const date = ref(props.modelValue);
+        const date = ref(props.modelValue ?
+            {
+                hours: format(props.modelValue, 'HH'),
+                minutes: format(props.modelValue, 'mm'),
+            } : null
+        );
 
-        const updateValue = (date) => {
-            context.emit('update:modelValue', date);
+        const updateValue = (time) => {
+            context.emit('update:modelValue', time ? parse(`${time.hours}:${time.minutes}`,'H:m') : null);
         }
 
         return {

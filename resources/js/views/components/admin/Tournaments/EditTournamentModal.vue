@@ -118,21 +118,12 @@ export default {
     data() {
         this.subscription = this.tournament.subscription.split(' ');
 
-        const toTimeInputObject = (time) => {
-            const date = parse(time,'HH:mm');
-
-            return {
-                hours: format(date, 'HH'),
-                minutes: format(date, 'mm'),
-            }
-        }
-
         return {
             inputs: {
                 name: this.tournament.name,
                 date: parse(this.tournament.date, 'DD/MM/YYYY'),
-                subscription_begin: toTimeInputObject(this.subscription[0]),
-                subscription_end: toTimeInputObject(this.subscription[2]),
+                subscription_begin: parse(this.subscription[0],'HH:mm'),
+                subscription_end: parse(this.subscription[2],'HH:mm'),
                 prize: this.tournament.prize,
                 min_buy_in: this.tournament.min,
                 max_buy_in: this.tournament.max,

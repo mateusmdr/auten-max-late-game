@@ -95,6 +95,7 @@ export default {
                     const subscription = tournament.subscription.split(' ');
                     const begin = parse(subscription[0], 'HH:mm');
                     const end = parse(subscription[2], 'HH:mm');
+                    console.log(subscription);
 
                     let tournamentStatusFilter = true;
                     switch(now.tournamentStatus) {
@@ -111,7 +112,7 @@ export default {
                     return (
                         tournamentStatusFilter &&
                         (now.date ? tournament.date === format(now.date, 'DD/MM/YYYY') : true) &&
-                        (now.time ? (now.time <= end || now.time >= begin) : true) &&
+                        (now.time ? (now.time <= end && now.time >= begin) : true) &&
                         (now.tournamentPlatform ? tournament.platform_id == now.tournamentPlatform : true) &&
                         (now.minBuyIn ? (now.minBuyIn == tournament.min) : true) &&
                         (now.maxBuyIn ? (now.maxBuyIn == tournament.max) : true) &&

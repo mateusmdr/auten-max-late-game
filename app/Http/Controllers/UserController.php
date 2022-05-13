@@ -28,7 +28,7 @@ class UserController extends Controller
     public function index()
     {
         $builder = User::query();
-        $builder->where('is_admin','!=','true');
+        $builder->where('is_admin',false);
         $builder->orderBy('name');
         $builder->with('payment_plan:id,name,period');
 

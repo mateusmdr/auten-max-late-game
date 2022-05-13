@@ -34,7 +34,7 @@ class TournamentController extends Controller
     {
         $builder = Tournament::query();
         if(!Auth::user()->is_admin) {
-            $builder->where('is_approved','=','true');
+            $builder->where('is_approved',true);
         }
         $builder->where('date','>=',now());
 
