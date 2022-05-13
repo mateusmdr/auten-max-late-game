@@ -36,7 +36,7 @@ class TournamentController extends Controller
         if(!Auth::user()->is_admin) {
             $builder->where('is_approved',true);
         }
-        $builder->where('date','>=',now());
+        $builder->whereDate('date','>=',today()->toDateString());
 
         return TournamentResource::collection($builder->orderBy('date')->orderBy('name')->get());
     }
