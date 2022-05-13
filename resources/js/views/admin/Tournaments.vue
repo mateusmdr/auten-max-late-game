@@ -27,11 +27,7 @@ import {useTournamentPlatformStore, useTournamentTypeStore, useTournamentStore} 
 
 export default {
     setup() {
-        const tournamentTypeStore = useTournamentTypeStore();
-        const tournamentPlatformStore = useTournamentPlatformStore();
         const tournamentStore = useTournamentStore();
-        tournamentTypeStore.refresh();
-        tournamentPlatformStore.refresh();
         tournamentStore.refresh();
 
         const {tournaments} = storeToRefs(tournamentStore);

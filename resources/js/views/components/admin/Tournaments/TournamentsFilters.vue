@@ -52,6 +52,8 @@ export default {
     setup() {
         const tournamentTypeStore = useTournamentTypeStore();
         const tournamentPlatformStore = useTournamentPlatformStore();
+        tournamentTypeStore.refresh();
+        tournamentPlatformStore.refresh();
 
         const {tournamentTypes} = storeToRefs(tournamentTypeStore);
         const {tournamentPlatforms} = storeToRefs(tournamentPlatformStore);

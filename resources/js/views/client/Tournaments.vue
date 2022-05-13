@@ -1,37 +1,39 @@
 <template>
     <Section title="Próximos torneios" icon="emoji_events">
 
-        <ClientTournamentsFilters/>
+        <ClientTournamentsFilters
+            @change="(newFilter) => this.filter = newFilter"
+        />
 
         <ClientTournamentsTable
-            :tournaments="tournaments"
+            :tournaments="filteredTournaments"
         />
     </Section>
 </template>
 
 <script>
-    export default {
-        data() {
-            return {
-                tournaments: Array(4).fill(
-                    {
-                        id: 1,
-                        title: 'Título do torneio',
-                        color: '#05F28E',
-                        values: [
-                            '00/00/0000',
-                            '00h00 às 00h00',
-                            'Party Poker',
-                            'Cash Game',
-                            '0000',
-                            '0000',
-                            '0000'
-                        ],
-                        isEditable: false,
-                        defaultAction: () => console.log("fui clicado")
-                    }
-                )
-            }
+import { storeToRefs } from 'pinia';
+import {useTournamentStore} from '../../stores/admin';
+
+export default {
+    setup() {
+        const tournamentStore = useTournamentStore();
+        tournamentStore.refresh();
+
+        const {tournaments} = storeToRefs(tournamentStore);
+        return {
+            tournaments
         }
-    }
+    },
+    computed: {
+        filteredTournaments() {
+            return this.tournaments.filter(this.filter);
+        }
+    },
+    data() {
+        return {
+            filter: () => true,
+        }
+    },
+}
 </script>
