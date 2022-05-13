@@ -42,7 +42,7 @@ export default {
                 color:'#B376F8',
             },
             {
-                text:'Semanal',
+                text:'Semestral',
                 color:'#F5A847',
             },
             {
@@ -76,7 +76,7 @@ export default {
                             paymentStatusFilter = !payment.is_pending && payment.plan === 'Mensal';
                             break;
                         case 2:
-                            paymentStatusFilter = !payment.is_pending && payment.plan === 'Semanal';
+                            paymentStatusFilter = !payment.is_pending && payment.plan === 'Semestral';
                             break;
                         case 3:
                             paymentStatusFilter = !payment.is_pending && payment.plan === 'Anual';

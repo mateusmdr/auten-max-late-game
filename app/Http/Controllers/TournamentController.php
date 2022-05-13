@@ -103,6 +103,9 @@ class TournamentController extends Controller
                 }
             });
         }else {
+            unset($data['is_recurrent']);
+            unset($data['schedule']);
+            unset($data['ends_at']);
             Tournament::create($data);
         }
     }
