@@ -19,6 +19,10 @@ PHP_USER.is_admin = false;
 
 // Provide user info to globally
 app.config.globalProperties.user = PHP_USER;
+// Include global functions
+import {func} from './func.js'
+
+app.config.globalProperties.$func = func
 
 // Load route respectively to user privileges
 app.use(PHP_USER.is_admin ? adminRouter : clientRouter);

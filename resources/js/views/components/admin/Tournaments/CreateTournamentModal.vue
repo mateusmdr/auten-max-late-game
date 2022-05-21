@@ -269,6 +269,8 @@ export default {
             return schedule;
         },
         submit() {
+            const subscription_begin = this.$func.toUTC(this.inputs.subscription_begin);
+            const subscription_end = this.$func.toUTC(this.inputs.subscription_end);
             axios
                 .post('/api/tournament', {
 					'name': this.inputs.name,
@@ -276,8 +278,8 @@ export default {
                     'min_buy_in': this.inputs.min_buy_in ? this.inputs.min_buy_in : undefined,
                     'max_buy_in': this.inputs.max_buy_in ? this.inputs.max_buy_in : undefined,
                     'date': format(this.inputs.date, 'YYYY-MM-DD'),
-                    'subscription_begin_at': format(this.inputs.subscription_begin, 'HH:mm'),
-                    'subscription_end_at': format(this.inputs.subscription_end, 'HH:mm'),
+                    'subscription_begin_at': format(subscription_begin, 'HH:mm'),
+                    'subscription_end_at': format(subscription_end, 'HH:mm'),
                     'tournament_platform_id': this.inputs.tournamentPlatform,
                     'tournament_type_id': this.inputs.tournamentType,
                     'is_recurrent': this.inputs.is_recurrent,

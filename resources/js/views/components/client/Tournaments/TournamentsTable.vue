@@ -14,7 +14,7 @@
             
             return '#05F28E';
         }"
-        :defaultAction="(item) => activateNotification(item)"
+        :action="(item) => activateNotification(item)"
     />
 </template>
 

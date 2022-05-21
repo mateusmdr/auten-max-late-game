@@ -2,9 +2,13 @@
     <div class="mt-5">
         <div class="row gx-5">
             <div class="col-3 card-col mb-5 d-flex" v-for="notification in notifications" :key="notification.id">
-                <Card :color="getNotificationColor(notification)" :corner-text="`${notification.date} ${notification.time}`">
+                <Card :color="getNotificationColor(notification)" :corner-text="notification.datetime">
                     <h3>{{getNotificationTitle(notification)}}</h3>
-                    <h4>{{getNotificationDescription(notification)}}</h4>
+                    <h4 v-if="!(notification.type === 'tournament')">{{notification.description}}</h4>
+                    <div v-else>
+                        <h4><span class='fw-bold'>Inscrição: </span>{{notification.tournament.subscription}}</h4>
+                        <h4><span class='fw-bold'>Plataforma: </span>{{notification.tournament.platform_name}}</h4>
+                    </div>
                 </Card>
             </div>
         </div>
@@ -12,13 +16,14 @@
 </template>
 
 <script>
+import {parse, format} from 'date-format-parse';
+
 export default {
     props: {
         notifications: Array,
     },
     methods: {
         getNotificationColor(notification) {
-            console.log({...notification});
             if(notification.type === 'tournament') {
                 return '#B376F8';
             }
@@ -40,13 +45,6 @@ export default {
 
             return 'Financeiro';
         },
-        getNotificationDescription(notification) {
-            if(notification.type === 'tournament') {
-                return '#B376F8';
-            }
-            
-            return notification.description;
-        }
     }
 }
 </script>
@@ -55,7 +53,7 @@ export default {
     .card-col {
 
     }
-    
+
     .card-col h3{
         color: #BFC9DB;
         font-weight: 700;

@@ -38,6 +38,7 @@ export default {
         border-left: 2px solid transparent;
         padding-left: 16px;
         box-sizing: border-box;
+        padding-bottom: .125rem;
     }
 
 </style>

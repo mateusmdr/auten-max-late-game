@@ -1,7 +1,7 @@
 <template>
     <RadioChips
         :chips="notificationTypes"
-        v-model="notificationType"
+        v-model="inputs.notificationType"
     />
 </template>
 
@@ -11,21 +11,22 @@ export default {
     created() {
         this.notificationTypes = [
             {
+                id: 0,
                 text:'Todos',
                 hasIcon: false,
             },
             {
-                id: 0,
+                id: 1,
                 text:'Torneios',
                 color:'#B376F8',
             },
             {
-                id: 1,
+                id: 2,
                 text:'Admnistração',
                 color:'#F5A847',
             },
             {
-                id: 2,
+                id: 3,
                 text:'Financeiro',
                 color:'#05F28E',
             }
@@ -35,8 +36,20 @@ export default {
         inputs: {
             handler(before, now) {
                 const newFilter = (notification) => {
+                    let notificationTypeFilter = true;
+                    switch(now.notificationType) {
+                        case 1:
+                            notificationTypeFilter = notification.type === 'tournament';
+                            break;
+                        case 2:
+                            notificationTypeFilter = notification.type === 'administrative';
+                            break;
+                        case 3:
+                            notificationTypeFilter = notification.type === 'financial';
+                    }
+
                     return (
-                        true
+                        notificationTypeFilter
                     );
                 };
 

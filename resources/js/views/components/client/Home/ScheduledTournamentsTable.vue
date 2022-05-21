@@ -22,6 +22,7 @@ export default {
 
         const {enabledTournaments} = storeToRefs(tournamentStore);
         return {
+            tournamentStore,
             enabledTournaments
         }
     },
@@ -39,7 +40,9 @@ export default {
     },
     methods: {
         disableNotification() {
+            
 
+            tournamentStore.refresh();
         }
     }
 }

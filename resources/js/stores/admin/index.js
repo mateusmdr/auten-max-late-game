@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+import {parse, format} from 'date-format-parse';
+import {func} from '../../func';
 
 // Tournaments
 
@@ -39,6 +41,23 @@ const useTournamentStore = defineStore('tournament', {
             axios
                 .get('/api/tournament')
                 .then((res) => this.tournaments = res.data.data)
+                .then(() => {
+                    this.tournaments = this.tournaments.map(tournament =>{
+                        const subscription = tournament.subscription.split(' ');
+                        let begin = parse(subscription[0], 'HH:mm')
+                        let end = parse(subscription[2], 'HH:mm')
+                        begin = func.toLocal(begin);
+                        end = func.toLocal(end);
+
+                        begin = format(begin, 'HH:mm');
+                        end = format(end, 'HH:mm');
+
+                        return ({
+                            ...tournament,
+                            subscription: `${begin} ${subscription[1]} ${end}`
+                        })
+                    });
+                })
                 .catch(e => console.error(e));
         }
     }
@@ -100,6 +119,16 @@ const usePaymentStore = defineStore('payment', {
                 axios
                 .get('/api/payment')
                 .then((res) => this.payments = res.data.data)
+                .then(() => {
+                    this.payments = this.payments.map(payment =>{
+                        let time = parse(payment.time, 'HH:mm')
+                        time = func.toLocal(time);
+                        return ({
+                            ...payment,
+                            time: format(time, 'HH:mm')
+                        })
+                    });
+                })
                 .catch(e => console.error(e))
             );
         }

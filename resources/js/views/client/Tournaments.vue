@@ -13,7 +13,7 @@
 
 <script>
 import { storeToRefs } from 'pinia';
-import {useTournamentStore} from '../../stores/admin';
+import {useTournamentStore} from '../../stores/client';
 
 export default {
     setup() {

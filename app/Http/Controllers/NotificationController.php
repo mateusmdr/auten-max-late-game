@@ -36,6 +36,7 @@ class NotificationController extends Controller
 
         $builder = Notification::query();
         $builder->with('user:id,name');
+        $builder->orderBy('datetime', 'desc');
 
         return NotificationResource::collection($builder->get());
     }
@@ -46,6 +47,7 @@ class NotificationController extends Controller
         $builder = Notification::query();
 
         $builder->whereBelongsTo($user);
+        $builder->orderBy('datetime', 'desc');
 
         return NotificationResource::collection($builder->get());
     }

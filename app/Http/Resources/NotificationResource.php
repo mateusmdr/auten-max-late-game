@@ -16,23 +16,16 @@ class NotificationResource extends JsonResource
      */
     public function toArray($request)
     {
-        $date = (new DateTime($this->datetime))->format('d/m/Y');
-
-        $time = (new DateTime($this->datetime))->format('H:i');
+        $datetime = (new DateTime($this->datetime))->format('d/m/Y H:i');
         $tournament = $this->tournament;
 
         return [
             'id' => $this->id,
             'user_name' => $this->user->name,
-            'date' => $date,
-            'time' => $time,
+            'datetime' => $datetime,
             'type' => $this->type,
             'description' => is_null($tournament) ?  $this->description : null,
-            'tournament' => is_null($tournament) ? null : [
-                'name' => $tournament->name,
-                'begin_at' => $tournament->subscription_begin_at,
-                'end_at' => $tournament->subscription_begin_at,
-            ]
+            'tournament' => is_null($tournament) ? null : new TournamentResource($tournament)
         ];
     }
 }
