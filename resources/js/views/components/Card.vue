@@ -1,7 +1,7 @@
 <template>
     <div class="custom-card position-relative">
         <h6 class="position-absolute corner-text">{{ cornerText }}</h6>
-        <div class="custom-card-content" :style="`border-left-color: ${ color };`">
+        <div class="custom-card-content mt-2" :style="`border-left-color: ${ color };`">
             <slot/>
         </div>
     </div>
@@ -25,6 +25,7 @@ export default {
         padding: 2.25rem 1.5rem;
         background-color: #232323;
         border-radius: 8px;
+        width: 100%;
     }
 
     .corner-text {
