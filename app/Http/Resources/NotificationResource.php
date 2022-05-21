@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use DateTime;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Mockery\Undefined;
 
 class NotificationResource extends JsonResource
 {
@@ -18,14 +19,20 @@ class NotificationResource extends JsonResource
         $date = (new DateTime($this->datetime))->format('d/m/Y');
 
         $time = (new DateTime($this->datetime))->format('H:i');
-        
+        $tournament = $this->tournament;
+
         return [
             'id' => $this->id,
             'user_name' => $this->user->name,
             'date' => $date,
             'time' => $time,
             'type' => $this->type,
-            'description' => $this->description
+            'description' => is_null($tournament) ? null : $this->description,
+            'tournament' => is_null($tournament) ? null : [
+                'name' => $tournament->name,
+                'begin_at' => $tournament->subscription_begin_at,
+                'end_at' => $tournament->subscription_begin_at,
+            ]
         ];
     }
 }

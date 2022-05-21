@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\NotificationResource;
 use App\Http\Requests\StoreNotificationRequest;
 use App\Http\Requests\UpdateNotificationRequest;
@@ -29,8 +30,22 @@ class NotificationController extends Controller
      */
     public function index()
     {
+        if(!Auth::user()->is_admin) {
+            return $this->showFromUser();
+        }
+
         $builder = Notification::query();
         $builder->with('user:id,name');
+
+        return NotificationResource::collection($builder->get());
+    }
+
+    public function showFromUser(User $user) {
+        $this->authorize('view', $user);
+
+        $builder = Notification::query();
+
+        $builder->whereBelongsTo($user);
 
         return NotificationResource::collection($builder->get());
     }
@@ -91,16 +106,5 @@ class NotificationController extends Controller
     public function destroy(Notification $notification)
     {
         $notification->delete();
-    }
-
-    public function showFromUser(User $user) {
-        $this->authorize('viewAny', Notification::class);
-        $this->authorize('view', $user);
-
-        $builder = Notification::query();
-
-        $builder->whereBelongsTo($user);
-
-        return NotificationResource::collection($builder->get());
     }
 }

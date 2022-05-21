@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\TournamentPlatform;
+use Carbon\Carbon;
 use App\Models\TournamentType;
+use App\Models\TournamentPlatform;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,10 +24,10 @@ class TournamentFactory extends Factory
             'prize'=> rand(0,350),
             'min_buy_in'=> rand(0,50),
             'max_buy_in'=> rand(50,100),
-            'date' => now(),
-            'subscription_begin_at' => $this->faker->time(),
-            'subscription_end_at' => $this->faker->time(),
-            'is_approved'=> $this->faker->boolean(25),
+            'date' => now()->addDays(rand(0,85)),
+            'subscription_begin_at' => $this->faker->time('H:i'),
+            'subscription_end_at' => $this->faker->time('H:i'),
+            'is_approved'=> $this->faker->boolean(),
 
             'tournament_type_id' => TournamentType::all()->random()->id,
             'tournament_platform_id' => TournamentPlatform::all()->random()->id,

@@ -18,13 +18,14 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->timestamp('datetime');
-            $table->string('description', DBSizes::STRING);
+            $table->string('description', DBSizes::STRING)->nullable();
             $table->enum('type', DBTypes::NOTIFICATION_TYPES);
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 
             $table->foreignId('user_id')->constrained();
+            $table->foreignId('tournament_id')->nullable()->constrained()->onDelete('CASCADE');
         });
     }
 

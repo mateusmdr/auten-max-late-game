@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use DateTime;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TournamentResource extends JsonResource
@@ -21,6 +22,8 @@ class TournamentResource extends JsonResource
         $subscription_end = (new DateTime($this->subscription_end_at))->format('H:i');
         $subscription = $subscription_begin . ' às ' . $subscription_end;
 
+
+
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -34,7 +37,8 @@ class TournamentResource extends JsonResource
             'max' => $this->max_buy_in,
             'prize' => $this->prize,
             'isRecurrent' => !is_null($this->tournament_recurrence_id),
-            'isApproved' => $this->is_approved
+            'isApproved' => $this->is_approved,
+            'isNotifiable' => Auth::user()->is_admin ? null : $this->notifications()->whereBelongsTo(Auth::user())->exists(),
         ];
     }
 }

@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'api'], function () {
         Route::apiResource('user',UserController::class);
         Route::apiResource('tournament',TournamentController::class);
+        Route::post('tournament/{tournament}/notification',[TournamentController::class, 'enableNotification']);
         Route::apiResource('payment_plan', PaymentPlanController::class);
         Route::apiResource('tournament_platform',TournamentPlatformController::class);
         Route::apiResource('tournament_type',TournamentTypeController::class);

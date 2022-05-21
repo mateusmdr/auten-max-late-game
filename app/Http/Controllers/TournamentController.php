@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use Carbon\Carbon;
 use Cron\CronExpression;
 use App\Models\Tournament;
+use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 use App\Models\TournamentRecurrence;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +14,7 @@ use App\Http\Resources\TournamentResource;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Requests\StoreTournamentRequest;
 use App\Http\Requests\UpdateTournamentRequest;
+use App\Http\Requests\EnableNotificationRequest;
 
 class TournamentController extends Controller
 {
@@ -149,5 +152,36 @@ class TournamentController extends Controller
     public function destroy(Tournament $tournament)
     {
         $tournament->delete();
+    }
+
+    public function enableNotification(EnableNotificationRequest $request, Tournament $tournament) {
+        $data = $request->only([
+            'before',
+            'after',
+            'time_interval'
+        ]);
+
+        $notificationData = [
+            'type' => 'tournament',
+            'tournament_id' => $tournament->id,
+            'user_id' => Auth::user()->id
+        ];
+
+        if($data['before'] ?? false){
+            // dd("before");
+            $notificationData['datetime'] =
+                Carbon::parse($tournament->date)->setTimeFrom($tournament->subscription_begin_at)
+                ->subMinutes($data['time_interval']);
+            
+            Notification::create($notificationData);
+        }
+
+        if($data['after'] ?? false) {
+            $notificationData['datetime'] = 
+                Carbon::parse($tournament->date)->setTimeFrom($tournament->subscription_end_at)
+                ->subMinutes($data['time_interval']);
+
+            Notification::create($notificationData);
+        }
     }
 }

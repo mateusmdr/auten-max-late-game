@@ -25,4 +25,8 @@ class Tournament extends Model
     public function tournament_recurrence() {
         return $this->belongsTo(TournamentRecurrence::class);
     }
+
+    public function notifications() {
+        return $this->hasMany(Notification::class);
+    }
 }

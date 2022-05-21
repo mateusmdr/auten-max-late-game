@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
                 TournamentPlatformsSeeder::class,
                 TournamentTypesSeeder::class,
                 PaymentSeeder::class,
-                TournamentSeeder::class
+                TournamentSeeder::class,
+                NotificationSeeder::class,
             ]);
         }
     }
