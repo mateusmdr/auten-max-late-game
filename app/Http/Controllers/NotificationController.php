@@ -31,7 +31,7 @@ class NotificationController extends Controller
     public function index()
     {
         if(!Auth::user()->is_admin) {
-            return $this->showFromUser();
+            return $this->showFromUser(Auth::user());
         }
 
         $builder = Notification::query();

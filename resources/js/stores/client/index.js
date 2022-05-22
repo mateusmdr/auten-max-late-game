@@ -15,7 +15,7 @@ const useTournamentStore = defineStore('tournament', {
                 .get('/api/tournament')
                 .then((res) => {
                     this.tournaments = res.data.data;
-                    this.enabledTournaments = res.data.data.filter(item => item.isEnabled);
+                    this.enabledTournaments = res.data.data.filter(item => item.isNotifiable);
                     this.errors = res.data.errors;
                 })
                 .then(() => {

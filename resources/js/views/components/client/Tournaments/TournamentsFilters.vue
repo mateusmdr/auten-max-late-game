@@ -99,13 +99,13 @@ export default {
                     let tournamentStatusFilter = true;
                     switch(now.tournamentStatus) {
                         case 1:
-                            tournamentStatusFilter = tournament.enabledNotification;
+                            tournamentStatusFilter = tournament.isNotifiable;
                             break;
                         case 2:
-                            tournamentStatusFilter = tournament.isRecurrent;
+                            tournamentStatusFilter = !tournament.isNotifiable && tournament.isRecurrent;
                             break;
                         case 3:
-                            tournamentStatusFilter = !tournament.isRecurrent;
+                            tournamentStatusFilter = !tournament.isNotifiable && !tournament.isRecurrent;
                     }
 
                     return (

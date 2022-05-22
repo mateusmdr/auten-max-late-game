@@ -17,18 +17,19 @@
             <div class="col-12 mb-3">
                 <Checkbox
                     label="No início das inscrições"
-                    v-model="inputs.begin"
+                    v-model="inputs.before"
                 />
             </div>
             <div class="col-12">
                 <Checkbox
                     label="Antes do final das inscrições"
-                    v-model="inputs.end"
+                    v-model="inputs.after"
                 />
             </div>
-            <div class="col-6" v-if="inputs.end">
+            <div class="col-6" v-if="inputs.after">
                 <Select
                     :options="notificationIntervals"
+                    v-model="inputs.interval"
                 />
             </div>
         </div>
@@ -76,25 +77,29 @@ export default {
 
         return {
             inputs: {
-                begin: false,
-                end: false
+                before: false,
+                after: false,
+                interval: null
             },
             errors: {
-                name: null,
-                date: null,
-                subscription_begin: null,
-                subscription_end: null,
-                prize: null,
-                min_buy_in: null,
-                max_buy_in: null,
-                tournament_platform_id: null,
-                tournament_type_id: null,
+                before: false,
+                after: false,
+                interval: null
             }
         }
     },
     methods: {
         submit() {
-
+            axios
+                .post(`/api/tournament/${this.tournament.id}/notification`, {
+                    before: this.inputs.before,
+                    after: this.inputs.after,
+                    interval: this.inputs.interval ? this.inputs.interval : undefined,
+                })
+                .then(() => {
+                    this.tournamentStore.refresh();
+                    this.$emit('close');
+                });
         }
     }
 }

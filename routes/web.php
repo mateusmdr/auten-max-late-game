@@ -51,7 +51,6 @@ Route::middleware('auth')->group(function () {
         Route::apiResource('tournament_platform',TournamentPlatformController::class);
         Route::apiResource('tournament_type',TournamentTypeController::class);
         Route::apiResource('notification', NotificationController::class);
-        Route::get('user/{user}/notification', [NotificationController::class, 'showFromUser']);
         Route::post('eula',[EULAController::class,'update']);
         Route::apiResource('payment',PaymentController::class,['only' => ['index', 'show']]);
         Route::apiResource('notification_interval',NotificationIntervalController::class,['only' => ['index', 'store', 'show', 'destroy']]);

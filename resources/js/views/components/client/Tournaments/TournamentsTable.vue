@@ -5,8 +5,8 @@
         :fields="fields"
         :items="tournaments"
         :colorPicker="(item) => {
-            if(item.enabledNotification) {
-                return '#EB4263';
+            if(item.isNotifiable) {
+                return '#B376F8';
             }
             if(item.isRecurrent) {
                 return '#F5A847';
@@ -14,7 +14,7 @@
             
             return '#05F28E';
         }"
-        :disableAction="item => item.isEnabled"
+        :disableAction="item => item.isNotifiable"
         :action="(item) => selectTournament(item)"
     />
 </template>

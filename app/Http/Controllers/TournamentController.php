@@ -15,6 +15,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Requests\StoreTournamentRequest;
 use App\Http\Requests\UpdateTournamentRequest;
 use App\Http\Requests\EnableNotificationRequest;
+use App\Http\Requests\DisableNotificationRequest;
 
 class TournamentController extends Controller
 {
@@ -158,7 +159,7 @@ class TournamentController extends Controller
         $data = $request->only([
             'before',
             'after',
-            'time_interval'
+            'interval'
         ]);
 
         $notificationData = [
@@ -178,9 +179,13 @@ class TournamentController extends Controller
         if($data['after'] ?? false) {
             $notificationData['datetime'] = 
                 Carbon::parse($tournament->date)->setTimeFrom($tournament->subscription_end_at)
-                ->subMinutes($data['time_interval']);
+                ->subMinutes($data['interval']);
 
             Notification::create($notificationData);
         }
+    }
+
+    public function disableNotification(DisableNotificationRequest $request, Tournament $tournament) {
+        Notification::query()->whereBelongsTo($tournament)->destroy();
     }
 }

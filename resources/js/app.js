@@ -15,8 +15,6 @@ import App from './views/App.vue';
 // Load root component respectively to user privileges
 const app = createApp(App);
 
-PHP_USER.is_admin = false;
-
 // Provide user info to globally
 app.config.globalProperties.user = PHP_USER;
 // Include global functions
