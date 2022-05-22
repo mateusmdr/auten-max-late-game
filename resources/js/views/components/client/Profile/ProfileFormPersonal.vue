@@ -7,7 +7,7 @@
             :submitHandler="(e) => {e.preventDefault;}"
         >
             <div class="row mb-4">
-                <div class="col-6">
+                <div class="col-12">
                     <TextInput
                         label="Nome"
                         v-model="inputs.name"
@@ -19,17 +19,10 @@
                         v-model="inputs.cpf"
                     />
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-6">
                     <TextInput
                         label="Telefone"
                         v-model="inputs.phone"
-                    />
-                </div>
-                <div class="col-6">
-                    <EmailInput
-                        v-model="inputs.email"
                     />
                 </div>
             </div>
@@ -48,7 +41,6 @@ export default {
                 name: this.user.name,
                 cpf: this.user.cpf,
                 phone: this.user.phone,
-                email: this.user.email,
             },
         }
     }

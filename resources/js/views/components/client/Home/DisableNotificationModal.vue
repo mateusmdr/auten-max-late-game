@@ -1,40 +1,40 @@
 <template>
 	<Modal
-        modalTitle= "Ativar"
-        modalIcon="alarm_add"
-        :titleColor="tournament.is_recurrent ? '#F5A847' : '#05F28E'"
+        modalTitle= "Desativar"
+        modalIcon="alarm_off"
+        titleColor="#B376F8"
         submitModalText= "Concluir"
-        :width="tournament.is_recurrent ? 55 : 30"
+        :width="30"
         @submit="submit"
         ref="modal"
         noButton
+        :noSubmit="!tournament.is_recurrent"
         @close="$emit('close')"
 	>
-        <div class="row mb-3">
+        <div class="row mb-3" v-if="tournament.is_recurrent">
             <div class="col-12 mb-3">
-                <h4>Quando você deseja ser notificado?</h4>
+                <h4>Como você deseja desativar a notificação deste torneio?</h4>
             </div>
             <div class="col-12 mb-3">
-                <Checkbox
-                    label="No início das inscrições"
-                    v-model="inputs.before"
-                />
-            </div>
-            <div class="col-12">
-                <Checkbox
-                    label="Antes do final das inscrições"
-                    v-model="inputs.after"
-                />
-            </div>
-            <div class="col-6" v-if="inputs.after">
-                <Select
-                    :options="notificationIntervals"
-                    v-model="inputs.interval"
+                <RadioGroup
+                    :options="[
+                        {value: false, text: 'Cancelar apenas este evento'},
+                        {value: true, text: 'Todos os eventos recorrentes'},
+                    ]"
+                    v-model="inputs.all"
                 />
             </div>
         </div>
-        <div v-if="tournament.is_recurrent">
-        
+        <div class="row mb-3" v-else>
+            <div class="col-12 mb-3">
+                <h4>Você tem certeza que deseja cancelar a notificação deste torneio?</h4>
+            </div>
+            <div class="col-6">
+                Sim
+            </div>
+            <div class="col-6">
+                Não
+            </div>
         </div>
 	</Modal>
 </template>
@@ -48,13 +48,9 @@ import { parse, format } from 'date-format-parse';
 export default {
     emits: ['close'],
     setup() {
-        const notificationIntervalStore = useNotificationIntervalStore();
-        notificationIntervalStore.refresh();
         const tournamentStore = useTournamentStore();
-        const {notificationIntervals} = storeToRefs(notificationIntervalStore);
 
         return {
-            notificationIntervals,
             tournamentStore
         }
     },
@@ -69,15 +65,8 @@ export default {
 
         return {
             inputs: {
-                before: false,
-                after: false,
-                interval: null
+                all: false
             },
-            errors: {
-                before: false,
-                after: false,
-                interval: null
-            }
         }
     },
     methods: {

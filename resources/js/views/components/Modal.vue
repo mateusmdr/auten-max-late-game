@@ -11,7 +11,7 @@
 			<div class="modal__content mb-5">
 				<slot/>
 			</div>
-			<div class="submit-button">
+			<div class="submit-button" v-if="!noSubmit">
 				<DynamicButton :text="submitModalText"/>
 			</div>
 		</form>
@@ -38,6 +38,10 @@ export default {
 			default: 75
 		},
 		noButton: {
+			type: Boolean,
+			default: false
+		},
+		noSubmit: {
 			type: Boolean,
 			default: false
 		}
