@@ -16,7 +16,7 @@
         
         <AdminTournamentsTable
             :tournaments="filteredTournaments"
-            @select="editTournament"
+            @select="(tournament) => selectedTournament = tournament"
         />
     </Section>
 </template>
@@ -46,11 +46,5 @@ export default {
             selectedTournament: null,
         }
     },
-    methods: {
-        editTournament(tournament) {
-            console.log(tournament);
-            this.selectedTournament = tournament;
-        }
-    }
 }
 </script>

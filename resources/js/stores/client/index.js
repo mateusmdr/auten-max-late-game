@@ -91,4 +91,29 @@ const useNotificationStore = defineStore('notification', {
     }
 });
 
-export {useTournamentStore, useTournamentTypeStore, useTournamentPlatformStore, useNotificationStore};
+// NotificationIntervals
+const useNotificationIntervalStore = defineStore('notificationInterval', {
+    state: () => ({
+        notificationIntervals: [],
+    }),
+    actions: {
+        refresh() {
+            return (
+                axios
+                .get('/api/notification_interval')
+                .then((res) => this.notificationIntervals = res.data.data)
+                .then(() => {
+                    this.notificationIntervals = this.notificationIntervals.map(interval => {
+                        return ({
+                            id: interval.minutes,
+                            name: `${interval.minutes} minutos antes`
+                        })
+                    })
+                })
+                .catch(e => console.error(e))
+            );
+        }
+    }
+});
+
+export {useTournamentStore, useTournamentTypeStore, useTournamentPlatformStore, useNotificationStore, useNotificationIntervalStore};

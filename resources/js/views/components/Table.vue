@@ -27,7 +27,7 @@
                 'approve': () => approveAction(item),
             }"
             :actionWidth="actionWidth"
-            :noAction="noAction"
+            :noAction="noAction || disableAction(item)"
         />
     </div>
 </template>
@@ -66,6 +66,10 @@ export default {
         action: {
             type: Function,
             default: () => null
+        },
+        disableAction: {
+            type: Function,
+            default: () => false
         },
         isEditable: {
             type: Function,

@@ -14,12 +14,14 @@
             
             return '#05F28E';
         }"
-        :action="(item) => activateNotification(item)"
+        :disableAction="item => item.isEnabled"
+        :action="(item) => selectTournament(item)"
     />
 </template>
 
 <script>
 export default {
+    emits: ['select'],
     created() {
         this.fields = [
             {name: '', value: 'name', width: 2},
@@ -33,23 +35,9 @@ export default {
         ];
     },
     methods: {
-        activateNotification(tournament) {
-            let res;
-            if(tournament.isRecurrent) {
-                res = confirm("Tem certeza que deseja aprovar esta ocorrência de torneio?");
-            }else {
-                res = confirm("Tem certeza que deseja aprovar este torneio?");
-            }
-            
-            if(res) {
-                axios
-                    .put(`/api/tournament/${tournament.id}`, {
-                        'is_approved': true
-                    })
-                    .catch(res => {alert("Falha ao aprovar o torneio: " + res.response.data?.errors)})
-                    .finally(this.tournamentStore.refresh);
-            }
-        },
+        selectTournament(tournament) {
+            this.$emit('select',tournament);
+        }
     },
     props: {
         tournaments: Array
