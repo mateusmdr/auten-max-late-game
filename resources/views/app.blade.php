@@ -9,13 +9,24 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-        <!-- Load user info -->
+    <!-- Load user info -->
     <script>
         const PHP_USER = @json(Auth::user());
     </script>
-        <!-- Load Vue -->
+    <!-- Load Vue -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <!-- Load service worker -->
+    <script defer>
+        const workerPath = "{{asset('serviceworker.js')}}";
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register(workerPath);
+            });
+        }else{
+            console.error("Service worker não disponível")
+        }
+        
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
