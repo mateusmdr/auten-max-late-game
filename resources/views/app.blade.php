@@ -13,8 +13,6 @@
     <script>
         const PHP_USER = @json(Auth::user());
     </script>
-    <!-- Load Vue -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Load service worker -->
     <script defer>
         const workerPath = "{{ asset('js/serviceworker.js')}} ";
@@ -26,6 +24,8 @@
             console.error("Service worker não disponível")
         }
     </script>
+    <!-- Load Vue -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -71,22 +71,117 @@ const useTournamentPlatformStore = defineStore('tournamentPlatform', {
 const useNotificationStore = defineStore('notification', {
     state: () => ({
         notifications: [],
+        due: [],
+        timeouts: [],
     }),
     actions: {
+        getNotificationTitle(notification) {
+            if(notification.type === 'tournament') {
+                return notification.tournament.name;
+            }
+            
+            if(notification.type === 'administrative') {
+                return 'Administração';
+            }
+
+            return 'Financeiro';
+        },
         refresh() {
             axios
                 .get('/api/notification')
-                .then((res) => this.notifications = res.data.data)
-                .then(() => {
-                    this.notifications = this.notifications.map(notification =>{
-                        let datetime = parse(notification.datetime, 'DD/MM/YYYY HH:mm')
-                        datetime = func.toLocal(datetime);
-                        return ({
-                            ...notification,
-                            datetime: format(datetime, 'DD/MM/YYYY HH:mm')
-                        })
+                .then((res) => res.data.data)
+                .then((data) => {
+                    data.forEach(notification =>{
+                        let datetime = parse(notification.datetime, 'DD/MM/YYYY HH:mm');
+                        const title = this.getNotificationTitle(notification);
+                        if(datetime <= Date.now()) { // Show notification history
+                            this.notifications.push(
+                                {
+                                    ...notification,
+                                    title,
+                                    datetime: format(func.toLocal(datetime), 'DD/MM/YYYY HH:mm')
+                                }
+                            );
+                        }else {
+                            this.due.push(
+                                {
+                                    ...notification,
+                                    title,
+                                    datetime
+                                }
+                            );
+                        }
                     });
-                })
+                });
+            
+            this.schedule();
+        },
+        schedule() {
+            navigator.serviceWorker.getRegistration(workerPath)
+                .then(reg => {
+                    console.log(reg);
+                    Notification.requestPermission()
+                    .then(permission => {
+                        if (permission !== 'granted') {
+                            return alert('É necessário permitir as notificações para fazer bom uso da plataforma.');
+                        }
+
+                        if(!!reg){
+                            this.due.forEach(notification => {                
+                                const timeout = notification.datetime.getTime() - Date.now();
+                
+                                setTimeout(() => 
+                                    {
+                                        reg.showNotification(
+                                            notification.title,
+                                            {
+                                                tag: notification.id, // a unique ID
+                                                body: notification.type !== 'tournament' ? notification.description : `
+                                                    Inscrição: ${notification.tournament.subscription}
+                                                    Plataforma: ${notification.tournament.platform_name}
+                                                `, // content of the push notification
+                                                //showTrigger: new TimestampTrigger(timestamp), // set the time for the push notification
+                                                data: {
+                                                    url: window.location.href, // pass the current url to the notification
+                                                },
+                                                badge: './assets/badge.png',
+                                                icon: './assets/icon.png',
+                                            }
+                                        );
+                                    },
+                                    3000
+                                );
+                            });
+                        }else {
+                            this.due.forEach(notification => {                
+                                const timeout = notification.datetime.getTime() - Date.now();
+                
+                                setTimeout(() => 
+                                    {
+                                        reg.showNotification(
+                                            notification.title,
+                                            {
+                                                tag: notification.id, // a unique ID
+                                                body: notification.type !== 'tournament' ? notification.description : `
+                                                    Inscrição: ${notification.tournament.subscription}
+                                                    Plataforma: ${notification.tournament.platform_name}
+                                                `, // content of the push notification
+                                                //showTrigger: new TimestampTrigger(timestamp), // set the time for the push notification
+                                                data: {
+                                                    url: window.location.href, // pass the current url to the notification
+                                                },
+                                                badge: './assets/badge.png',
+                                                icon: './assets/icon.png',
+                                            }
+                                        );
+                                    },
+                                    3000
+                                );
+                            });
+                        }
+                    });
+                });
+
         }
     }
 });

@@ -3,7 +3,7 @@
         <div class="row gx-5">
             <div class="col-3 card-col mb-5 d-flex" v-for="notification in notifications" :key="notification.id">
                 <Card :color="getNotificationColor(notification)" :corner-text="notification.datetime">
-                    <h3>{{getNotificationTitle(notification)}}</h3>
+                    <h3>{{notification.title}}</h3>
                     <h4 v-if="!(notification.type === 'tournament')">{{notification.description}}</h4>
                     <div v-else>
                         <h4><span class='fw-bold'>Inscrição: </span>{{notification.tournament.subscription}}</h4>
@@ -33,17 +33,6 @@ export default {
             }
 
             return '#05F28E';
-        },
-        getNotificationTitle(notification) {
-            if(notification.type === 'tournament') {
-                return notification.tournament.name;
-            }
-            
-            if(notification.type === 'administrative') {
-                return 'Administração';
-            }
-
-            return 'Financeiro';
         },
     }
 }
