@@ -17,7 +17,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Load service worker -->
     <script defer>
-        const workerPath = "{{asset('serviceworker.js')}}";
+        const workerPath = "{{ asset('js/serviceworker.js')}} ";
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register(workerPath);
@@ -25,7 +25,6 @@
         }else{
             console.error("Service worker não disponível")
         }
-        
     </script>
 
     <!-- Fonts -->
