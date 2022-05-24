@@ -21,11 +21,21 @@ class UserSeeder extends Seeder
             ->create();
         
         User::create([
-            'name' => 'Usuário Teste',
+            'name' => 'Cliente Teste',
             'cpf' => env('TEST_USER_CPF'),
             'phone' => env('TEST_USER_PHONE'),
-            'email' => env('TEST_USER_EMAIL'),
+            'email' => 'cliente@teste.com',
             'password' => Hash::make(env('TEST_USER_PASSWORD')),
+            'is_admin' => false,
+            'email_verified_at' => now()
+        ]);
+
+        User::create([
+            'name' => 'Admin Teste',
+            'cpf' => env('TEST_ADMIN_CPF'),
+            'phone' => env('TEST_ADMIN_PHONE'),
+            'email' => 'admin@teste.com',
+            'password' => Hash::make(env('TEST_ADMIN_PASSWORD')),
             'is_admin' => true,
             'email_verified_at' => now()
         ]);

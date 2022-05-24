@@ -16,7 +16,6 @@ import {useNotificationStore} from '../../stores/client';
 export default {
     setup() {
         const notificationStore = useNotificationStore();
-        notificationStore.refresh();
 
         const {notifications} = storeToRefs(notificationStore);
         return {

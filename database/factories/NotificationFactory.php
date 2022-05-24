@@ -21,7 +21,7 @@ class NotificationFactory extends Factory
     {
         $type = DBTypes::NOTIFICATION_TYPES[rand(0,2)];
         return [
-            'datetime' => now()->addDays(rand(0,85)),
+            'datetime' => rand(0, 1) === 1 ? now()->addDays(rand(1,85)) : now()->subDays(rand(1,85)),
             'description' => $this->faker->text(),
             'type' => $type,
 

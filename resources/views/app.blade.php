@@ -14,7 +14,7 @@
         const PHP_USER = @json(Auth::user());
     </script>
     <!-- Load service worker -->
-    <script defer>
+    <script >
         const workerPath = "{{ asset('js/serviceworker.js')}} ";
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
@@ -23,6 +23,8 @@
         }else{
             console.error("Service worker não disponível")
         }
+        
+        const channel = new BroadcastChannel('notifications');
     </script>
     <!-- Load Vue -->
     <script src="{{ asset('js/app.js') }}" defer></script>

@@ -9,6 +9,23 @@
     </div>
 </template>
 
+<script>
+import {useNotificationStore} from '../stores/client';
+
+export default {
+    mounted() {
+        if(!this.user.is_admin) {
+            const notificationStore = useNotificationStore();
+            
+            notificationStore.refresh();
+            setInterval(() => {
+                notificationStore.refresh();
+            }, 60*5*1000);
+        }
+    }
+}
+</script>
+
 <style>
     .img-home {
         width: 7vw;
