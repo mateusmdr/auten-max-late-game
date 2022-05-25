@@ -169,7 +169,6 @@ class TournamentController extends Controller
         ];
 
         if($data['before'] ?? false){
-            // dd("before");
             $notificationData['datetime'] =
                 Carbon::parse($tournament->date)->setTimeFrom($tournament->subscription_begin_at);
             
@@ -186,6 +185,17 @@ class TournamentController extends Controller
     }
 
     public function disableNotification(DisableNotificationRequest $request, Tournament $tournament) {
+        $all = $request->input('all',false);
+
+        if($all && $tournament->is_recurrent) {
+            $tournaments = Tournament::query()->whereBelongsTo($tournament->tournament_recurrence);
+
+            foreach ($tournaments as $tr) {
+                Notification::query()->whereBelongsTo($tr)->destroy();
+            }
+            return;
+        }
+
         Notification::query()->whereBelongsTo($tournament)->destroy();
     }
 }
