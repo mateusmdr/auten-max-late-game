@@ -16,11 +16,11 @@ import App from './views/App.vue';
 const app = createApp(App);
 
 // Provide user info to globally
-app.config.globalProperties.user = PHP_USER;
+app.config.globalProperties.user = {...PHP_USER, is_admin: Boolean(PHP_USER.is_admin)};
 // Include global functions
 import {func} from './func.js'
 
-app.config.globalProperties.$func = func
+app.config.globalProperties.$func = func;
 
 // Load route respectively to user privileges
 app.use(PHP_USER.is_admin ? adminRouter : clientRouter);

@@ -187,15 +187,15 @@ class TournamentController extends Controller
     public function disableNotification(DisableNotificationRequest $request, Tournament $tournament) {
         $all = $request->input('all',false);
 
-        if($all && $tournament->is_recurrent) {
-            $tournaments = Tournament::query()->whereBelongsTo($tournament->tournament_recurrence);
+        if($all && ($tournament->tournament_recurrence_id !== null)) {
+            $tournaments = $tournament->tournament_recurrence->tournaments;
 
             foreach ($tournaments as $tr) {
-                Notification::query()->whereBelongsTo($tr)->destroy();
+                Notification::query()->whereBelongsTo($tr)->delete();
             }
             return;
         }
 
-        Notification::query()->whereBelongsTo($tournament)->destroy();
+        Notification::query()->whereBelongsTo($tournament)->delete();
     }
 }

@@ -14,6 +14,12 @@
 			<div class="submit-button" v-if="!noSubmit">
 				<DynamicButton :text="submitModalText"/>
 			</div>
+
+			<div class="d-flex justify-content-around flex-row">
+				<DynamicButton text="Não" @click="closeModal" :primary="false" v-if="confirm"/>
+				<DynamicButton text="Sim" v-if="confirm"/>
+			</div>
+			
 		</form>
 	</vue-final-modal>
 	<div class="absolute-top-right" v-if="!noButton">
@@ -42,6 +48,10 @@ export default {
 			default: false
 		},
 		noSubmit: {
+			type: Boolean,
+			default: false
+		},
+		confirm: {
 			type: Boolean,
 			default: false
 		}

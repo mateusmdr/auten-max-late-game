@@ -11,4 +11,8 @@ class TournamentRecurrence extends Model
         'schedule',
         'ends_at'
     ];
+
+    public function tournaments() {
+        return $this->hasMany(Tournament::class);
+    }
 }

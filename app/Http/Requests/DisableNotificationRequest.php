@@ -12,7 +12,7 @@ class DisableNotificationRequest extends BaseRequest
     public function rules()
     {
         return [
-            'all' => 'required|boolean'
+            'all' => 'boolean'
         ];
     }
 }

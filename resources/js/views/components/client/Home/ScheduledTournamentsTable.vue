@@ -6,9 +6,14 @@
             :fields="fields"
             :items="enabledTournaments"
             :colorPicker="(item) => '#B376F8'"
-            :defaultAction="(item) => disableNotification(item)"
+            :action="(item) => selectedTournament = item"
         />
     </Section>
+    <ClientDisableNotificationModal
+        v-if="!!selectedTournament"
+        :tournament="selectedTournament"
+        @close="selectedTournament = null"
+    />
 </template>
 
 <script>
@@ -38,11 +43,9 @@ export default {
             {name: 'Prêmio', value: 'prize', width: 1}
         ];
     },
-    methods: {
-        disableNotification() {
-            
-
-            tournamentStore.refresh();
+    data() {
+        return {
+            selectedTournament: null
         }
     }
 }
