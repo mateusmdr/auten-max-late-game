@@ -14,7 +14,7 @@
         const PHP_USER = @json(Auth::user());
     </script>
     <!-- Load service worker -->
-    <script >
+    <!-- <script >
         const workerPath = "{{ asset('js/serviceworker.js')}} ";
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
@@ -25,9 +25,12 @@
         }
         
         const channel = new BroadcastChannel('notifications');
-    </script>
+    </script> -->
     <!-- Load Vue -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+
+    <!-- Load MercadoPago SDK -->
+    <script src="https://sdk.mercadopago.com/js/v2" defer></script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
