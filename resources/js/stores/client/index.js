@@ -124,83 +124,47 @@ const useNotificationStore = defineStore('notification', {
             });
             this.timeouts = [];
 
-            navigator.serviceWorker.getRegistration(workerPath)
-                .then(reg => {
-                    Notification.requestPermission()
-                    .then(permission => {
-                        if (permission !== 'granted') {
-                            return alert('É necessário permitir as notificações para fazer bom uso da plataforma.');
-                        }
+            Notification
+                .requestPermission()
+                .then(permission => {
+                    if (permission !== 'granted') {
+                        return alert('É necessário permitir as notificações para fazer bom uso da plataforma.');
+                    }
 
-                        // Push notifications to service worker
-                        // if('showTrigger' in Notification.prototype && !!reg){
-                        if(false){
-                            console.log("Utilizando API showTrigger com o Service Worker");
-                            // Clear all serviceWorker scheduled notifications
-                            reg.getNotifications({
-                                includeTriggered: true,
-                            }).then(scheduled => {
-                                scheduled.forEach((notification) => notification.close());
-                            });
+                    // Process notifications in the main tab
 
-                            this.due.forEach(notification => {
-                                const timeout = new Date(Date.now() + 8000);
-                                console.log(timeout);
-                                reg.showNotification(
-                                    notification.title,
-                                    {
-                                        tag: notification.id, // a unique ID
-                                        body: notification.type !== 'tournament' ? notification.description : 
-                                        `Inscrição: ${notification.tournament.subscription}
-                                        Plataforma: ${notification.tournament.platform_name}`, // content of the push notification
-                                        showTrigger: new TimestampTrigger(timeout), // set the time for the push notification
-                                        data: {
-                                            url: window.location.href, // pass the current url to the notification
-                                        },
-                                        badge: './assets/badge.png',
-                                        icon: './assets/icon.png',
-                                    }
-                                );
-                            });
-                        }else { // Process notifications in the main tab
-                            console.log("API showTrigger indisponível");
+                    this.due.forEach(notification => {
+                        const timeout = notification.datetime.getTime() - Date.now();
 
-                            this.due.forEach(notification => {
-                                const timeout = notification.datetime.getTime() - Date.now();
-
-                                if(timeout <= 24*60*60*1000) {
-                                    this.timeouts.push(setTimeout(() => 
+                        if(timeout <= 24*60*60*1000) {
+                            this.timeouts.push(setTimeout(() => 
+                                {
+                                    new Notification(
+                                        notification.title,
                                         {
-                                            new Notification(
-                                                notification.title,
-                                                {
-                                                    tag: notification.id, // a unique ID
-                                                    body: notification.type !== 'tournament' ? notification.description : `
-                                                        Inscrição: ${notification.tournament.subscription}
-                                                        Plataforma: ${notification.tournament.platform_name}
-                                                    `, // content of the push notification
-                                                    data: {
-                                                        url: window.location.href, // pass the current url to the notification
-                                                    },
-                                                    badge: './assets/badge.png',
-                                                    icon: './assets/icon.png',
-                                                }
-                                            );
+                                            tag: notification.id, // a unique ID
+                                            body: notification.type !== 'tournament' ? notification.description : `
+                                                Inscrição: ${notification.tournament.subscription}
+                                                Plataforma: ${notification.tournament.platform_name}
+                                            `, // content of the push notification
+                                            data: {
+                                                url: window.location.href, // pass the current url to the notification
+                                            },
+                                            badge: './assets/badge.png',
+                                            icon: './assets/icon.png',
+                                        }
+                                    );
 
-                                            this.notifications.push({
-                                                ...notification,
-                                                datetime: format(notification.datetime, 'DD/MM/YYYY HH:mm')
-                                            });
-                                        },
-                                        timeout
-                                    ));
-                                }
-                                
-                            });
+                                    this.notifications.push({
+                                        ...notification,
+                                        datetime: format(notification.datetime, 'DD/MM/YYYY HH:mm')
+                                    });
+                                },
+                                timeout
+                            ));
                         }
                     });
                 });
-
         }
     }
 });

@@ -14,19 +14,6 @@
         const PHP_USER = @json(Auth::user());
         const MERCADO_PAGO_PK = "{{ env('MERCADO_PAGO_PK') }}";
     </script>
-    <!-- Load service worker -->
-    <!-- <script >
-        const workerPath = "{{ asset('js/serviceworker.js')}} ";
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register(workerPath);
-            });
-        }else{
-            console.error("Service worker não disponível")
-        }
-        
-        const channel = new BroadcastChannel('notifications');
-    </script> -->
     
     <!-- Load Vue -->
     <script src="{{ asset('js/app.js') }}" defer></script>
