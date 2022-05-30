@@ -162,7 +162,14 @@ const useNotificationStore = defineStore('notification', {
             return (
                 axios
                 .get('/api/notification')
-                .then((res) => this.notifications = res.data.data)
+                .then((res) => this.notifications = res.data.data.map((notification) => {
+                    let datetime = func.toLocal(parse(notification.datetime, 'DD/MM/YYYY HH:mm'));
+                    return ({
+                        ...notification,
+                        date: format(datetime, 'DD/MM/YYYY'),
+                        time: format(datetime, 'HH:mm')
+                    })
+                }))
                 .catch(e => console.error(e))
             );
         }
@@ -197,14 +204,6 @@ const useNotificationIntervalStore = defineStore('notificationInterval', {
                 axios
                 .get('/api/notification_interval')
                 .then((res) => this.notificationIntervals = res.data.data)
-                .then(() => {
-                    this.notificationIntervals = this.notificationIntervals.map(interval => {
-                        return ({
-                            id: interval.minutes,
-                            name: `${interval.minutes} minutos antes`
-                        })
-                    })
-                })
                 .catch(e => console.error(e))
             );
         }
