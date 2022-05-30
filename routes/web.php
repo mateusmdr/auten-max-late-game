@@ -32,6 +32,10 @@ Route::get('/', function () {
     return view('welcome', ['payment_plans' => $builder->get()]);
 });
 
+Route::get('/mercadopago', function () {
+    return view('mercadopago');
+});
+
 Auth::routes(['verify' => true, 'register' => false]);
 
 // Registration Routes...

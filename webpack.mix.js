@@ -10,7 +10,6 @@ mix
         destination: 'resources/images',
     })
     .js('resources/js/app.js', 'public/js')
-    .js('resources/js/serviceworker.js', 'public/js')
     .vue()
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/public.scss', 'public/css')

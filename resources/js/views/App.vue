@@ -2,8 +2,8 @@
     <div>
         <Header :is-admin="user.is_admin"/>
         <main class="mt-5">
-            <router-view v-if="true"/>
-            <ClientProfile/>
+            <router-view v-if="user.is_admin || true"/>
+            <ClientProfile v-else/>
         </main>
         <ClientAd v-if="!user.is_admin"/>
         <ClientFooter v-if="!user.is_admin"/>
@@ -12,18 +12,19 @@
 
 <script>
 import {useNotificationStore} from '../stores/client';
+import ClientProfile from './client/Profile.vue';
 
 export default {
     mounted() {
-        if(!this.user.is_admin) {
+        if (!this.user.is_admin) {
             const notificationStore = useNotificationStore();
-            
             notificationStore.refresh();
             setInterval(() => {
                 notificationStore.refresh();
-            }, 60*5*1000);
+            }, 60 * 5 * 1000);
         }
-    }
+    },
+    components: { ClientProfile }
 }
 </script>
 

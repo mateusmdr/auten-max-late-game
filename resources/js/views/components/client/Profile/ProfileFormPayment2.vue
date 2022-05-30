@@ -4,7 +4,7 @@
             :showSubmitButton="true"
             title="Pagamento"
             submitText="Salvar edições"
-            :submitHandler="(e) => {e.preventDefault;}"
+            :submitHandler="submit"
         >   
             <div class="d-flex flex-row gap-4 mb-3">
                 <RadioGroup
@@ -87,6 +87,11 @@ export default {
                 expireDate: null,
                 cvv: null,
             }
+        }
+    },
+    methods: {
+        submit() {
+            
         }
     }
 }
