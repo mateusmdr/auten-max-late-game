@@ -6,8 +6,8 @@
             submitText="Salvar edições"
             :submitHandler="(e) => {e.preventDefault;}"
         >
-            <div class="row mb-4">
-                <div class="col-12">
+            <div class="row">
+                <div class="col-12 mb-4">
                     <TextInput
                         label="Nome"
                         v-model="inputs.name"

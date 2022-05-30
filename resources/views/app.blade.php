@@ -12,6 +12,7 @@
     <!-- Load user info -->
     <script>
         const PHP_USER = @json(Auth::user());
+        const MERCADO_PAGO_PK = "{{ env('MERCADO_PAGO_PK') }}";
     </script>
     <!-- Load service worker -->
     <!-- <script >
@@ -26,11 +27,12 @@
         
         const channel = new BroadcastChannel('notifications');
     </script> -->
+    
     <!-- Load Vue -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Load MercadoPago SDK -->
-    <script src="https://sdk.mercadopago.com/js/v2" defer></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

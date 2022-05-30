@@ -17,6 +17,12 @@ const app = createApp(App);
 
 // Provide user info to globally
 app.config.globalProperties.user = {...PHP_USER, is_admin: Boolean(PHP_USER.is_admin)};
+
+// Provide mercadoPago instance globally
+app.config.globalProperties.mercadoPago = new MercadoPago(MERCADO_PAGO_PK, {
+    locale: 'pt-BR'
+});
+
 // Include global functions
 import {func} from './func.js'
 

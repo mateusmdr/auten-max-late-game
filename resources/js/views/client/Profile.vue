@@ -18,6 +18,9 @@
     export default {
         created() {
             this.steps = ["Dados pessoais", "Plano e Pagamento"];
+            console.log(this.mercadoPago);
+
+            this.mercadoPago.getIdentificationTypes().then(console.log);
         },
     }
 </script>

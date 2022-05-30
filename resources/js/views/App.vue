@@ -2,7 +2,8 @@
     <div>
         <Header :is-admin="user.is_admin"/>
         <main class="mt-5">
-            <router-view/>
+            <router-view v-if="true"/>
+            <ClientProfile/>
         </main>
         <ClientAd v-if="!user.is_admin"/>
         <ClientFooter v-if="!user.is_admin"/>
