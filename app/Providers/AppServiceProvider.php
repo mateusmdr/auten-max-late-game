@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use MercadoPago\SDK;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,5 +35,7 @@ class AppServiceProvider extends ServiceProvider
                 $query->bindings
             );
         });
+
+        SDK::setAccessToken(env('MERCADO_PAGO_TOKEN'));
     }
 }

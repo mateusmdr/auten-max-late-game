@@ -27,7 +27,6 @@ export default {
 
         const updateValue = (date) => {
             context.emit('update:modelValue', date);
-            console.log(date);
         }
 
         return {
@@ -50,7 +49,7 @@ export default {
             type: Boolean,
             default: true
         },
-        modelValue: Date,
+        modelValue: Object,
     },
 }
 </script>

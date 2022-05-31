@@ -4,7 +4,7 @@
             :showSubmitButton="true"
             title="Pagamento"
             submitText="Salvar edições"
-            :submitHandler="submit"
+            @submit="submit"
         >   
             <div class="d-flex flex-row gap-4 mb-3">
                 <RadioGroup
@@ -32,7 +32,7 @@
                     <div class="col-6">
                         <TextInput
                             label="Nome do titular"
-                            v-model="inputs.ownerName"
+                            v-model="inputs.cardholderName"
                         />
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                         />
                     </div>
                     <div class="col-3">
-                        <NumberInput
+                        <TextInput
                             name="CVV"
                             v-model="inputs.cvv"
                         />
@@ -82,7 +82,7 @@ export default {
             inputs: {
                 paymentMethod: 0,
                 cardNumber: null,
-                ownerName: null,
+                cardholderName: null,
                 cpf: null,
                 expireDate: null,
                 cvv: null,
@@ -91,7 +91,24 @@ export default {
     },
     methods: {
         submit() {
-            
+            this.mercadoPago
+                .createCardToken({
+                    cardNumber: this.inputs.cardNumber,
+                    cardholderName: this.inputs.cardholderName,
+                    identificationType: 'CPF',
+                    identificationNumber: this.inputs.cpf,
+                    securityCode: this.inputs.cvv,
+                    cardExpirationMonth: (this.inputs.expireDate.month + 1).toString(),
+                    cardExpirationYear: this.inputs.expireDate.year.toString(),
+                })
+                .then(({id}) => {
+                    console.log({token: id});
+                    axios.post('/api/payment', {
+                        'card_token': id
+                    })
+                    .then(console.log);
+                })
+                .catch(code => alert(code));
         }
     }
 }

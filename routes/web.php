@@ -1,20 +1,21 @@
 <?php
 
-use App\Http\Controllers\AdController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Models\PaymentPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdController;
 use App\Http\Controllers\EULAController;
-use App\Http\Controllers\InsightsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\InsightsController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\PaymentPlanController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\NotificationIntervalController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TournamentTypeController;
 use App\Http\Controllers\TournamentPlatformController;
+use App\Http\Controllers\NotificationIntervalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,10 +31,6 @@ use App\Http\Controllers\TournamentPlatformController;
 Route::get('/', function () {
     $builder = PaymentPlan::query()->orderBy('price');
     return view('welcome', ['payment_plans' => $builder->get()]);
-});
-
-Route::get('/mercadopago', function () {
-    return view('mercadopago');
 });
 
 Auth::routes(['verify' => true, 'register' => false]);
@@ -57,9 +54,12 @@ Route::middleware('auth')->group(function () {
         Route::apiResource('tournament_type',TournamentTypeController::class);
         Route::apiResource('notification', NotificationController::class);
         Route::post('eula',[EULAController::class,'update']);
-        Route::apiResource('payment',PaymentController::class,['only' => ['index', 'show']]);
+        Route::apiResource('payment',PaymentController::class,['only' => ['index', 'show', 'store']]);
         Route::apiResource('notification_interval',NotificationIntervalController::class,['only' => ['index', 'store', 'show', 'destroy']]);
         Route::apiResource('ad',AdController::class,['only' => ['index', 'store', 'update', 'destroy']]);
         Route::get('insights',[InsightsController::class,'index']);
     });
 });
+
+// MercadoPago Webhook
+Route::post('mercado_pago_webhook', [WebhookController::class,'notify'])->name('mercado_pago_webhook');

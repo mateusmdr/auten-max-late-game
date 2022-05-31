@@ -8,6 +8,7 @@ class PaymentPlan extends Model
 {
 
     protected $fillable = [
-        'price'
+        'price',
+        'name'
     ];
 }

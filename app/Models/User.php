@@ -56,4 +56,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function payment_plan() {
         return $this->belongsTo(PaymentPlan::class);
     }
+
+    public function isInactive() {
+        // TODO
+        return false;
+    }
+
+    public function isRegular() {
+        // TODO
+        return false;
+    }
 }

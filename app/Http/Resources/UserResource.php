@@ -25,7 +25,8 @@ class UserResource extends JsonResource
             'plan_period' => is_null($this->payment_plan) ? 'free' : $this->payment_plan->period,
             'isVerified' => !is_null($this->email_verified_at),
             'isBlocked' => $this->is_blocked,
-            'isInactive' => false
+            'isInactive' => $this->is_inactive,
+            'isRegular' => $this->is_regular
         ]);
     }
 }

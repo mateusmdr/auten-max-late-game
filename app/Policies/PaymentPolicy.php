@@ -41,7 +41,6 @@ class PaymentPolicy
      */
     public function create(User $user)
     {
-        // TODO
-        return false;
+        return !$user->isRegular();
     }
 }
