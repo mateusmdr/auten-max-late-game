@@ -68,7 +68,6 @@ export default {
                 phone: this.currentUser.phone,
             }
 
-            console.log({inputs: this.inputs, currentUser: mapped});
             return !deepEqual(this.inputs, mapped);
         }
     },

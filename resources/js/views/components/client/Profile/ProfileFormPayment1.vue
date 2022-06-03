@@ -1,10 +1,10 @@
 <template>
     <div class="form-container">
         <EditForm
-            :showSubmitButton="true"
+            :showSubmitButton="hasChanged"
             title="Planos"
             submitText="Salvar edições"
-            :submitHandler="(e) => {e.preventDefault;}"
+            @submit="submit"
         >
             <p class="mb-5">
                 Todos os planos liberam o acesso completo à plataforma
@@ -18,7 +18,23 @@
 </template>
 
 <script>
+import axios from "axios";
+import deepEqual from "deep-equal";
+import { storeToRefs } from "pinia";
+
+import {useCurrentUserStore} from '../../../../stores/client';
+
 export default {
+    setup() {
+        const currentUserStore = useCurrentUserStore();
+
+        const {user} = storeToRefs(currentUserStore);
+
+        return {
+            currentUser: user,
+            currentUserStore
+        }
+    },
     created() {
         this.paymentPlans = [
             {
@@ -38,8 +54,28 @@ export default {
     data() {
         return {
             inputs: {
-                paymentPlan: 0
+                paymentPlan: this.currentUser.plan_period
             }
+        }
+    },
+    computed: {
+        hasChanged() {
+            return this.currentUser.plan_period !== this.inputs.paymentPlan;
+        }
+    },
+    methods: {
+        submit() {
+            console.log({paymentPlan: this.currentUser.plan_period, inputs: this.inputs.paymentPlan})
+            const res = confirm("Tem certeza que deseja alterar o plano de pagamento para \n" + this.paymentPlans.find((val) => val.value === this.inputs.paymentPlan).text + " ?");
+
+            if(!res) return;
+
+            axios
+                .put('/api/user/' + this.currentUser.id + '/payment_plan', {
+                    period: this.inputs.paymentPlan
+                })
+                .then(() => this.currentUserStore.refresh())
+                .catch(() => alert("Verifique os dados inseridos"));    
         }
     }
 }

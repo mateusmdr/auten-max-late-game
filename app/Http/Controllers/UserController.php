@@ -7,6 +7,8 @@ use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\ChangePaymentPlanRequest;
+use App\Models\PaymentPlan;
 
 class UserController extends Controller
 {
@@ -90,6 +92,27 @@ class UserController extends Controller
         }
 
         return new UserResource($user);
+    }
+
+    public function changePaymentPlan(ChangePaymentPlanRequest $request, User $user)
+    {
+        $data = $request->only(['period', 'method']);
+
+        if(empty($data)) {
+            return;
+        }
+
+        if(!empty($data['period'])) {
+            $builder = PaymentPlan::query()->where('period', $data['period']);
+
+            $user->payment_plan()->associate($builder->first());
+        }
+
+        if(!empty($data['method'])) {
+            $user->payment_method = $data['method'];
+        }
+
+        $user->save();
     }
 
     /**
