@@ -66,4 +66,9 @@ class User extends Authenticatable implements MustVerifyEmail
         // TODO
         return false;
     }
+
+    public function canPay() {
+        // TODO
+        return true;
+    }
 }

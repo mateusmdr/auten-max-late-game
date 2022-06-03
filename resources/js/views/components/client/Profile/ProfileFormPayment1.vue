@@ -19,7 +19,6 @@
 
 <script>
 import axios from "axios";
-import deepEqual from "deep-equal";
 import { storeToRefs } from "pinia";
 
 import {useCurrentUserStore} from '../../../../stores/client';
@@ -65,7 +64,6 @@ export default {
     },
     methods: {
         submit() {
-            console.log({paymentPlan: this.currentUser.plan_period, inputs: this.inputs.paymentPlan})
             const res = confirm("Tem certeza que deseja alterar o plano de pagamento para \n" + this.paymentPlans.find((val) => val.value === this.inputs.paymentPlan).text + " ?");
 
             if(!res) return;
@@ -75,7 +73,7 @@ export default {
                     period: this.inputs.paymentPlan
                 })
                 .then(() => this.currentUserStore.refresh())
-                .catch(() => alert("Verifique os dados inseridos"));    
+                .catch(() => alert("Verifique os dados inseridos"));
         }
     }
 }

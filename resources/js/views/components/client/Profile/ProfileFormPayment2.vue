@@ -1,9 +1,9 @@
 <template>
     <div class="form-container">
         <EditForm
-            :showSubmitButton="true"
+            :showSubmitButton="hasChanged"
             title="Pagamento"
-            submitText="Salvar edições"
+            submitText="Alterar método de pagamento"
             @submit="submit"
         >   
             <div class="d-flex flex-row gap-4 mb-3">
@@ -13,102 +13,144 @@
                 />
             </div>
 
-            <div class="ticket-form" v-if="inputs.paymentMethod === 0">
-                <a class="text-decoration-none" href="/ticket" download v-if="hasPendingTicket">
-                    Fazer download do boleto <Icon name="download"/>
-                </a>
+            <div v-if="canPay">
+                <div class="ticket-form" v-if="currentUser.payment_method === paymentMethods[0].value && !hasChanged">
+                    <a class="text-decoration-none" href="/ticket" download v-if="canPay">
+                        Fazer download do boleto <Icon name="download"/>
+                    </a>
+                </div>
 
-                <p v-else>Nenhuma fatura pendente encontrada.</p>
-            </div>
-
-            <div class="credit-card-form" v-else>
-                <div class="row mb-4">
-                    <div class="col-6">
-                        <TextInput
-                            label="Número do cartão"
-                            v-model="inputs.cardNumber"
-                        />
+                <div class="credit-card-form" v-else-if="currentUser.payment_method === paymentMethods[1].value && !hasChanged">
+                    <div class="row mb-4">
+                        <p class="col-12 mb-4">
+                            Por motivos de segurança, nossa plataforma não armazena nenhum dos dados digitados abaixo.
+                        </p>
+                        <div class="col-6">
+                            <TextInput
+                                label="Número do cartão"
+                                v-model="inputs.cardNumber"
+                            />
+                        </div>
+                        <div class="col-6">
+                            <TextInput
+                                label="Nome do titular"
+                                v-model="inputs.cardholderName"
+                            />
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <TextInput
-                            label="Nome do titular"
-                            v-model="inputs.cardholderName"
-                        />
+                    <div class="row mb-2">
+                        <div class="col-6">
+                            <TextInput
+                                label="CPF do titular"
+                                v-model="inputs.cpf"
+                            />
+                        </div>
+                        <div class="col-3">
+                            <DateInput
+                                label="Validade"
+                                monthPicker
+                                v-model="inputs.expireDate"
+                            />
+                        </div>
+                        <div class="col-3">
+                            <TextInput
+                                name="CVV"
+                                v-model="inputs.cvv"
+                            />
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mt-5">
+                        <DynamicButton @click="creditCardTransaction" text="Realizar pagamento"/>
                     </div>
                 </div>
-                <div class="row mb-2">
-                    <div class="col-6">
-                        <TextInput
-                            label="CPF"
-                            v-model="inputs.cpf"
-                        />
-                    </div>
-                    <div class="col-3">
-                        <DateInput
-                            label="Validade"
-                            monthPicker
-                            v-model="inputs.expireDate"
-                        />
-                    </div>
-                    <div class="col-3">
-                        <TextInput
-                            name="CVV"
-                            v-model="inputs.cvv"
-                        />
-                    </div>
-                </div>
             </div>
+            <p v-else>Nenhuma fatura pendente encontrada.</p>
         </EditForm>
     </div>
 </template>
 
 <script>
+import { storeToRefs } from "pinia";
+
+import {useCurrentUserStore} from '../../../../stores/client';
+
 export default {
+    setup() {
+        const currentUserStore = useCurrentUserStore();
+        const { user } = storeToRefs(currentUserStore);
+        return {
+            currentUser: user,
+            currentUserStore
+        };
+    },
     created() {
         this.paymentMethods = [
             {
-                value: 'bolbradesco',
-                text: 'Boleto',
+                value: "bolbradesco",
+                text: "Boleto",
             },
             {
-                value: 'credit_card',
-                text: 'Cartão de crédito',
+                value: "credit_card",
+                text: "Cartão de crédito",
             }
         ];
     },
     data() {
         return {
-            hasPendingTicket: true,
+            canPay: this.currentUser.canPay,
             inputs: {
-                paymentMethod: 0,
+                paymentMethod: this.currentUser.payment_method,
                 cardNumber: null,
                 cardholderName: null,
                 cpf: null,
-                expireDate: null,
+                expireDate: {month: null, year: null},
                 cvv: null,
             }
-        }
+        };
     },
     methods: {
         submit() {
+            const res = confirm("Tem certeza que deseja alterar o plano de pagamento para \n" + this.paymentMethods.find((val) => val.value === this.inputs.paymentMethod).text + " ?");
+            if (!res)
+                return;
+            axios
+                .put("/api/user/" + this.currentUser.id + "/payment_plan", {
+                method: this.inputs.paymentMethod
+            })
+                .then(() => this.currentUserStore.refresh())
+                .catch(() => alert("Verifique os dados inseridos"));
+        },
+        creditCardTransaction() {
+            if(!(this.inputs.cardNumber &&  this.inputs.cardholderName && this.inputs.cpf &&
+                this.inputs.expireDate?.month && this.inputs.expireDate?.year && this.inputs.cvv)) {
+                alert("Há dados não preenchidos");
+                return;
+            }
+            
             this.mercadoPago
                 .createCardToken({
                     cardNumber: this.inputs.cardNumber,
                     cardholderName: this.inputs.cardholderName,
-                    identificationType: 'CPF',
+                    identificationType: "CPF",
                     identificationNumber: this.inputs.cpf,
                     securityCode: this.inputs.cvv,
                     cardExpirationMonth: (this.inputs.expireDate.month + 1).toString(),
                     cardExpirationYear: this.inputs.expireDate.year.toString(),
                 })
-                .then(({id}) => {
-                    console.log({token: id});
-                    axios.post('/api/payment', {
-                        'card_token': id
+                .then(({ id }) => {
+                    axios.post("/api/payment", {
+                        "card_token": id,
+                        "cardholderName": this.inputs.cardholderName,
+                        "identificationNumber": this.inputs.cpf
                     })
                     .then(console.log);
                 })
                 .catch(code => alert(code));
+        }
+    },
+    computed: {
+        hasChanged() {
+            return this.currentUser.payment_method !== this.inputs.paymentMethod;
         }
     }
 }
