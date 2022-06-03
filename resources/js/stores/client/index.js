@@ -151,8 +151,8 @@ const useNotificationStore = defineStore('notification', {
                                             data: {
                                                 url: window.location.href, // pass the current url to the notification
                                             },
-                                            badge: './assets/badge.png',
-                                            icon: './assets/icon.png',
+                                            badge: notification.tournament ? notification.tournament.platform_img : '/images/logo.png',
+                                            icon: '/images/logo.png',
                                         }
                                     );
 

@@ -75,7 +75,7 @@ export default {
     methods: {
         submit() {
             axios
-                .post('/api/user/' + this.currentUser.id, this.inputs)
+                .put('/api/user/' + this.currentUser.id, this.inputs)
                 .then(() => this.currentUserStore.refresh())
                 .catch(() => alert("Verifique os dados inseridos"));
         }

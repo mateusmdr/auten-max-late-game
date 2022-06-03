@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use DateTime;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TournamentResource extends JsonResource
@@ -22,7 +23,7 @@ class TournamentResource extends JsonResource
         $subscription_end = (new DateTime($this->subscription_end_at))->format('H:i');
         $subscription = $subscription_begin . ' às ' . $subscription_end;
 
-
+        $img_filename = $this->tournament_platform ? Storage::disk('public')->url($this->tournament_platform->img_filename) : null;
 
         return [
             'id' => $this->id,
@@ -31,6 +32,7 @@ class TournamentResource extends JsonResource
             'subscription' => $subscription,
             'platform_name' => $this->tournament_platform?->name,
             'platform_id' => $this->tournament_platform_id,
+            'platform_img' => $img_filename,
             'type_name' => $this->tournament_type?->name,
             'type_id' => $this->tournament_type_id,
             'min' => $this->min_buy_in,
