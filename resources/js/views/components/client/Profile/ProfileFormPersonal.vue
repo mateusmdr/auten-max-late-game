@@ -1,10 +1,10 @@
 <template>
     <div class="form-container">
         <EditForm
-            :showSubmitButton="true"
+            :showSubmitButton="hasChanged"
             title="Dados pessoais"
             submitText="Salvar edições"
-            :submitHandler="(e) => {e.preventDefault;}"
+            @submit="submit"
         >
             <div class="row">
                 <div class="col-12 mb-4">
@@ -34,14 +34,50 @@
 </template>
 
 <script>
+import axios from "axios";
+import deepEqual from "deep-equal";
+import { storeToRefs } from "pinia";
+
+import {useCurrentUserStore} from '../../../../stores/client';
+
 export default {
+    setup() {
+        const currentUserStore = useCurrentUserStore();
+
+        const {user} = storeToRefs(currentUserStore);
+
+        return {
+            currentUser: user,
+            currentUserStore
+        }
+    },
     data() {
         return {
             inputs: {
-                name: this.user.name,
-                cpf: this.user.cpf,
-                phone: this.user.phone,
+                name: this.currentUser.name,
+                cpf: this.currentUser.cpf,
+                phone: this.currentUser.phone,
             },
+        }
+    },
+    computed: {
+        hasChanged() {
+            const mapped = {
+                name: this.currentUser.name,
+                cpf: this.currentUser.cpf,
+                phone: this.currentUser.phone,
+            }
+
+            console.log({inputs: this.inputs, currentUser: mapped});
+            return !deepEqual(this.inputs, mapped);
+        }
+    },
+    methods: {
+        submit() {
+            axios
+                .post('/api/user/' + this.currentUser.id, this.inputs)
+                .then(() => this.currentUserStore.refresh())
+                .catch(() => alert("Verifique os dados inseridos"));
         }
     }
 }

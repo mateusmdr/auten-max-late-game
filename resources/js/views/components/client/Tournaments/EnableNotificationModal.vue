@@ -43,8 +43,6 @@
 import {useNotificationIntervalStore, useTournamentStore} from '../../../../stores/client';
 import {storeToRefs} from 'pinia';
 
-import { parse, format } from 'date-format-parse';
-
 export default {
     emits: ['close'],
     setup() {

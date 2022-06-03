@@ -11,10 +11,16 @@
 </template>
 
 <script>
-import {useNotificationStore} from '../stores/client';
+import {getCurrentInstance} from 'vue';
+
+import {useNotificationStore, useCurrentUserStore} from '../stores/client';
 import ClientProfile from './client/Profile.vue';
 
 export default {
+    setup() {
+        const currentUserStore = useCurrentUserStore();
+        currentUserStore.refresh();
+    },
     mounted() {
         if (!this.user.is_admin) {
             const notificationStore = useNotificationStore();

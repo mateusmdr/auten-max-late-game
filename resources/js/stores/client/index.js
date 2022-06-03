@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import {parse, format} from 'date-format-parse';
 import {func} from '../../func';
+import axios from 'axios';
 
 // Tournaments
 const useTournamentStore = defineStore('tournament', {
@@ -155,10 +156,7 @@ const useNotificationStore = defineStore('notification', {
                                         }
                                     );
 
-                                    this.notifications.push({
-                                        ...notification,
-                                        datetime: format(notification.datetime, 'DD/MM/YYYY HH:mm')
-                                    });
+                                    this.refresh();
                                 },
                                 timeout
                             ));
@@ -176,8 +174,7 @@ const useNotificationIntervalStore = defineStore('notificationInterval', {
     }),
     actions: {
         refresh() {
-            return (
-                axios
+            axios
                 .get('/api/notification_interval')
                 .then((res) => this.notificationIntervals = res.data.data)
                 .then(() => {
@@ -189,9 +186,25 @@ const useNotificationIntervalStore = defineStore('notificationInterval', {
                     })
                 })
                 .catch(e => console.error(e))
-            );
         }
     }
 });
 
-export {useTournamentStore, useTournamentTypeStore, useTournamentPlatformStore, useNotificationStore, useNotificationIntervalStore};
+// Current User data
+import {getCurrentInstance} from 'vue';
+
+const useCurrentUserStore = defineStore('currentUser', {
+    state: () => ({
+        user: getCurrentInstance().appContext.config.globalProperties.user,
+    }),
+    actions: {
+        refresh() {
+            axios
+                .get('/api/user/' + this.user.id)
+                .then((res) => this.user = res.data.data)
+                .catch(e => console.error(e))
+        }
+    }
+});
+
+export {useTournamentStore, useTournamentTypeStore, useTournamentPlatformStore, useNotificationStore, useNotificationIntervalStore, useCurrentUserStore};
