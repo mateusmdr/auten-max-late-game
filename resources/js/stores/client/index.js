@@ -15,16 +15,16 @@ export const useTournamentStore = defineStore('tournament', {
             axios
                 .get('/api/tournament')
                 .then((res) => {
-                    this.tournaments = res.data.data;
-                    this.enabledTournaments = res.data.data
-                        .filter(item => item.isNotifiable)
-                        .filter(item => { // Check if happens today
-                            return parse(item.date, 'DD/MM/YYYY').toDateString() === new Date().toDateString()
-                        });
-                    this.errors = res.data.errors;
-                })
-                .then(() => {
-                    this.tournaments = this.tournaments.map(tournament =>{
+                    return res.data.data
+                        .filter(tournament => {
+                            const date = parse(tournament.date, 'DD/MM/YYYY');
+                            const subscription = tournament.subscription.split(' ');
+                            let end = parse(subscription[2], 'HH:mm')
+                            end = func.toLocal(end);
+                            
+                            return (date > new Date() || end.getTime() >= Date.now());
+                        })
+                        .map(tournament =>{
                         const subscription = tournament.subscription.split(' ');
                         let begin = parse(subscription[0], 'HH:mm')
                         let end = parse(subscription[2], 'HH:mm')
@@ -39,6 +39,15 @@ export const useTournamentStore = defineStore('tournament', {
                             subscription: `${begin} ${subscription[1]} ${end}`
                         })
                     });
+                })
+                .then((tournaments) => {
+                    this.tournaments = tournaments;
+                    this.enabledTournaments = tournaments
+                        .filter(item => item.isNotifiable)
+                        .filter(item => { // Check if happens today
+                            return parse(item.date, 'DD/MM/YYYY').toDateString() === new Date().toDateString()
+                        });
+                    this.errors = res.data.errors;
                 })
                 .catch(e => console.error(e));
         }
