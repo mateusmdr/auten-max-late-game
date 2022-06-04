@@ -24,11 +24,6 @@
 export default {
     created() {
         this.steps = ['Planos', 'Notificações', 'Torneios', 'Termos de uso']
-    },
-    data() {
-        return {
-
-        }
     }
 }
 </script>

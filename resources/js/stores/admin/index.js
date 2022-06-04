@@ -67,13 +67,21 @@ export const useTournamentStore = defineStore('tournament', {
 export const useUserStore = defineStore('user', {
     state: () => ({
         users: [],
+        user: null,
     }),
     actions: {
         refresh() {
-            axios
+            return axios
                 .get('/api/user')
                 .then((res) => this.users = res.data.data)
                 .catch(e => console.error(e));
+        },
+        getUser(id) {
+            this.user = this.users.find(item => item.id == id);
+            this.refresh()
+            .then(() => {
+                this.user = this.users.find(item => item.id == id);
+            })
         }
     }
 });
@@ -158,14 +166,27 @@ export const useNotificationStore = defineStore('notification', {
         notifications: [],
     }),
     actions: {
+        getNotificationTitle(notification) {
+            if(notification.type === 'tournament') {
+                return notification.tournament.name;
+            }
+            
+            if(notification.type === 'administrative') {
+                return 'Administração';
+            }
+
+            return 'Financeiro';
+        },
         refresh() {
             return (
                 axios
                 .get('/api/notification')
                 .then((res) => this.notifications = res.data.data.map((notification) => {
                     let datetime = func.toLocal(parse(notification.datetime, 'DD/MM/YYYY HH:mm'));
+                    const title = this.getNotificationTitle(notification);
                     return ({
                         ...notification,
+                        title,
                         date: format(datetime, 'DD/MM/YYYY'),
                         time: format(datetime, 'HH:mm')
                     })

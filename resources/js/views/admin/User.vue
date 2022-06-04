@@ -7,9 +7,21 @@
                     <span class="return-button">Voltar</span>
                 </router-link>
             </div>
-            <div>
-                <span class="user-name">{{user.name}}</span>
+            <div class="mb-4">
+                <span class="user-name">{{user?.name}}</span>
             </div>
+            <Stepper :steps="steps">
+                <template #step-0>
+                    <AdminUserData :user="user"/>
+                </template>
+                <template #step-1>
+                    <AdminUserPayments :user="user"/>
+                </template>
+                <template #step-2>
+                    <AdminUserNotifications :user="user"/>
+                </template>
+            </Stepper>
+            
         </div>
         
     </Section>
@@ -17,23 +29,24 @@
 
 <script>
 import { storeToRefs } from 'pinia';
+
 import {useUserStore} from '../../stores/admin';
 
 export default {
-    setup() {
+    setup(context) {
         const userStore = useUserStore();
-        userStore.refresh();
 
-        const {users} = storeToRefs(userStore);
+        const {user} = storeToRefs(userStore);
+
         return {
-            users
+            user,
+            userStore
         }
     },
-    computed: {
-        user() {
-            return this.users.find(item => item.id == this.$route.params.id);
-        }
-    }
+    created() {
+        this.userStore.getUser(this.$route.params.id);
+        this.steps = ['Dados', 'Pagamentos', 'Notificações']
+    },
 }
 </script>
 

@@ -24,6 +24,7 @@ class PaymentResource extends JsonResource
         return [
             'id' => $this->id,
             'user_name' => $this->user->name,
+            'user_id' => $this->user->id,
             'plan' => $this->payment_plan->name,
             'date' => $date,
             'time' => $time,

@@ -32,7 +32,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/global.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/mozillafix.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app" class="container-fluid"></div>

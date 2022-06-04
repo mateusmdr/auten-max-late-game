@@ -22,6 +22,7 @@ class NotificationResource extends JsonResource
         return [
             'id' => $this->id,
             'user_name' => $this->user->name,
+            'user_id' => $this->user->id,
             'datetime' => $datetime,
             'type' => $this->type,
             'description' => is_null($tournament) ?  $this->description : null,
