@@ -42,7 +42,7 @@ export default {
                 const newFilter = (notification) => {
 
                     const search1 = (notification.user_name).toLowerCase();
-                    const search2 = (notification.description).toLowerCase();
+                    const search2 = notification.description ? (notification.description).toLowerCase() : "";
 
                     return (
                         (now.username ? search1.includes(now.username.toLowerCase()) : true) &&
