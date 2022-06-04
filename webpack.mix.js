@@ -16,7 +16,8 @@ mix
     .sass('resources/sass/global.scss', 'public/css')
     .alias({
         '@images': path.join(__dirname, 'resources/images'),
-    });
+    })
+    .copy('resources/images/dark_logo.png', 'public/images');
 
 if (mix.inProduction()) {
     mix

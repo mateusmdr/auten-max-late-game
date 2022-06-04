@@ -37,7 +37,7 @@ class AdController extends Controller
             $builder->where('begin_at', '<=', now());
             $ad = $builder->inRandomOrder()->first();
 
-            return new AdResource($ad);
+            return $ad === null ? null : new AdResource($ad);
         }
 
         return AdResource::collection($builder->get());

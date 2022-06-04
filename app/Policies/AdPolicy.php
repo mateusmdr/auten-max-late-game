@@ -18,7 +18,7 @@ class AdPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->is_admin;
+        return true;
     }
 
     /**

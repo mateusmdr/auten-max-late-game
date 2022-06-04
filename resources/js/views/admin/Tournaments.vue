@@ -8,6 +8,7 @@
             v-else
             :tournament="selectedTournament"
             @close="selectedTournament = null"
+            :editMode="!editMode"
         />
 
         <AdminTournamentsFilters
@@ -44,6 +45,7 @@ export default {
         return {
             filter: () => true,
             selectedTournament: null,
+            editMode: false,
         }
     },
 }

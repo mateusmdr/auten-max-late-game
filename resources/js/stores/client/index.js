@@ -4,7 +4,7 @@ import {func} from '../../func';
 import axios from 'axios';
 
 // Tournaments
-const useTournamentStore = defineStore('tournament', {
+export const useTournamentStore = defineStore('tournament', {
     state: () => ({
         tournaments: [],
         errors: [],
@@ -16,7 +16,11 @@ const useTournamentStore = defineStore('tournament', {
                 .get('/api/tournament')
                 .then((res) => {
                     this.tournaments = res.data.data;
-                    this.enabledTournaments = res.data.data.filter(item => item.isNotifiable);
+                    this.enabledTournaments = res.data.data
+                        .filter(item => item.isNotifiable)
+                        .filter(item => { // Check if happens today
+                            return parse(item.date, 'DD/MM/YYYY').toDateString() === new Date().toDateString()
+                        });
                     this.errors = res.data.errors;
                 })
                 .then(() => {
@@ -41,7 +45,7 @@ const useTournamentStore = defineStore('tournament', {
     }
 });
 
-const useTournamentTypeStore = defineStore('tournamentType', {
+export const useTournamentTypeStore = defineStore('tournamentType', {
     state: () => ({
         tournamentTypes: [],
     }),
@@ -55,7 +59,7 @@ const useTournamentTypeStore = defineStore('tournamentType', {
     }
 });
 
-const useTournamentPlatformStore = defineStore('tournamentPlatform', {
+export const useTournamentPlatformStore = defineStore('tournamentPlatform', {
     state: () => ({
         tournamentPlatforms: [],
     }),
@@ -69,7 +73,7 @@ const useTournamentPlatformStore = defineStore('tournamentPlatform', {
     }
 });
 
-const useNotificationStore = defineStore('notification', {
+export const useNotificationStore = defineStore('notification', {
     state: () => ({
         notifications: [],
         due: [],
@@ -115,27 +119,6 @@ const useNotificationStore = defineStore('notification', {
                             );
                         }
                     });
-                })
-                .then(() => {
-                    const isFirefox = !navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-
-                    const platformIcon = isFirefox ? '/images/dark_logo.png' : '/images/logo.png';
-
-                    new Notification(
-                        this.due[0].title,
-                        {
-                            tag: this.due[0].id, // a unique ID
-                            body: this.due[0].type !== 'tournament' ? this.due[0].description : `
-                                Inscrição: ${this.due[0].tournament.subscription}
-                                Plataforma: ${this.due[0].tournament.platform_name}
-                            `, // content of the push this.due[0]
-                            data: {
-                                url: window.location.href, // pass the current url to the this.due[0]
-                            },
-                            badge: this.due[0].tournament ? this.due[0].tournament.platform_img : platformIcon,
-                            icon: platformIcon,
-                        }
-                    )
                 })
                 .then(this.schedule);
         },
@@ -193,7 +176,7 @@ const useNotificationStore = defineStore('notification', {
 });
 
 // NotificationIntervals
-const useNotificationIntervalStore = defineStore('notificationInterval', {
+export const useNotificationIntervalStore = defineStore('notificationInterval', {
     state: () => ({
         notificationIntervals: [],
     }),
@@ -218,7 +201,7 @@ const useNotificationIntervalStore = defineStore('notificationInterval', {
 // Current User data
 import {getCurrentInstance} from 'vue';
 
-const useCurrentUserStore = defineStore('currentUser', {
+export const useCurrentUserStore = defineStore('currentUser', {
     state: () => ({
         user: getCurrentInstance().appContext.config.globalProperties.user,
     }),
@@ -232,4 +215,17 @@ const useCurrentUserStore = defineStore('currentUser', {
     }
 });
 
-export {useTournamentStore, useTournamentTypeStore, useTournamentPlatformStore, useNotificationStore, useNotificationIntervalStore, useCurrentUserStore};
+// NotificationIntervals
+export const useAdStore = defineStore('ad', {
+    state: () => ({
+        ad: null,
+    }),
+    actions: {
+        refresh() {
+            axios
+                .get('/api/ad')
+                .then((res) => this.ad = (!res.data) ? null : res.data.data)
+                .catch(e => console.error(e))
+        }
+    }
+});

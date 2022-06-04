@@ -4,7 +4,7 @@ import {func} from '../../func';
 
 // Tournaments
 
-const useTournamentTypeStore = defineStore('tournamentType', {
+export const useTournamentTypeStore = defineStore('tournamentType', {
     state: () => ({
         tournamentTypes: [],
     }),
@@ -18,7 +18,7 @@ const useTournamentTypeStore = defineStore('tournamentType', {
     }
 });
 
-const useTournamentPlatformStore = defineStore('tournamentPlatform', {
+export const useTournamentPlatformStore = defineStore('tournamentPlatform', {
     state: () => ({
         tournamentPlatforms: [],
     }),
@@ -32,7 +32,7 @@ const useTournamentPlatformStore = defineStore('tournamentPlatform', {
     }
 });
 
-const useTournamentStore = defineStore('tournament', {
+export const useTournamentStore = defineStore('tournament', {
     state: () => ({
         tournaments: [],
     }),
@@ -64,7 +64,7 @@ const useTournamentStore = defineStore('tournament', {
 });
 
 //Users
-const useUserStore = defineStore('user', {
+export const useUserStore = defineStore('user', {
     state: () => ({
         users: [],
     }),
@@ -79,7 +79,7 @@ const useUserStore = defineStore('user', {
 });
 
 //PaymentPlans
-const usePaymentPlanStore = defineStore('paymentPlan', {
+export const usePaymentPlanStore = defineStore('paymentPlan', {
     state: () => ({
         paymentPlans: {
             monthly: null,
@@ -109,7 +109,7 @@ const usePaymentPlanStore = defineStore('paymentPlan', {
 });
 
 // Payments
-const usePaymentStore = defineStore('payment', {
+export const usePaymentStore = defineStore('payment', {
     state: () => ({
         payments: [],
     }),
@@ -136,7 +136,7 @@ const usePaymentStore = defineStore('payment', {
 });
 
 // Ads
-const useAdStore = defineStore('ad', {
+export const useAdStore = defineStore('ad', {
     state: () => ({
         ads: [],
     }),
@@ -153,7 +153,7 @@ const useAdStore = defineStore('ad', {
 });
 
 // Notifications
-const useNotificationStore = defineStore('notification', {
+export const useNotificationStore = defineStore('notification', {
     state: () => ({
         notifications: [],
     }),
@@ -177,7 +177,7 @@ const useNotificationStore = defineStore('notification', {
 });
 
 // Insights
-const useInsightsStore = defineStore('insights', {
+export const useInsightsStore = defineStore('insights', {
     state: () => ({
         insights: null,
     }),
@@ -194,7 +194,7 @@ const useInsightsStore = defineStore('insights', {
 });
 
 // NotificationIntervals
-const useNotificationIntervalStore = defineStore('notificationInterval', {
+export const useNotificationIntervalStore = defineStore('notificationInterval', {
     state: () => ({
         notificationIntervals: [],
     }),
@@ -209,10 +209,3 @@ const useNotificationIntervalStore = defineStore('notificationInterval', {
         }
     }
 });
-
-export {
-    useTournamentTypeStore, useTournamentPlatformStore, useTournamentStore,
-    useUserStore, usePaymentPlanStore, usePaymentStore,
-    useAdStore, useNotificationStore,
-    useInsightsStore, useNotificationIntervalStore
-};
