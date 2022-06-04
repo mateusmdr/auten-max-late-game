@@ -19,7 +19,7 @@ class StoreTournamentRequest extends BaseRequest
             'prize' => 'required|integer|min:1',
             'min_buy_in' => 'integer|min:0',
             'max_buy_in' => 'integer|min:0|gte:min_buy_in',
-            'date' => 'required|date_format:Y-m-d|after_or_equal:yesterday',
+            'date' => 'required|date_format:Y-m-d|after:yesterday',
             'subscription_begin_at' => 'required|date_format:H:i',
             'subscription_end_at' => 'required|date_format:H:i',
             'tournament_platform_id' => 'required|integer|min:0|exists:App\Models\TournamentPlatform,id',
