@@ -116,6 +116,27 @@ const useNotificationStore = defineStore('notification', {
                         }
                     });
                 })
+                .then(() => {
+                    const isFirefox = !navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+
+                    const platformIcon = isFirefox ? '/images/dark_logo.png' : '/images/logo.png';
+
+                    new Notification(
+                        this.due[0].title,
+                        {
+                            tag: this.due[0].id, // a unique ID
+                            body: this.due[0].type !== 'tournament' ? this.due[0].description : `
+                                Inscrição: ${this.due[0].tournament.subscription}
+                                Plataforma: ${this.due[0].tournament.platform_name}
+                            `, // content of the push this.due[0]
+                            data: {
+                                url: window.location.href, // pass the current url to the this.due[0]
+                            },
+                            badge: this.due[0].tournament ? this.due[0].tournament.platform_img : platformIcon,
+                            icon: platformIcon,
+                        }
+                    )
+                })
                 .then(this.schedule);
         },
         schedule() {
@@ -124,6 +145,10 @@ const useNotificationStore = defineStore('notification', {
                 clearTimeout(timeout);
             });
             this.timeouts = [];
+
+            const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+
+            const platformIcon = isFirefox ? '/images/dark_logo.png' : '/images/logo.png';
 
             Notification
                 .requestPermission()
@@ -144,15 +169,15 @@ const useNotificationStore = defineStore('notification', {
                                         notification.title,
                                         {
                                             tag: notification.id, // a unique ID
-                                            body: notification.type !== 'tournament' ? notification.description : `
-                                                Inscrição: ${notification.tournament.subscription}
-                                                Plataforma: ${notification.tournament.platform_name}
-                                            `, // content of the push notification
+                                            body: notification.type !== 'tournament' ? notification.description :
+                                                `Inscrição: ${notification.tournament.subscription} \n` +
+                                                `Plataforma: ${notification.tournament.platform_name}`,
+                                                // content of the push notification
                                             data: {
                                                 url: window.location.href, // pass the current url to the notification
                                             },
-                                            badge: notification.tournament ? notification.tournament.platform_img : '/images/logo.png',
-                                            icon: '/images/logo.png',
+                                            badge: notification.tournament ? notification.tournament.platform_img : platformIcon,
+                                            icon: platformIcon,
                                         }
                                     );
 
