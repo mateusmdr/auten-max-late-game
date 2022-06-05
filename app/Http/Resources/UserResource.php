@@ -26,6 +26,7 @@ class UserResource extends JsonResource
             'payment_method' => $this->payment_method,
             'isVerified' => !is_null($this->email_verified_at),
             'isBlocked' => !!$this->is_blocked,
+            'block_reason' => $this->block_reason,
             'isInactive' => $this->isInactive(),
             'isRegular' => $this->isRegular(),
             'canPay' => $this->canPay()

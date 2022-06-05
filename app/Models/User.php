@@ -23,6 +23,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'cpf',
         'phone',
+        'is_blocked',
+        'block_reason',
+        'email_verified_at'
     ];
 
     /**
@@ -33,7 +36,6 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
-        'is_blocked'
     ];
 
     /**

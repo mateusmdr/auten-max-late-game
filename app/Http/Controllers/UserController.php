@@ -85,12 +85,16 @@ class UserController extends Controller
             'cpf',
             'phone',
             'is_blocked',
-            'blocked_reason'
+            'block_reason'
         ]);
         
         if(!empty($data)) {
-            if(is_bool($data['is_blocked']) &&  !$data['is_blocked']) {
-                $data['blocked_reason'] = null;
+            if(isset($data['is_blocked']) && $data['is_blocked']) {
+                $data['block_reason'] = null;
+            }
+
+            if(isset($data['email'])) {
+                $data['email_verified_at'] = null;
             }
             
             $user->update($data);

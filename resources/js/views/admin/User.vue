@@ -10,9 +10,9 @@
             <div class="mb-4">
                 <span class="user-name">{{user?.name}}</span>
             </div>
-            <Stepper :steps="steps">
+            <Stepper v-if="user" :steps="steps">
                 <template #step-0>
-                    <AdminUserData :user="user"/>
+                    <AdminUserData :user="user" @update="refresh"/>
                 </template>
                 <template #step-1>
                     <AdminUserPayments :user="user"/>
@@ -47,6 +47,12 @@ export default {
         this.userStore.getUser(this.$route.params.id);
         this.steps = ['Dados', 'Pagamentos', 'Notificações']
     },
+    methods: {
+        refresh() {
+            this.userStore.refresh();
+            this.userStore.getUser(this.user.id);
+        }
+    }
 }
 </script>
 

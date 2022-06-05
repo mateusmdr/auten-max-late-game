@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="$emit('submit')" autocomplete="off">
-        <h4 class="form-title mb-5">{{title}}</h4>
+        <h4 class="form-title mb-5" v-if="title">{{title}}</h4>
         <div class="input-container mb-3">
             <slot/>
         </div>

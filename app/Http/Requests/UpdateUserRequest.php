@@ -35,7 +35,7 @@ class UpdateUserRequest extends BaseRequest
             'cpf'=> 'cpf|unique:users,cpf,' . $id,
             'phone'=> 'integer|digits_between:10,14',
             'is_blocked' => 'boolean',
-            'blocked_reason' => 'required_if:is_blocked,1|string|max:' . DBSizes::STRING,
+            'block_reason' => 'required_if:is_blocked,1|string|max:' . DBSizes::STRING,
         ];
     }
 }

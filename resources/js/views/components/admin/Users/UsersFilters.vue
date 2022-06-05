@@ -28,21 +28,26 @@ export default {
         this.userStatuses = [
             {
                 id: 0,
+                text:'Todos',
+                hasIcon: false,
+            },
+            {
+                id: 1,
                 text:'Cadastrados',
                 color:'#05F28E',
             },
             {
-                id: 1,
+                id: 2,
                 text:'Email não verificado',
                 color:'#B376F8',
             },
             {
-                id: 2,
+                id: 3,
                 text:'Inativos',
                 color:'#F5A847',
             },
             {
-                id: 3,
+                id: 4,
                 text:'Bloqueados',
                 color:'#EB4263',
             }
@@ -75,15 +80,17 @@ export default {
                     let userStatusFilter = true;
                     switch(now.userStatus) {
                         case 0:
+                            return true;
+                        case 1:
                             userStatusFilter = user.isVerified;
                             break;
-                        case 1:
+                        case 2:
                             userStatusFilter = !user.isVerified;
                             break;
-                        case 2:
+                        case 3:
                             userStatusFilter = user.isInactive;
                             break;
-                        case 3:
+                        case 4:
                             userStatusFilter = user.isBlocked;
                     }
 
