@@ -9,7 +9,8 @@
             dark
             hideInputIcon
             v-model="date"
-            @update:modelValue="updateValue"
+            @update:modelValue="$emit('update:modelValue', $event)"
+            :value="modelValue"
             :format="monthPicker ? 'MM/yyyy' : 'dd/MM/yyyy'"
             :monthPicker="monthPicker"
         />
@@ -21,18 +22,11 @@ import { ref } from 'vue';
 import Datepicker from '@vuepic/vue-datepicker';
 
 export default {
-    setup(props, context) {
+    setup() {
         const now = ref(new Date());
-        const date = ref(props.modelValue);
-
-        const updateValue = (date) => {
-            context.emit('update:modelValue', date);
-        }
 
         return {
-            now,
-            date,
-            updateValue
+            now
         }
     },
     components: {Datepicker},

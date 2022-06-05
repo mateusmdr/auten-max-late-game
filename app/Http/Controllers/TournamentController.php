@@ -74,10 +74,10 @@ class TournamentController extends Controller
         ]);
 
         DB::transaction(function () use ($data) {
-            $ends_at = new DateTime($data['ends_at']);
-            $date = new DateTime($data['date']);
-
             if(isset($data['schedule']) && str_contains($data['schedule'], '*/15')) {
+                $ends_at = new DateTime($data['ends_at']);
+                $date = new DateTime($data['date']);
+
                 $tournamentData = [];
 
                 $recurrence = TournamentRecurrence::create($data);
@@ -113,6 +113,9 @@ class TournamentController extends Controller
 
                 Tournament::insert($tournamentData);
             }else if($data['is_recurrent']) {
+
+                $ends_at = new DateTime($data['ends_at']);
+                $date = new DateTime($data['date']);
             
                 $recurrence = TournamentRecurrence::create($data);
 
@@ -142,6 +145,7 @@ class TournamentController extends Controller
                 unset($data['is_recurrent']);
                 unset($data['schedule']);
                 unset($data['ends_at']);
+                
                 Tournament::create($data);
             }
         });
