@@ -84,9 +84,15 @@ class UserController extends Controller
             'name',
             'cpf',
             'phone',
+            'is_blocked',
+            'blocked_reason'
         ]);
         
         if(!empty($data)) {
+            if(is_bool($data['is_blocked']) &&  !$data['is_blocked']) {
+                $data['blocked_reason'] = null;
+            }
+            
             $user->update($data);
             $user->save();
         }

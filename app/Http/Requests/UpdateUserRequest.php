@@ -32,8 +32,10 @@ class UpdateUserRequest extends BaseRequest
         return [
             'email' => 'email|unique:users,email,' . $id . '|max:' . DBSizes::STRING,
             'name'=> 'string|min:2|max:' . DBSizes::STRING,
-            'cpf'=> 'required|cpf|unique:users,cpf,' . $id,
+            'cpf'=> 'cpf|unique:users,cpf,' . $id,
             'phone'=> 'integer|digits_between:10,14',
+            'is_blocked' => 'boolean',
+            'blocked_reason' => 'required_if:is_blocked,1|string|max:' . DBSizes::STRING,
         ];
     }
 }

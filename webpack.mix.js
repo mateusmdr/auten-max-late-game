@@ -5,6 +5,7 @@ require('mix-env-file');
 require('laravel-mix-simple-image-processing')
 
 mix
+    .disableNotifications()
     .imgs({
         source: 'resources/images/raw',
         destination: 'resources/images',
@@ -24,5 +25,6 @@ if (mix.inProduction()) {
         .version()
         .sourceMaps()
 }else {
-    mix.browserSync(process.env.APP_URL);
+    mix
+        .browserSync(process.env.APP_URL)
 }

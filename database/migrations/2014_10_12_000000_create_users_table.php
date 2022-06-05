@@ -27,6 +27,7 @@ return new class extends Migration
             $table->enum('payment_method',DBTypes::PAYMENT_METHODS)->nullable();
 
             $table->boolean('is_blocked')->default(false);
+            $table->string('blocked_reason', DBSizes::STRING)->nullable();
             $table->boolean('is_admin')->default(false);
 
             $table->timestamp('created_at')->useCurrent();
