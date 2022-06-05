@@ -8,7 +8,6 @@
             v-else
             :tournament="selectedTournament"
             @close="selectedTournament = null"
-            :editMode="!editMode"
         />
 
         <AdminTournamentsFilters

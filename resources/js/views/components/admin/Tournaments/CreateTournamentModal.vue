@@ -242,22 +242,19 @@ export default {
                             .join(',');
                         break;
                     case 'biweekly':
-                        // Weeks of the month
-                        // monthDay = this.inputs.date.getDate();
-                        // if(monthDay <= 7 || (monthDay >=15 && monthday<=21)) {
-                        //     schedule += "1-7,15-21";
-                        // }else {
-                        //     schedule += "1-7,15-21";
-                        // }
-                        schedule += "1-7,15-21";
+                        schedule += "*/15";
 
                         schedule += " * ";
 
                         // Days of the week
-                        schedule += this.inputs.weekDays
+                        if(this.inputs.weekDays.every(v => !v)) {
+                            schedule += (this.inputs.date).getDay();
+                        }else {
+                            schedule += this.inputs.weekDays
                             .map((item, index) => index)
                             .filter((index) => this.inputs.weekDays[index])
                             .join(',');
+                        }
 
                         break;
                     default:
