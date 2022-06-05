@@ -106,7 +106,7 @@ export default {
                     block_reason: this.blockReason
                 })
                 .then(() => this.$emit('update'))
-                .catch(() => alert("Verifique os dados inseridos"));
+                .catch(() => alert("É necessário preencher um motivo para o bloqueio."));
         },
         unblockUser() {
             const res = confirm("Tem certeza que deseja desbloquear este usuário?");
