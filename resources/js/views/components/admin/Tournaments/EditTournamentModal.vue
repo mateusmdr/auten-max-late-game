@@ -1,15 +1,26 @@
 <template>
 	<Modal
-        modalTitle= "Editar Torneio"
-        modalIcon="edit"
-        titleColor="#B376F8"
+        :modalTitle="viewMode ? 'Torneio' : 'Editar Torneio'"
+        :modalIcon="viewMode ? 'emoji_events' : 'edit'"
+        :titleColor="viewMode ? '#05F28E' : '#B376F8'"
         submitModalText= "Salvar"
         :width="55"
         @submit="submit"
         ref="modal"
         noButton
         @close="$emit('close')"
+        :noSubmit="viewMode"
 	>
+        <div class="d-flex flex-row mb-3" v-if="viewMode">
+            <div class="action-col me-4" @click="$emit('editMode')">
+                <icon name="edit" color="#B376F8" size="1.5rem"/>
+                <h4 style="color: #B376F8;">Editar torneio</h4>
+            </div>
+            <div class="action-col" @click="deleteTournament">
+                <icon name="block" color="#EB4263" size="1.5rem"/>
+                <h4 style="color:#EB4263;">Cancelar torneio</h4>
+            </div>
+        </div>
         <div class="row mb-3">
             <div class="col-4">
                 <TextInput
@@ -86,7 +97,7 @@ import {storeToRefs} from 'pinia';
 import { parse, format } from 'date-format-parse';
 
 export default {
-    emits: ['close'],
+    emits: ['close', 'editMode'],
     setup(context, props) {
         const tournamentTypeStore = useTournamentTypeStore();
         const tournamentPlatformStore = useTournamentPlatformStore();
@@ -102,7 +113,8 @@ export default {
         }
     },
     props: {
-        tournament: Object
+        tournament: Object,
+        viewMode: Boolean
     },
     mounted() {
 		this.$refs.modal.openModal();
@@ -166,7 +178,22 @@ export default {
                 .then(() => this.$emit('close'))
                 .catch(res => this.errors = res.response.data.errors)
                 .finally(this.tournamentStore.refresh);
-        }
+        },
+        deleteTournament() {
+            let res;
+            if(this.tournament.isRecurrent) {
+                res = confirm("Tem certeza que deseja cancelar esta ocorrência de torneio?");
+            }else {
+                res = confirm("Tem certeza que deseja cancelar este torneio?");
+            }
+
+            if(res) {
+                axios
+                    .delete(`/api/tournament/${this.tournament.id}`)
+                    .catch(res => {alert("Falha ao cancelar o torneio: " + res.response.data?.errors)})
+                    .finally(() => {this.tournamentStore.refresh(); this.$refs.modal.closeModal();});
+            }
+        },
     }
 }
 </script>
@@ -183,5 +210,19 @@ export default {
 
     .weekdays-container {
         width: 60%;
+    }
+
+    .action-col {
+        cursor: pointer;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .action-col h4{
+        font-weight: 600;
+        padding-left: 8px;
+        margin: 0;
     }
 </style>

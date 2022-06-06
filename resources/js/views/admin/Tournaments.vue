@@ -7,7 +7,9 @@
         <AdminEditTournamentModal
             v-else
             :tournament="selectedTournament"
+            :viewMode="viewMode"
             @close="selectedTournament = null"
+            @editMode="viewMode = false"
         />
 
         <AdminTournamentsFilters
@@ -17,6 +19,8 @@
         <AdminTournamentsTable
             :tournaments="filteredTournaments"
             @select="(tournament) => selectedTournament = tournament"
+            @editMode="viewMode = false"
+            @viewMode="viewMode = true"
         />
     </Section>
 </template>
@@ -44,7 +48,7 @@ export default {
         return {
             filter: () => true,
             selectedTournament: null,
-            editMode: false,
+            viewMode: false,
         }
     },
 }

@@ -14,7 +14,7 @@
             
             return '#05F28E';
         }"
-        :defaultAction="(item) => true"
+        :action="viewTournament"
         :approveAction="approveTournament"
         :editAction="editTournament"
         :deleteAction="deleteTournament"
@@ -26,6 +26,7 @@
 import {useTournamentStore} from '../../../../stores/admin';
 
 export default {
+    emits: ['select', 'editMode', 'viewMode'],
     setup() {
         const tournamentStore = useTournamentStore();
 
@@ -65,6 +66,11 @@ export default {
         },
         editTournament(tournament) {
             this.$emit('select',tournament);
+            this.$emit('editMode');
+        },
+        viewTournament(tournament) {
+            this.$emit('select',tournament);
+            this.$emit('viewMode');
         },
         deleteTournament(tournament) {
             let res;
