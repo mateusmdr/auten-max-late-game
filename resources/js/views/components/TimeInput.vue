@@ -22,20 +22,21 @@ import { parse, format } from 'date-format-parse';
 
 export default {
     setup(props, context) {
-        const date = ref(props.modelValue ?
-            {
-                hours: format(props.modelValue, 'HH'),
-                minutes: format(props.modelValue, 'mm'),
-            } : null
-        );
-
         const updateValue = (time) => {
             context.emit('update:modelValue', time ? parse(`${time.hours}:${time.minutes}`,'H:m') : null);
         }
 
         return {
-            date,
             updateValue
+        }
+    },
+    computed: {
+        date() {
+            return this.modelValue ?
+            {
+                hours: format(this.modelValue, 'HH'),
+                minutes: format(this.modelValue, 'mm'),
+            } : null
         }
     },
     components: {Datepicker},

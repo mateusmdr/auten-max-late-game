@@ -96,11 +96,12 @@ export default {
 				const res = confirm("Tem certeza que deseja enviar uma mensagem para TODOS os usuários cadastrados?");
 				if(!res) return;
 			}
+            const time = this.$func.toUTC(this.inputs.time);
             axios
                 .post('/api/notification', {
 					type: this.inputs.type,
 					user_id: !this.inputs.user_id ? undefined : this.inputs.user_id,
-					datetime: this.inputs.date.toISOString().slice(0, 10) + ' ' + this.inputs.time.toISOString().slice(11, 16),
+					datetime: this.inputs.date.toISOString().slice(0, 10) + ' ' + time.toISOString().slice(11, 16),
 					description:  this.inputs.description,
 				})
                 .then(this.$refs.modal.closeModal)
