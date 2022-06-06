@@ -8,9 +8,8 @@
             :minDate="minDate ? now : null"
             dark
             hideInputIcon
-            v-model="date"
             @update:modelValue="$emit('update:modelValue', $event)"
-            :value="modelValue"
+            :modelValue="modelValue"
             :format="monthPicker ? 'MM/yyyy' : 'dd/MM/yyyy'"
             :monthPicker="monthPicker"
         />
