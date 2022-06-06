@@ -149,7 +149,7 @@
                 <h5 class="fw-bold">*O torneio acontecerá todos os dias da semana.</h5>
             </div>
             <div class="mt-3" v-if="inputs.recurrence_type === 'biweekly'">
-                <h5 class="fw-bold">*O torneio se repetirá na primeira e terceira semana de todo mês, nos dias informados acima.</h5>
+                <h5 class="fw-bold">*O torneio se repetirá a cada duas semanas, nos dias da semana informados acima (ou a partir da data inicial, caso nenhum tenha sido informado).</h5>
             </div>
             <div class="row mt-4">
                 <div class="col-3">
@@ -302,7 +302,7 @@ export default {
                         ends_at: null
                     }
 				})
-                .catch(res => this.errors = res.response.data.errors)
+                .catch(res => {this.errors = res.response.data.errors; alert("Verifique os dados inseridos.")})
                 .finally(this.tournamentStore.refresh);
         }
     }
