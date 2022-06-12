@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -45,10 +46,13 @@ class LoginController extends Controller
         // ...
     }
 
-    protected function authenticated(Request $request, $user)
+    protected function authenticated(Request $request, User $user)
     {
         if(!env('APP_DEBUG',false)) {
             Auth::logoutOtherDevices($request->input('password'));
         }
+
+        $user->last_login = now();
+        $user->save();
     }
 }

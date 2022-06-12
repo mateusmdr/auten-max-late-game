@@ -15,7 +15,7 @@ class PaymentRequest extends BaseRequest
     {
         return [
             'card_token' => 'required|string|max:'. DBSizes::TOKEN,
-            'cardholderName' => 'required|string|max:'. DBSizes::TOKEN,
+            'cardholderName' => 'required|string|max:'. DBSizes::STRING,
             'identificationNumber' => 'required|cpf'
         ];
     }

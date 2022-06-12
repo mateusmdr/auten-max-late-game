@@ -45,20 +45,23 @@ Route::middleware('auth')->group(function () {
     ->where('any','.*');
 
     Route::group(['prefix' => 'api'], function () {
-        Route::apiResource('user',UserController::class);
-        Route::put('user/{user}/payment_plan', [UserController::class, 'changePaymentPlan']);
-        Route::apiResource('tournament',TournamentController::class);
-        Route::post('tournament/{tournament}/notification',[TournamentController::class, 'enableNotification']);
-        Route::delete('tournament/{tournament}/notification', [TournamentController::class, 'disableNotification']);
-        Route::apiResource('payment_plan', PaymentPlanController::class);
-        Route::apiResource('tournament_platform',TournamentPlatformController::class);
-        Route::apiResource('tournament_type',TournamentTypeController::class);
-        Route::apiResource('notification', NotificationController::class);
-        Route::post('eula',[EULAController::class,'update']);
-        Route::apiResource('payment',PaymentController::class,['only' => ['index', 'show', 'store']]);
-        Route::apiResource('notification_interval',NotificationIntervalController::class,['only' => ['index', 'store', 'show', 'destroy']]);
+        Route::middleware('is_regular')->group(function() {
+            Route::apiResource('user',UserController::class);        
+            Route::apiResource('tournament',TournamentController::class);
+            Route::post('tournament/{tournament}/notification',[TournamentController::class, 'enableNotification']);
+            Route::delete('tournament/{tournament}/notification', [TournamentController::class, 'disableNotification']);        
+            Route::apiResource('tournament_platform',TournamentPlatformController::class);
+            Route::apiResource('tournament_type',TournamentTypeController::class);
+            Route::apiResource('notification', NotificationController::class);
+            Route::post('eula',[EULAController::class,'update']);        
+            Route::apiResource('notification_interval',NotificationIntervalController::class,['only' => ['index', 'store', 'show', 'destroy']]);        
+            Route::get('insights',[InsightsController::class,'index']);
+        });
+
         Route::apiResource('ad',AdController::class,['only' => ['index', 'store', 'update', 'destroy']]);
-        Route::get('insights',[InsightsController::class,'index']);
+        Route::put('user/{user}/payment_plan', [UserController::class, 'changePaymentPlan']);
+        Route::apiResource('payment_plan', PaymentPlanController::class);
+        Route::apiResource('payment',PaymentController::class,['only' => ['index', 'show', 'store']]);
     });
 });
 

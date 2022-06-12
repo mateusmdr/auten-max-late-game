@@ -30,7 +30,9 @@ class PaymentResource extends JsonResource
             'time' => $time,
             'price' => 'R$ '. $this->price,
             'payment_method' => $payment_method,
-            'is_pending' => !!$this->is_pending
+            'is_pending' => $this->is_pending(),
+            'has_failed' => $this->failed(),
+            'status' => $this->status
         ];
     }
 }

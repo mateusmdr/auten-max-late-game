@@ -25,7 +25,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone',
         'is_blocked',
         'block_reason',
-        'email_verified_at'
+        'email_verified_at',
+        'payment_method',
+        'last_login'
     ];
 
     /**
@@ -60,17 +62,36 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function isInactive() {
-        // TODO
-        return false;
+        $lastLogin = new DateTime($this->last_login);
+        
+        $days = now()->diff($lastLogin)->format('%a');
+
+        return($days >= env('INACTIVE_USER_DAYS', 30));
     }
 
     public function isRegular() {
-        // TODO
-        return false;
+        return !$this->isPastTestPeriod() || !$this->canPay();
     }
 
     public function canPay() {
-        // TODO
-        return true;
+        if(!$this->isPastTestPeriod()) {
+            return false;
+        }
+
+        $builder = Payment::query();
+        $builder->whereBelongsTo($this);
+        $builder->whereNotIn('status', ['rejected','cancelled', 'refunded', 'charged_back']);
+        $builder->latest('datetime');
+        $payment = $builder->first();
+
+        if($payment === null || $payment->payment_plan === null) {
+            return true;
+        }
+
+        $payment_plan_period = $payment->payment_plan->getPeriodInDays();
+
+        $days_from_now = now()->diff($payment->datetime)->format('%a');
+
+        return($days_from_now > $payment_plan_period);
     }
 }

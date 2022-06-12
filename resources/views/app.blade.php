@@ -11,7 +11,7 @@
 
     <!-- Load user info -->
     <script>
-        const PHP_USER = @json(Auth::user());
+        const PHP_USER = @json($user);
         const MERCADO_PAGO_PK = "{{ env('MERCADO_PAGO_PK') }}";
     </script>
     

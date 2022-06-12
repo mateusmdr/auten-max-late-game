@@ -43,17 +43,28 @@ class InsightsController extends Controller
                 ->count();
 
         $totalPayments = 
-            Payment::where('is_pending',false)
+            Payment::all()
+                ->filter(function($payment) {
+                    return !($payment->failed() || $payment->is_pending());
+                })
                 ->sum('price');
         $todayPayments = 
-            Payment::where('is_pending',false)
+            Payment::query()
                 ->whereDate('datetime', '>=', $today)
                 ->whereDate('datetime', '<', $tomorrow)
+                ->get()
+                ->filter(function($payment) {
+                    return !($payment->failed() || $payment->is_pending());
+                })
                 ->sum('price');
         $monthPayments = 
-            Payment::where('is_pending',false)
+            Payment::query()
                 ->whereDate('datetime', '>=', $startOfMonth)
                 ->whereDate('datetime', '<', $endOfMonth)
+                ->get()
+                ->filter(function($payment) {
+                    return !($payment->failed() || $payment->is_pending());
+                })
                 ->sum('price');
 
         $totalTournaments = 

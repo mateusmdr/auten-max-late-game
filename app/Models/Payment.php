@@ -13,7 +13,7 @@ class Payment extends Model
         'datetime',
         'price',
         'payment_method',
-        'is_pending',
+        'status',
         'user_id',
         'payment_plan_id'
     ];
@@ -24,5 +24,13 @@ class Payment extends Model
 
     public function payment_plan() {
         return $this->belongsTo(PaymentPlan::class);
+    }
+
+    public function failed() {
+        return in_array($this->status, ['rejected','cancelled', 'refunded', 'charged_back']);
+    }
+
+    public function is_pending() {
+        return true;
     }
 }

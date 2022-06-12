@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\PaymentRequest;
 use App\Http\Resources\PaymentResource;
 use MercadoPago\Payment as MercadoPagoPayment;
 
@@ -34,18 +35,14 @@ class PaymentController extends Controller
         return PaymentResource::collection($builder->get());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(PaymentRequest $request)
     {
         $payment = new MercadoPagoPayment();
 
         $payment->token = $request->input('card_token');
-        return $payment->token;
+        $name = $request->input('cardholderName');
+        $cpf = $request->input('identificationNumber');
+
         $payment_plan = Auth::user()->payment_plan;
         if($payment_plan === null) {
             abort(422);
@@ -56,16 +53,16 @@ class PaymentController extends Controller
         $payment->description = "Assinatura ". $payment_plan->name . " da plataforma MaxLateGame";
         $payment->installments = 1;
         $payment->notification_url = route('mercado_pago_webhook');
-        $payment->payment_method_id = $payment_method_id;
+        $payment->payment_method_id = Auth::user()->payment_method;
 
-        $name = explode(" ", Auth::user()->name);
+        $name = explode(" ", $name);
         $payment->payer = array(
             "email" => Auth::user()->email,
             "first_name" => $name[0],
             "last_name" => $name[array_key_last($name)],
             "identification" => array(
                 "type" => "CPF",
-                "number" => Auth::user()->cpf
+                "number" => $cpf
             ),
             //  "address"=>  array(
             //      "zip_code" => $cep,
