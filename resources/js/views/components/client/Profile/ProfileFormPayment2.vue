@@ -13,9 +13,9 @@
                 />
             </div>
 
-            <div v-if="canPay">
+            <div v-if="!currentUser.isRegular">
                 <div class="ticket-form" v-if="currentUser.payment_method === paymentMethods[0].value && !hasChanged">
-                    <a class="text-decoration-none" href="/ticket" download v-if="canPay">
+                    <a class="text-decoration-none" href="/ticket" download v-if="!currentUser.isRegular">
                         Fazer download do boleto <Icon name="download"/>
                     </a>
                 </div>
@@ -60,7 +60,7 @@
                         </div>
                     </div>
                     <div class="d-flex align-items-center justify-content-center mt-5">
-                        <DynamicButton @click="creditCardTransaction" text="Realizar pagamento"/>
+                        <DynamicButton @click="creditCardTransaction" text="Realizar pagamento" type="button"/>
                     </div>
                 </div>
             </div>
@@ -97,13 +97,12 @@ export default {
     },
     data() {
         return {
-            canPay: this.currentUser.canPay,
             inputs: {
                 paymentMethod: this.currentUser.payment_method,
                 cardNumber: null,
                 cardholderName: null,
                 cpf: null,
-                expireDate: {month: null, year: null},
+                expireDate: null,
                 cvv: null,
             }
         };
@@ -121,8 +120,9 @@ export default {
                 .catch(() => alert("Verifique os dados inseridos"));
         },
         creditCardTransaction() {
+
             if(!(this.inputs.cardNumber &&  this.inputs.cardholderName && this.inputs.cpf &&
-                this.inputs.expireDate?.month && this.inputs.expireDate?.year && this.inputs.cvv)) {
+                this.inputs.expireDate && this.inputs.cvv)) {
                 alert("Há dados não preenchidos");
                 return;
             }
@@ -143,9 +143,15 @@ export default {
                         "cardholderName": this.inputs.cardholderName,
                         "identificationNumber": this.inputs.cpf
                     })
-                    .then(console.log);
+                    .then(() => {
+                        this.currentUserStore.refresh();
+                        alert("Pagamento Realizado com sucesso!");
+                        this.$router.push({name: 'home'});
+                        this.$forceUpdate();
+                    })
+                    .catch(error => alert(error.response ? error.response.data?.error : error));
                 })
-                .catch(code => alert(code));
+                .catch(() => alert("Verifique os dados inseridos"));
         }
     },
     computed: {

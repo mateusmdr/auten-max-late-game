@@ -1,6 +1,6 @@
 <template>
     <Section title="Perfil" icon="person">
-        <Stepper :steps="steps">
+        <Stepper :steps="steps" :defaultStep="isRegular ? 0 : 1">
             <template #step-0>
                 <ClientProfileFormPersonal/>
             </template>
@@ -15,9 +15,12 @@
 </template>
 
 <script>
-    export default {
-        created() {
-            this.steps = ["Dados pessoais", "Plano e Pagamento"];
-        },
-    }
+
+export default {
+    created() {
+        this.steps = ["Dados pessoais", "Plano e Pagamento"];
+
+        this.isRegular = this.user.isRegular;
+    },
+}
 </script>

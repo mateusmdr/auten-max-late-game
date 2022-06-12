@@ -1,5 +1,5 @@
 <template>
-    <button @click="$emit('click')" :class="primary ? 'primary':'secondary'">
+    <button :class="primary ? 'primary':'secondary'" :type="type">
         {{ text }}
     </button>
 </template>
@@ -7,11 +7,14 @@
 <script>
 export default {
     props: {
-        emits: ['click'],
         text: String,
         primary: {
             type: Boolean,
             default: true
+        },
+        type: {
+            type: String,
+            default: "submit"
         }
     }
 }

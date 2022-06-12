@@ -15,6 +15,7 @@ export const useTournamentStore = defineStore('tournament', {
             axios
                 .get('/api/tournament')
                 .then((res) => {
+                    this.errors = res.data.errors;
                     return res.data.data
                         .filter(tournament => {
                             const date = parse(tournament.date, 'DD/MM/YYYY');
@@ -47,7 +48,6 @@ export const useTournamentStore = defineStore('tournament', {
                         .filter(item => { // Check if happens today
                             return parse(item.date, 'DD/MM/YYYY').toDateString() === new Date().toDateString()
                         });
-                    this.errors = res.data.errors;
                 })
                 .catch(e => console.error(e));
         }
@@ -213,12 +213,14 @@ import {getCurrentInstance} from 'vue';
 export const useCurrentUserStore = defineStore('currentUser', {
     state: () => ({
         user: getCurrentInstance().appContext.config.globalProperties.user,
+        isRegular: getCurrentInstance().appContext.config.globalProperties.user.isRegular
     }),
     actions: {
         refresh() {
             axios
                 .get('/api/user/' + this.user.id)
                 .then((res) => this.user = res.data.data)
+                .then(() => this.isRegular = this.user.isRegular)
                 .catch(e => console.error(e))
         }
     }

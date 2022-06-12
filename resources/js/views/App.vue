@@ -1,9 +1,8 @@
 <template>
     <div>
-        <Header :is-admin="user.is_admin"/>
+        <Header :is-admin="user.is_admin" :disable="!(this.user.is_admin || isRegular)"/>
         <main class="mt-5">
-            <router-view v-if="user.is_admin || true"/>
-            <ClientProfile v-else/>
+            <router-view/>
         </main>
         <ClientAd v-if="!user.is_admin"/>
         <ClientFooter v-if="!user.is_admin"/>
@@ -11,26 +10,38 @@
 </template>
 
 <script>
-import {getCurrentInstance} from 'vue';
-
+import { storeToRefs } from 'pinia';
 import {useNotificationStore, useCurrentUserStore} from '../stores/client';
-import ClientProfile from './client/Profile.vue';
 
 export default {
     setup() {
         const currentUserStore = useCurrentUserStore();
         currentUserStore.refresh();
+        const {isRegular} = storeToRefs(currentUserStore);
+
+        return {
+            isRegular,
+            currentUserStore
+        }
+    },
+    watch:{
+        $route (to, from){
+            this.currentUserStore.refresh();
+        }
     },
     mounted() {
+        if(!(this.user.is_admin || this.isRegular)) {
+            return this.$router.push({name: 'profile'});
+        }
+
         if (!this.user.is_admin) {
             const notificationStore = useNotificationStore();
             notificationStore.refresh();
             setInterval(() => {
                 notificationStore.refresh();
             }, 60 * 5 * 1000);
-        }
+        }        
     },
-    components: { ClientProfile }
 }
 </script>
 

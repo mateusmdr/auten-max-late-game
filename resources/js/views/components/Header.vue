@@ -1,11 +1,14 @@
 <template>
     <header class="row align-items-center">
             <router-link 
-                :to="{name: 'home'}"
+                :to="{name: 'home'}" v-show="isAdmin || !disable"
                 class="col-1"
             >
                 <img class="img-header-logo" src="@images/header_logo.png"/>
             </router-link>
+            <div class="col-1" v-if="!isAdmin && disable">
+                <img class="img-header-logo" src="@images/header_logo.png"/>
+            </div>
             <nav class="col-10">
                 <ul v-if="isAdmin">
                     <li><LinkIcon icon='emoji_events' url='tournaments'/></li>
@@ -17,8 +20,8 @@
                 </ul>
 
                 <ul v-else>
-                    <li><LinkIcon icon='notifications' url='notifications'/></li>
-                    <li><LinkIcon icon='emoji_events' url='tournaments'/></li>
+                    <li><LinkIcon icon='notifications' url='notifications' v-show="!disable"/></li>
+                    <li><LinkIcon icon='emoji_events' url='tournaments' v-show="!disable"/></li>
                     <li><LinkIcon icon='person' url='profile'/></li>
                 </ul>
             </nav>
@@ -30,6 +33,8 @@
 
 <script>
 import axios from 'axios';
+import { storeToRefs } from 'pinia';
+import {useCurrentUserStore} from '../../stores/client';
 
 export default {
     methods: {
@@ -45,7 +50,8 @@ export default {
         isAdmin: {
             type: Boolean,
             default: false
-        }
+        },
+        disable: Boolean
     }
 }
 </script>

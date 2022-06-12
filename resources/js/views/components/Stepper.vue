@@ -16,11 +16,15 @@
 <script>
 export default {
     props: {
-        steps: Array
+        steps: Array,
+        defaultStep: {
+            type: Number,
+            default: 0
+        }
     },
     data() {
         return {
-            currentStep: 0
+            currentStep: this.defaultStep
         }
     }
 }

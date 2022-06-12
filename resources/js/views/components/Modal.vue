@@ -1,6 +1,6 @@
 <template>
 	<vue-final-modal v-model="showModal" classes="modal-container" :styles="{padding: `0 ${(100-width)/2}vw`}" content-class="modal-content" @before-close="$emit('close')">
-		<form @submit.prevent="$emit('submit')" autocomplete="off">
+		<form @submit.prevent.once="$emit('submit')" autocomplete="off">
 			<a class="modal__close" @click="closeModal">
 				<Icon name="close"/>
 			</a>

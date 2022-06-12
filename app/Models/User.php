@@ -70,12 +70,8 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function isRegular() {
-        return !$this->isPastTestPeriod() || !$this->canPay();
-    }
-
-    public function canPay() {
         if(!$this->isPastTestPeriod()) {
-            return false;
+            return true;
         }
 
         $builder = Payment::query();
@@ -85,13 +81,13 @@ class User extends Authenticatable implements MustVerifyEmail
         $payment = $builder->first();
 
         if($payment === null || $payment->payment_plan === null) {
-            return true;
+            return false;
         }
 
         $payment_plan_period = $payment->payment_plan->getPeriodInDays();
 
         $days_from_now = now()->diff($payment->datetime)->format('%a');
 
-        return($days_from_now > $payment_plan_period);
+        return($days_from_now <= $payment_plan_period);
     }
 }

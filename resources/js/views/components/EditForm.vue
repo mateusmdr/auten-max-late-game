@@ -23,7 +23,6 @@ export default {
         },
         title: String,
         submitText: String,
-        submitHandler: Function
     }
 }
 </script>

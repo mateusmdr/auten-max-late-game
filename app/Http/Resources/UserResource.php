@@ -29,7 +29,7 @@ class UserResource extends JsonResource
             'block_reason' => $this->block_reason,
             'isInactive' => $this->isInactive(),
             'isRegular' => $this->isRegular(),
-            'canPay' => $this->canPay()
+            'is_admin' => $this->is_admin
         ]);
     }
 }

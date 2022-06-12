@@ -46,7 +46,6 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => 'api'], function () {
         Route::middleware('is_regular')->group(function() {
-            Route::apiResource('user',UserController::class);        
             Route::apiResource('tournament',TournamentController::class);
             Route::post('tournament/{tournament}/notification',[TournamentController::class, 'enableNotification']);
             Route::delete('tournament/{tournament}/notification', [TournamentController::class, 'disableNotification']);        
@@ -58,6 +57,7 @@ Route::middleware('auth')->group(function () {
             Route::get('insights',[InsightsController::class,'index']);
         });
 
+        Route::apiResource('user',UserController::class);
         Route::apiResource('ad',AdController::class,['only' => ['index', 'store', 'update', 'destroy']]);
         Route::put('user/{user}/payment_plan', [UserController::class, 'changePaymentPlan']);
         Route::apiResource('payment_plan', PaymentPlanController::class);
