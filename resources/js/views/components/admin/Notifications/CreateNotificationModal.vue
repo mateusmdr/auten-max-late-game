@@ -96,7 +96,7 @@ export default {
 				const res = confirm("Tem certeza que deseja enviar uma mensagem para TODOS os usuários cadastrados?");
 				if(!res) return;
 			}
-            const time = this.$func.toUTC(this.inputs.time);
+            const time = this.inputs.time;
             axios
                 .post('/api/notification', {
 					type: this.inputs.type,
