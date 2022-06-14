@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreignId('payment_plan_id')->constrained();
             $table->foreignId('user_id')->constrained();
 
-            $table->bigInteger('mercado_pago_id')->unique();
+            $table->bigInteger('mercado_pago_id')->nullable()->unique();
         });
     }
 
