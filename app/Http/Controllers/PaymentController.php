@@ -81,12 +81,14 @@ class PaymentController extends Controller
 
     public function store(PaymentRequest $request)
     {
+        // Must have selected both a plan and a payment_method
         $payment_plan = Auth::user()->payment_plan;
         $payment_method = Auth::user()->payment_method;
         if($payment_plan === null || $payment_method === null) {
             abort(422);
         }
 
+        // Show latest ticket if exists
         if($payment_method === 'bolbradesco') {
             $lastTicket = Payment::query()->whereBelongsTo(Auth::user())->where('payment_method','bolbradesco')->where('status','pending')->orderBy('datetime','desc')->first();
             if($lastTicket !== null) {
@@ -95,7 +97,8 @@ class PaymentController extends Controller
                 ]);
             }
         }
-
+        
+        //General payment data
         $payment = new MercadoPagoPayment();
 
         $payment->transaction_amount = $payment_plan->price;
@@ -104,14 +107,17 @@ class PaymentController extends Controller
         $payment->notification_url = route('mercado_pago_webhook');
         $payment->payment_method_id = $payment_method;
 
+        // Method specific info
         if($payment_method === 'credit_card') {
             $payment->token = $request->input('card_token');
             $name = $request->input('cardholderName');
             $cpf = $request->input('identificationNumber');
         }else {
+            $name = Auth::user()->name;
             $cpf = Auth::user()->cpf;
         }
 
+        // Payer data
         $name = explode(" ", $name);
         $payment->payer = array(
             "email" => Auth::user()->email,
@@ -131,16 +137,15 @@ class PaymentController extends Controller
             //   )
         );
 
+        //Treat failures
         try{
             $payment->save();
+            if($payment->error) {
+                return response()->json([
+                    'error' => $this->getErrorMessage($payment->status_detail)
+                ], 422);
+            }
         }catch(Exception $e) {
-            return response()->json([
-                'error' => $this->getErrorMessage($payment->status_detail)
-            ], 422);
-        }
-        
-
-        if($payment->error) {
             return response()->json([
                 'error' => $this->getErrorMessage($payment->status_detail)
             ], 422);

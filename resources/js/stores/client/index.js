@@ -101,12 +101,12 @@ export const useNotificationStore = defineStore('notification', {
             return 'Financeiro';
         },
         refresh() {
-            this.notifications = [];
-            this.due = [];
             axios
                 .get('/api/notification')
                 .then((res) => res.data.data)
                 .then((data) => {
+                    this.notifications = [];
+                    this.due = [];
                     data.forEach(notification => {
                         let datetime = func.toLocal(parse(notification.datetime, 'DD/MM/YYYY HH:mm'));
                         const title = this.getNotificationTitle(notification);

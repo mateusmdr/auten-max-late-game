@@ -15,7 +15,7 @@
 
             <div v-if="!currentUser.isRegular">
                 <div class="ticket-form" v-if="currentUser.payment_method === paymentMethods[0].value && !hasChanged">
-                    <a class="text-decoration-none" href="/ticket" download v-if="!currentUser.isRegular">
+                    <a class="text-decoration-none" v-if="!currentUser.isRegular" @click="openTicket">
                         Fazer download do boleto <Icon name="download"/>
                     </a>
                 </div>
@@ -153,6 +153,12 @@ export default {
                     .catch(error => alert(error.response ? error.response.data?.error : error));
                 })
                 .catch(() => alert("Verifique os dados inseridos"));
+        },
+        openTicket() {
+            axios.post("/api/payment", {
+                "is_ticket": true
+            })
+            .then(console.log);
         }
     },
     computed: {
