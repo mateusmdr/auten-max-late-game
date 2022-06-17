@@ -18,6 +18,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->timestamp('datetime');
+            $table->timestamp('date_of_expiration')->nullable();
             $table->decimal('price')->unsigned();
             $table->enum('payment_method',DBTypes::PAYMENT_METHODS);
             $table->string('status',DBSizes::STRING)->default('pending');

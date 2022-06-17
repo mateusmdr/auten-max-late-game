@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use Exception;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PaymentRequest;
 use App\Http\Resources\PaymentResource;
-use Exception;
 use MercadoPago\Payment as MercadoPagoPayment;
 
 class PaymentController extends Controller
@@ -88,9 +89,10 @@ class PaymentController extends Controller
             abort(422);
         }
 
-        // Show latest ticket if exists
+        // Show latest ticket if exists in the last 24h
         if($payment_method === 'bolbradesco') {
-            $lastTicket = Payment::query()->whereBelongsTo(Auth::user())->where('payment_method','bolbradesco')->where('status','pending')->orderBy('datetime','desc')->first();
+            $lastTicket = Payment::query()->whereBelongsTo(Auth::user())->where('payment_method','bolbradesco')
+                ->where('status','pending')->whereDate('date_of_expiration', '<', now())->orderBy('datetime','desc')->first();
             if($lastTicket !== null) {
                 return response()->json([
                     'url' => $lastTicket->url
@@ -105,7 +107,6 @@ class PaymentController extends Controller
         $payment->description = "Assinatura ". $payment_plan->name . " da plataforma MaxLateGame";
         $payment->installments = 1;
         $payment->notification_url = route('mercado_pago_webhook');
-        $payment->payment_method_id = $payment_method;
 
         // Method specific info
         if($payment_method === 'credit_card') {
@@ -115,6 +116,9 @@ class PaymentController extends Controller
         }else {
             $name = Auth::user()->name;
             $cpf = Auth::user()->cpf;
+            $dateOfExpiration = now()->addDays(5);
+            $payment->date_of_expiration = $dateOfExpiration->format(DateTime::RFC3339_EXTENDED);
+            $payment->payment_method_id = $payment_method;
         }
 
         // Payer data
@@ -142,8 +146,9 @@ class PaymentController extends Controller
             $payment->save();
             if($payment->error) {
                 return response()->json([
-                    'error' => $this->getErrorMessage($payment->status_detail)
-                ], 422);
+                    'error' => $this->getErrorMessage($payment->status_detail),
+                    'mp' => $payment->error
+                ], $payment->error->status);
             }
         }catch(Exception $e) {
             return response()->json([
@@ -159,7 +164,8 @@ class PaymentController extends Controller
             "payment_plan_id" => $payment_plan->id,
             "price" => $payment_plan->price,
             "payment_method" => $payment_method,
-            "url" => $payment_method === 'bolbradesco' ? $payment->transaction_details->external_resource_url : null
+            "url" => $payment_method === 'bolbradesco' ? $payment->transaction_details->external_resource_url : null,
+            "date_of_expiration" => $payment_method === 'bolbradesco' ? $dateOfExpiration : null,
         ];
 
         Payment::create($data);

@@ -5,9 +5,11 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\PaymentPlan;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
 
 class Payment extends Model
 {
+    use Prunable;
 
     protected $fillable = [
         'datetime',
@@ -18,6 +20,11 @@ class Payment extends Model
         'payment_plan_id',
         'url'
     ];
+
+    public function prunable()
+    {
+        return static::where('status', 'pending')->where('payment_method', 'bolbradesco')->whereDate('date_of_expiration', '<=', now());
+    }
 
     public function user() {
         return $this->belongsTo(User::class);

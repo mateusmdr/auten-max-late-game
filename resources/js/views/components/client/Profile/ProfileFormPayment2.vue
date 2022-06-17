@@ -15,7 +15,7 @@
 
             <div v-if="!currentUser.isRegular">
                 <div class="ticket-form" v-if="currentUser.payment_method === paymentMethods[0].value && !hasChanged">
-                    <a class="text-decoration-none" v-if="!currentUser.isRegular" @click="openTicket">
+                    <a class="text-decoration-none" v-if="ticket_url" :href="ticket_url" download="boleto.pdf" target="_blank">
                         Fazer download do boleto <Icon name="download"/>
                     </a>
                 </div>
@@ -95,7 +95,29 @@ export default {
             }
         ];
     },
+    watch: {
+        paymentMethod(before, now) {
+            if(now === 'bolbradesco') {
+                axios
+                    .post("/api/payment", {
+                        "is_ticket": true
+                    })
+                    .then((res) => this.ticket_url = res.data.url)
+                    .catch(() => alert("Falha ao gerar o boleto"));
+            }
+        } 
+    },
     data() {
+        if(this.currentUser.payment_method === 'bolbradesco') {
+            axios
+                .post("/api/payment", {
+                    "is_ticket": true
+                })
+                .then((res) => {this.ticket_url = res.data.url; return res.data.url})
+                .then(console.log)
+                .catch(() => alert("Falha ao gerar o boleto"));
+        }
+
         return {
             inputs: {
                 paymentMethod: this.currentUser.payment_method,
@@ -104,7 +126,8 @@ export default {
                 cpf: null,
                 expireDate: null,
                 cvv: null,
-            }
+            },
+            ticket_url: null
         };
     },
     methods: {
@@ -155,10 +178,7 @@ export default {
                 .catch(() => alert("Verifique os dados inseridos"));
         },
         openTicket() {
-            axios.post("/api/payment", {
-                "is_ticket": true
-            })
-            .then(console.log);
+            
         }
     },
     computed: {
