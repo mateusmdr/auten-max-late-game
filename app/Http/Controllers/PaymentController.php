@@ -92,7 +92,7 @@ class PaymentController extends Controller
         // Show latest ticket if exists in the last 24h
         if($payment_method === 'bolbradesco') {
             $lastTicket = Payment::query()->whereBelongsTo(Auth::user())->where('payment_method','bolbradesco')
-                ->where('status','pending')->whereDate('date_of_expiration', '<', now())->orderBy('datetime','desc')->first();
+                ->where('status','pending')->whereDate('date_of_expiration', '>', now())->orderBy('datetime','desc')->first();
             if($lastTicket !== null) {
                 return response()->json([
                     'url' => $lastTicket->url

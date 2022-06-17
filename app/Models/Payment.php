@@ -11,19 +11,21 @@ class Payment extends Model
 {
     use Prunable;
 
-    protected $fillable = [
-        'datetime',
-        'price',
-        'payment_method',
-        'status',
-        'user_id',
-        'payment_plan_id',
-        'url'
-    ];
+    protected $guarded = [];
 
     public function prunable()
     {
         return static::where('status', 'pending')->where('payment_method', 'bolbradesco')->whereDate('date_of_expiration', '<=', now());
+    }
+
+    /**
+     * Prepare the model for pruning.
+     *
+     * @return void
+     */
+    protected function pruning()
+    {
+        
     }
 
     public function user() {
