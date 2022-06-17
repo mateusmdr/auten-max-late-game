@@ -1,9 +1,10 @@
 <?php
 
+use App\Helpers\DBSizes;
 use App\Helpers\DBTypes;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -19,7 +20,8 @@ return new class extends Migration
             $table->timestamp('datetime');
             $table->decimal('price')->unsigned();
             $table->enum('payment_method',DBTypes::PAYMENT_METHODS);
-            $table->string('status')->default('pending');
+            $table->string('status',DBSizes::STRING)->default('pending');
+            $table->string('url',DBSizes::STRING)->nullable();
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

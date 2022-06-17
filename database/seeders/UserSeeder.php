@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make(env('TEST_USER_PASSWORD')),
             'is_admin' => false,
             'email_verified_at' => now(),
-            'created_at' => now()->subCenturies(),
+            'created_at' => now()->subDays(80),
         ]);
 
         User::create([

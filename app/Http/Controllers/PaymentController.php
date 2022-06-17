@@ -81,23 +81,36 @@ class PaymentController extends Controller
 
     public function store(PaymentRequest $request)
     {
-        $payment = new MercadoPagoPayment();
-
         $payment_plan = Auth::user()->payment_plan;
         $payment_method = Auth::user()->payment_method;
         if($payment_plan === null || $payment_method === null) {
             abort(422);
         }
 
-        $payment->token = $request->input('card_token');
-        $name = $request->input('cardholderName');
-        $cpf = $request->input('identificationNumber');
+        if($payment_method === 'bolbradesco') {
+            $lastTicket = Payment::query()->whereBelongsTo(Auth::user())->where('payment_method','bolbradesco')->where('status','pending')->orderBy('datetime','desc')->first();
+            if($lastTicket !== null) {
+                return response()->json([
+                    'url' => $lastTicket->url
+                ]);
+            }
+        }
+
+        $payment = new MercadoPagoPayment();
 
         $payment->transaction_amount = $payment_plan->price;
         $payment->description = "Assinatura ". $payment_plan->name . " da plataforma MaxLateGame";
         $payment->installments = 1;
-        // $payment->notification_url = route('mercado_pago_webhook');
-        $payment->notification_url = "https://mateusrezende.dev";
+        $payment->notification_url = route('mercado_pago_webhook');
+        $payment->payment_method_id = $payment_method;
+
+        if($payment_method === 'credit_card') {
+            $payment->token = $request->input('card_token');
+            $name = $request->input('cardholderName');
+            $cpf = $request->input('identificationNumber');
+        }else {
+            $cpf = Auth::user()->cpf;
+        }
 
         $name = explode(" ", $name);
         $payment->payer = array(
@@ -116,7 +129,7 @@ class PaymentController extends Controller
             //      "city" => $cidade,
             //      "federal_unit" => $uf
             //   )
-           );
+        );
 
         try{
             $payment->save();
@@ -138,23 +151,19 @@ class PaymentController extends Controller
             "user_id" => Auth::user()->id,
             "datetime" => now(),
             "status" => $payment->status,
-            "payment_plan_id" => Auth::user()->payment_plan->id,
-            "price" => Auth::user()->payment_plan->price,
-            "payment_method" => Auth::user()->payment_method
+            "payment_plan_id" => $payment_plan->id,
+            "price" => $payment_plan->price,
+            "payment_method" => $payment_method,
+            "url" => $payment_method === 'bolbradesco' ? $payment->transaction_details->external_resource_url : null
         ];
 
         Payment::create($data);
-    }
 
-    public function getTicket() {
-        $payment = new MercadoPagoPayment();
-
-        $payment_plan = Auth::user()->payment_plan;
-        $payment_method = Auth::user()->payment_method;
-        if($payment_plan === null || $payment_method !== 'bolbradesco') {
-            abort(422);
+        if($payment_method === 'bolbradesco') {
+            return response()->json([
+                'url' => $payment->transaction_details->external_resource_url
+            ]);
         }
-
     }
 
     /**

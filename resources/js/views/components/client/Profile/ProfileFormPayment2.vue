@@ -139,6 +139,7 @@ export default {
                 })
                 .then(({ id }) => {
                     axios.post("/api/payment", {
+                        "is_ticket": false,
                         "card_token": id,
                         "cardholderName": this.inputs.cardholderName,
                         "identificationNumber": this.inputs.cpf

@@ -15,7 +15,8 @@ class Payment extends Model
         'payment_method',
         'status',
         'user_id',
-        'payment_plan_id'
+        'payment_plan_id',
+        'url'
     ];
 
     public function user() {

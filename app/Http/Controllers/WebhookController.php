@@ -22,6 +22,7 @@ class WebhookController extends Controller
     }
 
     public function notify(Request $request) {
+        Log::info(var_export($request, true));
         if($request->input("type") === "payment") {
             $mppayment = MPPayment::find_by_id($request->input($data)["id"]);
         }
@@ -30,27 +31,14 @@ class WebhookController extends Controller
         $user = User::query()->where('email', $mppayment->payer->email)->first();
         $payment_plan = PaymentPlan::query()->where('price', $mppayment->transaction_amount)->first();
 
-        if($user === null) return;
-        
-        if($payment === null) {
-            $data = [
-                "mercado_pago_id" => $mppayment->id,
-                "user_id" => $user->id,
-                "datetime" => $mppayment->date_last_updated,
-                "status" => $mppayment->status,
-                "payment_plan_id" => $payment_plan->id,
-                "price" => $mppayment->transaction_amount,
-                "payment_method" =>$mppayment->payment_type_id
-            ];
-            Payment::create($data);
+        if($user === null || $payment === null) return;
 
-            return;
-        }
-
-        $payment->update($data = [
+        $data = [
             "datetime" => $mppayment->date_last_updated,
             "status" => $mppayment->status,
-        ]);
+        ];
+
+        $payment->update($data);
 
         $payment->save();
     }

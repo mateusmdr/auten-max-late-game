@@ -14,9 +14,10 @@ class PaymentRequest extends BaseRequest
     public function rules()
     {
         return [
-            'card_token' => 'required|string|max:'. DBSizes::TOKEN,
-            'cardholderName' => 'required|string|max:'. DBSizes::STRING,
-            'identificationNumber' => 'required|cpf'
+            'is_ticket' => 'required|boolean',
+            'card_token' => 'required_if:is_ticket,0|string|max:'. DBSizes::TOKEN,
+            'cardholderName' => 'required_if:is_ticket,0|string|max:'. DBSizes::STRING,
+            'identificationNumber' => 'required_if:is_ticket,0|cpf'
         ];
     }
 }
