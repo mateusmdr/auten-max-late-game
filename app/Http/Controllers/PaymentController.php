@@ -39,47 +39,43 @@ class PaymentController extends Controller
     private function getErrorMessage($status) {
         switch ($status){
             case "cc_rejected_bad_filled_card_number":
-                return'Ops! Algo deu errado: verifique o número do cartão e tente novamente.';
+                return 'Ops! Algo deu errado: verifique o número do cartão e tente novamente.';
         
             case "cc_rejected_bad_filled_date":
-                return'Ops! Algo deu errado: verifique a data de vencimento do cartão e tente novamente.';
+                return 'Ops! Algo deu errado: verifique a data de vencimento do cartão e tente novamente.';
                 
             case "cc_rejected_bad_filled_other":
-                return'Ops! Algo deu errado: revise os dados do cartão e tente novamente.';            
+                return 'Ops! Algo deu errado: revise os dados do cartão e tente novamente.';            
 
             case "cc_rejected_bad_filled_security_code":
-                return'Ops! Algo deu errado: verifique o código de segurança do cartão e tente novamente.';    
+                return 'Ops! Algo deu errado: verifique o código de segurança do cartão e tente novamente.';    
 
             case "cc_rejected_blacklist":
-                return'Ops! Algo deu errado: não conseguimos processar o seu pagamento. Entre em contato com a operadora ou tente outra forma de pagamento.';
+                return 'Ops! Algo deu errado: não conseguimos processar o seu pagamento. Entre em contato com a operadora ou tente outra forma de pagamento.';
                 
             case "cc_rejected_call_for_authorize":
-                return'Ops! Algo deu errado: Você deve autorizar o uso do seu cartão junto à operadora.';            
+                return 'Ops! Algo deu errado: Você deve autorizar o uso do seu cartão junto à operadora.';            
 
             case "cc_rejected_card_disabled":
-                return'Ops! Algo deu errado: Você deve ligar para a operadora do seu cartão para ativar seu cartão.';
-        
+                return 'Ops! Algo deu errado: Você deve ligar para a operadora do seu cartão para ativar seu cartão.';
 
             case "cc_rejected_card_error":
-                return'Ops! Algo deu errado: não conseguimos processar o seu pagamento. Entre em contato com a operadora ou tente outra forma de pagamento.';
-        
+                return 'Ops! Algo deu errado: não conseguimos processar o seu pagamento. Entre em contato com a operadora ou tente outra forma de pagamento.';
 
             case "cc_rejected_duplicated_payment":
-                return'Ops! Você já efetuou um pagamento com esse valor à poucos minutos. Caso precise pagar novamente, utilize outro cartão ou outra forma de pagamento.';
+                return 'Ops! Você já efetuou um pagamento com esse valor à poucos minutos. Caso precise pagar novamente, utilize outro cartão ou outra forma de pagamento.';
                 
             case "cc_rejected_high_risk":
-                return'Ops! Algo deu errado: não conseguimos processar o seu pagamento. Entre em contato com a operadora ou tente outra forma de pagamento.';
+                return 'Ops! Algo deu errado: não conseguimos processar o seu pagamento. Entre em contato com a operadora ou tente outra forma de pagamento.';
                 
             case "cc_rejected_insufficient_amount":
-                return'Ops! Algo deu errado: parece que o seu cartão possui saldo insuficiente.';
-        
+                return 'Ops! Algo deu errado: parece que o seu cartão possui saldo insuficiente.';
 
             case "cc_rejected_max_attempts":
-                return'Ops! Algo deu errado: Você atingiu o limite de tentativas permitido. Entre em contato com a operadora ou tente outra forma de pagamento.';
-        
+                return 'Ops! Algo deu errado: Você atingiu o limite de tentativas permitido. Entre em contato com a operadora ou tente outra forma de pagamento.';
 
             default:
-                return'Ops! Algo deu errado: não conseguimos processar o seu pagamento. Entre em contato com a operadora ou tente outra forma de pagamento.';
+                return 'Ops! Algo deu errado: não conseguimos processar o seu pagamento. Entre em contato com a operadora ou tente outra forma de pagamento.';
         }
     }
 
@@ -87,20 +83,21 @@ class PaymentController extends Controller
     {
         $payment = new MercadoPagoPayment();
 
+        $payment_plan = Auth::user()->payment_plan;
+        $payment_method = Auth::user()->payment_method;
+        if($payment_plan === null || $payment_method === null) {
+            abort(422);
+        }
+
         $payment->token = $request->input('card_token');
         $name = $request->input('cardholderName');
         $cpf = $request->input('identificationNumber');
 
-        $payment_plan = Auth::user()->payment_plan;
-        if($payment_plan === null) {
-            abort(422);
-        }
-
         $payment->transaction_amount = $payment_plan->price;
         $payment->description = "Assinatura ". $payment_plan->name . " da plataforma MaxLateGame";
         $payment->installments = 1;
-        $payment->notification_url = route('mercado_pago_webhook');
-        // $payment->payment_method_id = Auth::user()->payment_method;
+        // $payment->notification_url = route('mercado_pago_webhook');
+        $payment->notification_url = "https://mateusrezende.dev";
 
         $name = explode(" ", $name);
         $payment->payer = array(
@@ -147,6 +144,17 @@ class PaymentController extends Controller
         ];
 
         Payment::create($data);
+    }
+
+    public function getTicket() {
+        $payment = new MercadoPagoPayment();
+
+        $payment_plan = Auth::user()->payment_plan;
+        $payment_method = Auth::user()->payment_method;
+        if($payment_plan === null || $payment_method !== 'bolbradesco') {
+            abort(422);
+        }
+
     }
 
     /**

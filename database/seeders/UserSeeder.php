@@ -27,7 +27,8 @@ class UserSeeder extends Seeder
             'email' => 'cliente@teste.com',
             'password' => Hash::make(env('TEST_USER_PASSWORD')),
             'is_admin' => false,
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
+            'created_at' => now()->subCenturies(),
         ]);
 
         User::create([

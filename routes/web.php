@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
         Route::put('user/{user}/payment_plan', [UserController::class, 'changePaymentPlan']);
         Route::apiResource('payment_plan', PaymentPlanController::class);
         Route::apiResource('payment',PaymentController::class,['only' => ['index', 'show', 'store']]);
+        Route::get('payment/ticket',[PaymentController::class,'getTicket']);
     });
 });
 

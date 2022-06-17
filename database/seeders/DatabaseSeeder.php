@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
                 UserSeeder::class,
                 TournamentPlatformsSeeder::class,
                 TournamentTypesSeeder::class,
-                PaymentSeeder::class,
+                // PaymentSeeder::class,
                 TournamentSeeder::class,
                 NotificationSeeder::class,
             ]);
