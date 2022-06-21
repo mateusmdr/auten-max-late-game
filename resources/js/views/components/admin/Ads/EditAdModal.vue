@@ -104,7 +104,6 @@ export default {
 	},
 	methods: {
 		submit() {
-			console.log("oii!");
 			const formData = new FormData();
 			formData.append('_method','PUT');
 			

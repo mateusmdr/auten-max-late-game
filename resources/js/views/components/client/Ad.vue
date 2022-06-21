@@ -22,11 +22,6 @@ export default {
             adStore,
             ad
         }
-    },
-    watch: {
-        ad() {
-            console.log(this.ad);
-        }
     }
 }
 </script>

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import {parse, format} from 'date-format-parse';
-import {func} from '../../func';
 import axios from 'axios';
 
 // Tournaments
@@ -17,20 +16,10 @@ export const useTournamentStore = defineStore('tournament', {
                 .then((res) => {
                     this.errors = res.data.errors;
                     return res.data.data
-                        // .filter(tournament => {
-                        //     const date = parse(tournament.date, 'DD/MM/YYYY');
-                        //     const subscription = tournament.subscription.split(' ');
-                        //     let end = parse(subscription[2], 'HH:mm')
-                        //     end = func.toLocal(end);
-                            
-                        //     return (date > new Date() || end.getTime() >= Date.now());
-                        // })
                         .map(tournament =>{
                         const subscription = tournament.subscription.split(' ');
                         let begin = parse(subscription[0], 'HH:mm')
                         let end = parse(subscription[2], 'HH:mm')
-                        begin = func.toLocal(begin);
-                        end = func.toLocal(end);
 
                         begin = format(begin, 'HH:mm');
                         end = format(end, 'HH:mm');
@@ -157,8 +146,6 @@ export const useNotificationStore = defineStore('notification', {
                         if(timeout <= 24*60*60*1000) {
                             this.timeouts.push(setTimeout(() => 
                                 {
-                                    console.log(notification.tournament.platform_img);
-
                                     new Notification(
                                         notification.title,
                                         {

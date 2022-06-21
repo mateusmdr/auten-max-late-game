@@ -80,7 +80,6 @@ export default {
                 .finally(this.notificationIntervalStore.refresh);
         },
         handleDelete(interval) {
-            console.log('oi');
             const res = confirm("Tem certeza que quer remover o intervalo de " + interval.minutes + " minutos?");
 
             if(!res) {

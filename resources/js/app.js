@@ -23,11 +23,6 @@ app.config.globalProperties.mercadoPago = new MercadoPago(MERCADO_PAGO_PK, {
     locale: 'pt-BR'
 });
 
-// Include global functions
-import {func} from './func.js'
-
-app.config.globalProperties.$func = func;
-
 // Load route respectively to user privileges
 app.use(PHP_USER.is_admin ? adminRouter : clientRouter);
 

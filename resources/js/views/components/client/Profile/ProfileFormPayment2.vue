@@ -114,7 +114,6 @@ export default {
                     "is_ticket": true
                 })
                 .then((res) => {this.ticket_url = res.data.url; return res.data.url})
-                .then(console.log)
                 .catch(() => alert("Falha ao gerar o boleto"));
         }
 

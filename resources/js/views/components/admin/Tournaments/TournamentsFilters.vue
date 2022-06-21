@@ -95,7 +95,6 @@ export default {
                     const subscription = tournament.subscription.split(' ');
                     const begin = parse(subscription[0], 'HH:mm');
                     const end = parse(subscription[2], 'HH:mm');
-                    console.log(subscription);
 
                     let tournamentStatusFilter = true;
                     switch(now.tournamentStatus) {

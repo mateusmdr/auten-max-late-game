@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import {parse, format} from 'date-format-parse';
-import {func} from '../../func';
 
 // Tournaments
 
@@ -179,7 +178,7 @@ export const useNotificationStore = defineStore('notification', {
                 axios
                 .get('/api/notification')
                 .then((res) => this.notifications = res.data.data.map((notification) => {
-                    let datetime = func.toLocal(parse(notification.datetime, 'DD/MM/YYYY HH:mm'));
+                    let datetime = parse(notification.datetime, 'DD/MM/YYYY HH:mm');
                     const title = this.getNotificationTitle(notification);
                     return ({
                         ...notification,
