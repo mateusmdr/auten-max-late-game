@@ -108,7 +108,7 @@ export default {
         } 
     },
     data() {
-        if(this.currentUser.payment_method === 'bolbradesco') {
+        if(this.currentUser.payment_method === 'bolbradesco' && !this.currentUser.isRegular) {
             axios
                 .post("/api/payment", {
                     "is_ticket": true
@@ -175,9 +175,6 @@ export default {
                     .catch(error => alert(error.response ? error.response.data?.error : error));
                 })
                 .catch(() => alert("Verifique os dados inseridos"));
-        },
-        openTicket() {
-            
         }
     },
     computed: {
