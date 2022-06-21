@@ -89,8 +89,8 @@ class UserController extends Controller
         ]);
         
         if(!empty($data)) {
-            if(isset($data['is_blocked']) && $data['is_blocked']) {
-                $data['block_reason'] = null;
+            if(isset($data['is_blocked'])) {
+                $data['block_reason'] = $data['is_blocked'] ? $data['block_reason'] : null;
             }
 
             if(isset($data['email'])) {

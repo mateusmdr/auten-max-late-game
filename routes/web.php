@@ -39,7 +39,14 @@ Auth::routes(['verify' => true, 'register' => false]);
 Route::get('register/{step?}', [RegisterController::class,'showRegistrationForm'])->name('register');
 Route::post('register/{step?}', [RegisterController::class,'register']);
 
-Route::middleware('auth')->group(function () {
+Route::get('/blocked', function () {
+    if(Auth::user()->is_blocked){
+        return view('blocked', ['reason' => Auth::user()->block_reason]);
+    }
+    return redirect(route('home'));
+})->middleware('auth')->name('blocked');
+
+Route::middleware('auth', 'blocked')->group(function () {
     Route::get('/plataforma/{any?}', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home')
     ->where('any','.*');

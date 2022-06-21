@@ -116,6 +116,7 @@ export default {
                     is_blocked: false
                 })
                 .then(() => this.$emit('update'))
+                .then(() => this.blockReason = "")
                 .catch(() => alert("Verifique os dados inseridos"));
         }
     },
