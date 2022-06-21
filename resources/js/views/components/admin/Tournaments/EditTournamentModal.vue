@@ -161,8 +161,8 @@ export default {
     },
     methods: {
         submit() {
-            const subscription_begin = this.$func.toUTC(this.inputs.subscription_begin);
-            const subscription_end = this.$func.toUTC(this.inputs.subscription_end);
+            const subscription_begin = this.inputs.subscription_begin;
+            const subscription_end = this.inputs.subscription_end;
             axios
                 .put(`/api/tournament/${this.tournament.id}`, {
 					'name': this.inputs.name,

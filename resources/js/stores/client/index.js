@@ -17,14 +17,14 @@ export const useTournamentStore = defineStore('tournament', {
                 .then((res) => {
                     this.errors = res.data.errors;
                     return res.data.data
-                        .filter(tournament => {
-                            const date = parse(tournament.date, 'DD/MM/YYYY');
-                            const subscription = tournament.subscription.split(' ');
-                            let end = parse(subscription[2], 'HH:mm')
-                            end = func.toLocal(end);
+                        // .filter(tournament => {
+                        //     const date = parse(tournament.date, 'DD/MM/YYYY');
+                        //     const subscription = tournament.subscription.split(' ');
+                        //     let end = parse(subscription[2], 'HH:mm')
+                        //     end = func.toLocal(end);
                             
-                            return (date > new Date() || end.getTime() >= Date.now());
-                        })
+                        //     return (date > new Date() || end.getTime() >= Date.now());
+                        // })
                         .map(tournament =>{
                         const subscription = tournament.subscription.split(' ');
                         let begin = parse(subscription[0], 'HH:mm')
@@ -108,7 +108,7 @@ export const useNotificationStore = defineStore('notification', {
                     this.notifications = [];
                     this.due = [];
                     data.forEach(notification => {
-                        let datetime = func.toLocal(parse(notification.datetime, 'DD/MM/YYYY HH:mm'));
+                        let datetime = parse(notification.datetime, 'DD/MM/YYYY HH:mm');
                         const title = this.getNotificationTitle(notification);
                         if(datetime.getTime() <= Date.now()) { // Show notification history
                             this.notifications.push(
@@ -157,6 +157,8 @@ export const useNotificationStore = defineStore('notification', {
                         if(timeout <= 24*60*60*1000) {
                             this.timeouts.push(setTimeout(() => 
                                 {
+                                    console.log(notification.tournament.platform_img);
+
                                     new Notification(
                                         notification.title,
                                         {
@@ -169,7 +171,7 @@ export const useNotificationStore = defineStore('notification', {
                                                 url: window.location.href, // pass the current url to the notification
                                             },
                                             badge: notification.tournament ? notification.tournament.platform_img : platformIcon,
-                                            icon: platformIcon,
+                                            icon: notification.tournament ? notification.tournament.platform_img : platformIcon,
                                         }
                                     );
 

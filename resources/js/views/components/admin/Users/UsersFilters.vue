@@ -80,7 +80,7 @@ export default {
                     let userStatusFilter = true;
                     switch(now.userStatus) {
                         case 0:
-                            return true;
+                            userStatusFilter = true;
                         case 1:
                             userStatusFilter = user.isVerified;
                             break;

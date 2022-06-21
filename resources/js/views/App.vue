@@ -39,8 +39,8 @@ export default {
             notificationStore.refresh();
             setInterval(() => {
                 notificationStore.refresh();
-            }, 60 * 5 * 1000);
-        }        
+            }, 60 * 1 * 1000);
+        }
     },
 }
 </script>

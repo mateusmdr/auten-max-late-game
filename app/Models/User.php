@@ -70,7 +70,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function isRegular() {
-        return false;
         if(!$this->isPastTestPeriod()) {
             return true;
         }

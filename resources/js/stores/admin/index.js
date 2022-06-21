@@ -46,8 +46,6 @@ export const useTournamentStore = defineStore('tournament', {
                         const subscription = tournament.subscription.split(' ');
                         let begin = parse(subscription[0], 'HH:mm')
                         let end = parse(subscription[2], 'HH:mm')
-                        begin = func.toLocal(begin);
-                        end = func.toLocal(end);
 
                         begin = format(begin, 'HH:mm');
                         end = format(end, 'HH:mm');
@@ -130,7 +128,6 @@ export const usePaymentStore = defineStore('payment', {
                 .then(() => {
                     this.payments = this.payments.map(payment =>{
                         let time = parse(payment.time, 'HH:mm')
-                        time = func.toLocal(time);
                         return ({
                             ...payment,
                             time: format(time, 'HH:mm')
