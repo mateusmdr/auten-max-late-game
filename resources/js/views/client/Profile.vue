@@ -32,7 +32,9 @@ export default {
     created() {
         this.steps = ["Dados pessoais", "Plano e Pagamento"];
 
-        this.isRegular = this.user.isRegular;
+        if(!isRegular) {
+            alert("Não identificamos o pagamento da sua assinatura da plataforma. Para retomar o acesso, escolha um dos métodos de pagamento disponíveis.");
+        }
     },
 }
 </script>
