@@ -96,29 +96,9 @@ export default {
             }
         ];
 
-        this.ticketLoading = true;
-        const self = this;
         if(this.currentUser.payment_method === 'bolbradesco' && !this.currentUser.isRegular) {
-            axios
-                .post("/api/payment", {
-                    "is_ticket": true
-                })
-                .then((res) => {self.ticket_url = res.data.url; return res.data.url})
-                .catch(() => alert("Falha ao gerar o boleto"))
-                .finally(() => {self.ticketLoading = false});
+            this.generateTicket();
         }
-    },
-    watch: {
-        paymentMethod(before, now) {
-            if(now === 'bolbradesco') {
-                axios
-                    .post("/api/payment", {
-                        "is_ticket": true
-                    })
-                    .then((res) => this.ticket_url = res.data.url)
-                    .catch(() => alert("Falha ao gerar o boleto"));
-            }
-        } 
     },
     data() {
         return {
@@ -136,15 +116,33 @@ export default {
     },
     methods: {
         submit() {
-            const res = confirm("Tem certeza que deseja alterar o plano de pagamento para \n" + this.paymentMethods.find((val) => val.value === this.inputs.paymentMethod).text + " ?");
+            const method = this.inputs.paymentMethod;
+            const res = confirm("Tem certeza que deseja alterar o plano de pagamento para \n" + this.paymentMethods.find((val) => val.value === method).text + " ?");
             if (!res)
                 return;
             axios
                 .put("/api/user/" + this.currentUser.id + "/payment_plan", {
-                method: this.inputs.paymentMethod
-            })
+                    method: method
+                })
                 .then(() => this.currentUserStore.refresh())
+                .then(() => {
+                    if(method === 'bolbradesco') {
+                        this.generateTicket();
+                    }
+                })
                 .catch(() => alert("Verifique os dados inseridos"));
+        },
+        generateTicket() {
+            this.ticketLoading = true;
+            const self = this;
+            
+            axios
+                .post("/api/payment", {
+                    "is_ticket": true
+                })
+                .then((res) => {self.ticket_url = res.data.url; return res.data.url})
+                .catch(() => alert("Falha ao gerar o boleto"))
+                .finally(() => {self.ticketLoading = false});
         },
         creditCardTransaction() {
             if(!(this.inputs.cardNumber &&  this.inputs.cardholderName && this.inputs.cpf &&
