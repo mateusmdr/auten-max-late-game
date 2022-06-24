@@ -45,16 +45,10 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-2">
+            <div class="col-4">
                 <NumberInput 
-                    v-model.number="inputs.min_buy_in"
-                    name="Buy-in mínimo"
-                />
-            </div>
-            <div class="col-2">
-                <NumberInput 
-                    v-model.number="inputs.max_buy_in"
-                    name="Buy-in máximo"
+                    v-model.number="inputs.buy_in"
+                    name="Buy-in"
                 />
             </div>
             <div class="col-3">
@@ -137,8 +131,7 @@ export default {
                 subscription_begin: parse(this.subscription[0],'HH:mm'),
                 subscription_end: parse(this.subscription[2],'HH:mm'),
                 prize: this.tournament.prize,
-                min_buy_in: this.tournament.min,
-                max_buy_in: this.tournament.max,
+                buy_in: this.tournament.buy_in,
                 tournamentPlatform: this.tournament.platform_id,
                 tournamentType: this.tournament.type_id,
                 // is_recurrent: false,
@@ -152,8 +145,7 @@ export default {
                 subscription_begin: null,
                 subscription_end: null,
                 prize: null,
-                min_buy_in: null,
-                max_buy_in: null,
+                buy_in: null,
                 tournament_platform_id: null,
                 tournament_type_id: null,
             }
@@ -167,8 +159,7 @@ export default {
                 .put(`/api/tournament/${this.tournament.id}`, {
 					'name': this.inputs.name,
                     'prize': this.inputs.prize,
-                    'min_buy_in': this.inputs.min_buy_in,
-                    'max_buy_in': this.inputs.max_buy_in,
+                    'buy_in': this.inputs.buy_in,
                     'date': format(this.inputs.date, 'YYYY-MM-DD'),
                     'subscription_begin_at': format(subscription_begin, 'HH:mm'),
                     'subscription_end_at': format(subscription_end, 'HH:mm'),

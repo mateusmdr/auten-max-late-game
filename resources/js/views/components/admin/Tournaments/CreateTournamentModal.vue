@@ -32,16 +32,10 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-2">
+            <div class="col-4">
                 <NumberInput 
-                    v-model.number="inputs.min_buy_in"
-                    name="Buy-in mínimo"
-                />
-            </div>
-            <div class="col-2">
-                <NumberInput 
-                    v-model.number="inputs.max_buy_in"
-                    name="Buy-in máximo"
+                    v-model.number="inputs.buy_in"
+                    name="Buy-in"
                 />
             </div>
             <div class="col-3">
@@ -200,8 +194,7 @@ export default {
                 subscription_begin: null,
                 subscription_end: null,
                 prize: null,
-                min_buy_in: null,
-                max_buy_in: null,
+                buy_in: null,
                 tournamentPlatform: null,
                 tournamentType: null,
                 is_recurrent: false,
@@ -215,8 +208,7 @@ export default {
                 subscription_begin: null,
                 subscription_end: null,
                 prize: null,
-                min_buy_in: null,
-                max_buy_in: null,
+                buy_in: null,
                 tournament_platform_id: null,
                 tournament_type_id: null,
                 is_recurrent: false,
@@ -272,8 +264,7 @@ export default {
                 .post('/api/tournament', {
 					'name': this.inputs.name,
                     'prize': this.inputs.prize,
-                    'min_buy_in': this.inputs.min_buy_in ? this.inputs.min_buy_in : undefined,
-                    'max_buy_in': this.inputs.max_buy_in ? this.inputs.max_buy_in : undefined,
+                    'buy_in': this.inputs.buy_in ? this.inputs.buy_in : undefined,
                     'date': format(this.inputs.date, 'YYYY-MM-DD'),
                     'subscription_begin_at': format(subscription_begin, 'HH:mm'),
                     'subscription_end_at': format(subscription_end, 'HH:mm'),
@@ -292,8 +283,7 @@ export default {
                         subscription_begin: null,
                         subscription_end: null,
                         prize: null,
-                        min_buy_in: null,
-                        max_buy_in: null,
+                        buy_in: null,
                         tournamentPlatform: null,
                         tournamentType: null,
                         is_recurrent: false,

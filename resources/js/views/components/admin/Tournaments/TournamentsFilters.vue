@@ -19,16 +19,10 @@
                     name="Plataforma"
                 />
             </div>
-            <div class="col-2">
+            <div class="col-4">
                 <NumberInput 
-                    v-model.number="inputs.minBuyIn"
-                    name="Buy-in mínimo"
-                />
-            </div>
-            <div class="col-2">
-                <NumberInput 
-                    v-model.number="inputs.maxBuyIn"
-                    name="Buy-in máximo"
+                    v-model.number="inputs.buy_in"
+                    name="Buy-in"
                 />
             </div>
             <div class="col-2">
@@ -113,8 +107,8 @@ export default {
                         (now.date ? tournament.date === format(now.date, 'DD/MM/YYYY') : true) &&
                         (now.time ? (now.time <= end && now.time >= begin) : true) &&
                         (now.tournamentPlatform ? tournament.platform_id == now.tournamentPlatform : true) &&
-                        (now.minBuyIn ? (now.minBuyIn <= tournament.min) : true) &&
-                        (now.maxBuyIn ? (now.maxBuyIn >= tournament.max) : true) &&
+                        (now.buy_in ? (now.minBuyIn <= tournament.buy_in) : true) &&
+                        (now.maxBuyIn ? (now.maxBuyIn >= tournament.buy_in) : true) &&
                         (now.tournamentType ? tournament.type_id == now.tournamentType : true)
                     );
                 };

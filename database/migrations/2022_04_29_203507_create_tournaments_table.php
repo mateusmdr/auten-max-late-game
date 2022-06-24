@@ -19,8 +19,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', DBSizes::STRING);
             $table->integer('prize')->unsigned();
-            $table->integer('min_buy_in')->unsigned()->nullable();
-            $table->integer('max_buy_in')->unsigned()->nullable();
+            $table->integer('buy_in')->unsigned()->nullable();
             $table->date('date');
             $table->time('subscription_begin_at');
             $table->time('subscription_end_at');

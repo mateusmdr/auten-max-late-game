@@ -23,8 +23,7 @@ class TournamentFactory extends Factory
         return [
             'name' => $this->faker->sentence(4),
             'prize'=> rand(0,350),
-            'min_buy_in'=> rand(0,50),
-            'max_buy_in'=> rand(50,100),
+            'buy_in'=> rand(0,100),
             'date' => now()->addDays(rand(0,85)),
             'subscription_begin_at' => $this->faker->time('H:i',$end),
             'subscription_end_at' => $end,

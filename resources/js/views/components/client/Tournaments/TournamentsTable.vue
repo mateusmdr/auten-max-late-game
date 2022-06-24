@@ -28,9 +28,8 @@ export default {
             {name: 'Dia', value: 'date', width: 1},
             {name: 'Inscrição', value: 'subscription', width: 2},
             {name: 'Plataforma', value: 'platform_name', width: 2},
-            {name: 'Tipo torneio', value: 'type_name', width: 1},
-            {name: 'Buy-in Mín', value: 'min', width: 1},
-            {name: 'Buy-in Máx', value: 'max', width: 1},
+            {name: 'Tipo torneio', value: 'type_name', width: 2},
+            {name: 'Buy-in', value: 'buy_in', width: 1},
             {name: 'Prêmio', value: 'prize', width: 1}
         ];
     },
