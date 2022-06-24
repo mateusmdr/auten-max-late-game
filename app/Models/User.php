@@ -76,7 +76,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $builder = Payment::query();
         $builder->whereBelongsTo($this);
-        $builder->whereNotIn('status', ['rejected','cancelled', 'refunded', 'charged_back']);
+        $builder->where('status', 'approved');
         $builder->latest('datetime');
         $payment = $builder->first();
 
