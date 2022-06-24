@@ -15,9 +15,10 @@
 
             <div v-if="!currentUser.isRegular">
                 <div class="ticket-form" v-if="currentUser.payment_method === paymentMethods[0].value && !hasChanged">
-                    <a class="text-decoration-none" v-if="ticket_url" :href="ticket_url" download="boleto.pdf" target="_blank">
+                    <a class="text-decoration-none" v-if="!ticketLoading" :href="ticket_url" download="boleto.pdf" target="_blank">
                         Fazer download do boleto <Icon name="download"/>
                     </a>
+                    <h4 v-else>Gerando fatura...</h4>
                 </div>
 
                 <div class="credit-card-form" v-else-if="currentUser.payment_method === paymentMethods[1].value && !hasChanged">
@@ -94,6 +95,18 @@ export default {
                 text: "Cartão de crédito",
             }
         ];
+
+        this.ticketLoading = true;
+        const self = this;
+        if(this.currentUser.payment_method === 'bolbradesco' && !this.currentUser.isRegular) {
+            axios
+                .post("/api/payment", {
+                    "is_ticket": true
+                })
+                .then((res) => {self.ticket_url = res.data.url; return res.data.url})
+                .catch(() => alert("Falha ao gerar o boleto"))
+                .finally(() => {self.ticketLoading = false});
+        }
     },
     watch: {
         paymentMethod(before, now) {
@@ -108,15 +121,6 @@ export default {
         } 
     },
     data() {
-        if(this.currentUser.payment_method === 'bolbradesco' && !this.currentUser.isRegular) {
-            axios
-                .post("/api/payment", {
-                    "is_ticket": true
-                })
-                .then((res) => {this.ticket_url = res.data.url; return res.data.url})
-                .catch(() => alert("Falha ao gerar o boleto"));
-        }
-
         return {
             inputs: {
                 paymentMethod: this.currentUser.payment_method,
@@ -126,7 +130,8 @@ export default {
                 expireDate: null,
                 cvv: null,
             },
-            ticket_url: null
+            ticket_url: null,
+            ticketLoading: true,
         };
     },
     methods: {
@@ -142,7 +147,6 @@ export default {
                 .catch(() => alert("Verifique os dados inseridos"));
         },
         creditCardTransaction() {
-
             if(!(this.inputs.cardNumber &&  this.inputs.cardholderName && this.inputs.cpf &&
                 this.inputs.expireDate && this.inputs.cvv)) {
                 alert("Há dados não preenchidos");
