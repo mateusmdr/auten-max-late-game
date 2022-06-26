@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\PaymentPlan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Support\Facades\Log;
+use MercadoPago\Payment as MercadoPagoPayment;
 
 class Payment extends Model
 {
@@ -15,17 +17,23 @@ class Payment extends Model
 
     public function prunable()
     {
-        return static::where('status', 'pending')->where('payment_method', 'bolbradesco')->whereDate('date_of_expiration', '<=', now());
+        return static::where('status', 'pending')->whereDate('date_of_expiration', '<=', now())
+            ->orWhere('status','cancelled')->where('payment_method', 'bolbradesco');
     }
 
-    /**
-     * Prepare the model for pruning.
-     *
-     * @return void
-     */
-    protected function pruning()
-    {
-        
+    public function cancel() {
+        if($this->status === 'pending' || $this->status === 'in_process') {
+            $payment = MercadoPagoPayment::find_by_id($this->mercado_pago_id);
+            if($payment !== null){
+                $payment->status = "cancelled";
+                $payment->update();
+            }
+
+            $this->status = "cancelled";
+            $this->save();
+        }else {
+            Log::alert("Tentativa inválida de cancelar pagamento", $this);
+        }
     }
 
     public function user() {

@@ -6,6 +6,7 @@ use DateTime;
 use Exception;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PaymentRequest;
 use App\Http\Resources\PaymentResource;
@@ -82,99 +83,104 @@ class PaymentController extends Controller
 
     public function store(PaymentRequest $request)
     {
-        // Must have selected both a plan and a payment_method
-        $payment_plan = Auth::user()->payment_plan;
-        $payment_method = Auth::user()->payment_method;
-        if($payment_plan === null || $payment_method === null) {
-            abort(422);
-        }
+        // DB::transaction(function() use ($request){
+            // Must have selected both a plan and a payment_method
+            $payment_plan = Auth::user()->payment_plan;
+            $payment_method = Auth::user()->payment_method;
+            if($payment_plan === null || $payment_method === null) {
+                abort(422);
+            }
 
-        // Show latest ticket if exists in the last 24h
-        if($payment_method === 'bolbradesco') {
-            $lastTicket = Payment::query()->whereBelongsTo(Auth::user())->where('payment_method','bolbradesco')
-                ->where('status','pending')->whereDate('date_of_expiration', '>', now())->orderBy('datetime','desc')->first();
-            if($lastTicket !== null) {
+            // Show latest ticket if exists in the last 24h
+            if($payment_method === 'bolbradesco') {
+                $lastTicket = Payment::query()->whereBelongsTo(Auth::user())->where('payment_method','bolbradesco')
+                    ->where('status','pending')->whereDate('date_of_expiration', '>', now())->orderBy('datetime','desc')->first();
+                if($lastTicket !== null) {
+                    return response()->json([
+                        'url' => $lastTicket->url
+                    ]);
+                }
+            }
+            
+            //General payment data
+            $payment = new MercadoPagoPayment();
+
+            $payment->transaction_amount = $payment_plan->price;
+            $payment->description = "Assinatura ". $payment_plan->name . " da plataforma MaxLateGame";
+            $payment->installments = 1;
+            $payment->notification_url = route('mercado_pago_webhook');
+
+            // Method specific info
+            if($payment_method === 'credit_card') {
+                $payment->token = $request->input('card_token');
+                $name = $request->input('cardholderName');
+                $cpf = $request->input('identificationNumber');
+            }else {
+                $name = Auth::user()->name;
+                $cpf = Auth::user()->cpf;
+                $dateOfExpiration = now()->addDays(5);
+                $payment->date_of_expiration = $dateOfExpiration->format(DateTime::RFC3339_EXTENDED);
+                $payment->payment_method_id = $payment_method;
+            }
+
+            // Payer data
+            $name = explode(" ", $name);
+            $payment->payer = array(
+                "email" => Auth::user()->email,
+                "first_name" => $name[0],
+                "last_name" => $name[array_key_last($name)],
+                "identification" => array(
+                    "type" => "CPF",
+                    "number" => $cpf
+                ),
+                //  "address"=>  array(
+                //      "zip_code" => $cep,
+                //      "street_name" => $endereco,
+                //      "street_number" => $numero_endereco,
+                //      "neighborhood" => $bairro,
+                //      "city" => $cidade,
+                //      "federal_unit" => $uf
+                //   )
+            );
+
+            //Treat failures
+            try{
+                $payment->save();
+                if($payment->error) {
+                    return response()->json([
+                        'error' => $this->getErrorMessage($payment->status_detail),
+                        'mp' => $payment->error
+                    ], $payment->error->status);
+                }
+            }catch(Exception $e) {
                 return response()->json([
-                    'url' => $lastTicket->url
+                    'error' => $this->getErrorMessage($payment->status_detail)
+                ], 422);
+            }
+
+            $data = [
+                "mercado_pago_id" => $payment->id,
+                "user_id" => Auth::user()->id,
+                "datetime" => now(),
+                "status" => $payment->status,
+                "payment_plan_id" => $payment_plan->id,
+                "price" => $payment_plan->price,
+                "payment_method" => $payment_method,
+                "url" => $payment_method === 'bolbradesco' ? $payment->transaction_details->external_resource_url : null,
+                "date_of_expiration" => $payment_method === 'bolbradesco' ? $dateOfExpiration : null,
+            ];
+
+            Payment::create($data);
+
+            if($payment_method === 'bolbradesco') {
+                return response()->json([
+                    'url' => $payment->transaction_details->external_resource_url
                 ]);
+            }else {
+                // Cancel all pending tickets from that user
+                Payment::whereBelongsTo(Auth::user())->where('payment_method','bolbradesco')->where('status','pending')->get()->map->cancel();
             }
-        }
-        
-        //General payment data
-        $payment = new MercadoPagoPayment();
-
-        $payment->transaction_amount = $payment_plan->price;
-        $payment->description = "Assinatura ". $payment_plan->name . " da plataforma MaxLateGame";
-        $payment->installments = 1;
-        $payment->notification_url = route('mercado_pago_webhook');
-
-        // Method specific info
-        if($payment_method === 'credit_card') {
-            $payment->token = $request->input('card_token');
-            $name = $request->input('cardholderName');
-            $cpf = $request->input('identificationNumber');
-        }else {
-            $name = Auth::user()->name;
-            $cpf = Auth::user()->cpf;
-            $dateOfExpiration = now()->addDays(5);
-            $payment->date_of_expiration = $dateOfExpiration->format(DateTime::RFC3339_EXTENDED);
-            $payment->payment_method_id = $payment_method;
-        }
-
-        // Payer data
-        $name = explode(" ", $name);
-        $payment->payer = array(
-            "email" => Auth::user()->email,
-            "first_name" => $name[0],
-            "last_name" => $name[array_key_last($name)],
-            "identification" => array(
-                "type" => "CPF",
-                "number" => $cpf
-            ),
-            //  "address"=>  array(
-            //      "zip_code" => $cep,
-            //      "street_name" => $endereco,
-            //      "street_number" => $numero_endereco,
-            //      "neighborhood" => $bairro,
-            //      "city" => $cidade,
-            //      "federal_unit" => $uf
-            //   )
-        );
-
-        //Treat failures
-        try{
-            $payment->save();
-            if($payment->error) {
-                return response()->json([
-                    'error' => $this->getErrorMessage($payment->status_detail),
-                    'mp' => $payment->error
-                ], $payment->error->status);
-            }
-        }catch(Exception $e) {
-            return response()->json([
-                'error' => $this->getErrorMessage($payment->status_detail)
-            ], 422);
-        }
-
-        $data = [
-            "mercado_pago_id" => $payment->id,
-            "user_id" => Auth::user()->id,
-            "datetime" => now(),
-            "status" => $payment->status,
-            "payment_plan_id" => $payment_plan->id,
-            "price" => $payment_plan->price,
-            "payment_method" => $payment_method,
-            "url" => $payment_method === 'bolbradesco' ? $payment->transaction_details->external_resource_url : null,
-            "date_of_expiration" => $payment_method === 'bolbradesco' ? $dateOfExpiration : null,
-        ];
-
-        Payment::create($data);
-
-        if($payment_method === 'bolbradesco') {
-            return response()->json([
-                'url' => $payment->transaction_details->external_resource_url
-            ]);
-        }
+        // });
     }
 
     /**

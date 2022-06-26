@@ -4,15 +4,23 @@ namespace App\Models;
 
 use App\Models\TournamentRecurrence;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
 
 class Tournament extends Model
 {
+    use Prunable;
 
     public $timestamps = true;
 
     protected $dates = ['created_at', 'updated_at', 'date'];
 
     protected $guarded = [];
+
+    // Prune Tournaments older than 7 days from now
+    public function prunable()
+    {
+        return static::whereDate('date', '<=', now()->subDays(7));
+    }
 
     public function tournament_type() {
         return $this->belongsTo(TournamentType::class);
