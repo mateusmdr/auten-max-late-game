@@ -35,10 +35,14 @@ class SyncPayments implements ShouldQueue, ShouldBeUnique
     {
         $pendingPayments = Payment::whereIn('status', ['pending', 'in_process'])->get();
 
+        if(empty($pendingPayments)) {
+            return Log::info("Nenhum pagamento pendente encontrado");
+        }
+
         foreach ($pendingPayments as $payment) {
             $mppayment = MPPayment::find_by_id($payment->mercado_pago_id);
             if($mppayment === null) {
-                Log::warning("Erro ao encontrar o pagamento de id " . $payment->mercado_pago_id . " na integração do MercadoPago");
+                return Log::warning("Erro ao encontrar o pagamento de id " . $payment->mercado_pago_id . " na integração do MercadoPago");
             }
 
             $data = [
@@ -60,6 +64,14 @@ class SyncPayments implements ShouldQueue, ShouldBeUnique
                 );
                 $payment->update($data);
                 $payment->save();
+            }else {
+                Log::info(
+                    "O pagamento de id ["
+                    . $payment->id
+                    . "] e mercado_pago_id ["
+                    . $payment->mercado_pago_id
+                    . "] continua pendente"
+                );
             }
         }
     }
