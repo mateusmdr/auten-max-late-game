@@ -43,7 +43,8 @@ export default {
         this.steps = ["Dados pessoais", "Plano e Pagamento"];
 
         if(!this.isRegular) {
-            alert("Não identificamos o pagamento da sua assinatura da plataforma. Para retomar o acesso, escolha um dos métodos de pagamento disponíveis.");
+            alert("Não identificamos o pagamento da sua assinatura da plataforma. Para retomar o acesso, escolha um dos métodos de pagamento disponíveis.\n\n"
+                + "Desconsidere esta mensagem caso já tenha efetuado o pagamento da assinatura.");
         }
     },
 }

@@ -19,6 +19,12 @@
                         Fazer download do boleto <Icon name="download"/>
                     </a>
                     <h4 v-else>Gerando fatura...</h4>
+                    <p class="col-12 mb-4 mt-4">
+                        Depois de efetuado, o pagamento será compensado em até dois dias úteis.
+                    </p>
+                    <p class="col-12">
+                        Após a compensação, seu acesso à plataforma será rehabilitado.
+                    </p>
                 </div>
 
                 <div class="credit-card-form" v-else-if="currentUser.payment_method === paymentMethods[1].value && !hasChanged">
@@ -124,7 +130,10 @@ export default {
                 })
                 .then(() => this.currentUserStore.refresh())
                 .then(() => {
-                    this.generateTicket();
+                    if(method === 'bolbradesco'){
+                        this.currentUser.payment_method = 'bolbradesco';
+                        this.generateTicket();
+                    }
                 })
                 .catch(() => alert("Verifique os dados inseridos"));
         },
