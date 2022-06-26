@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import {format} from 'date-format-parse';
 import { storeToRefs } from 'pinia';
 import { useUserStore, useNotificationStore } from '../../../../stores/admin';
 
@@ -101,7 +102,7 @@ export default {
                 .post('/api/notification', {
 					type: this.inputs.type,
 					user_id: !this.inputs.user_id ? undefined : this.inputs.user_id,
-					datetime: this.inputs.date.toISOString().slice(0, 10) + ' ' + time.toISOString().slice(11, 16),
+					datetime: this.inputs.date.toISOString().slice(0, 10) + ' ' + format(time, 'HH:mm'),
 					description:  this.inputs.description,
 				})
                 .then(this.$refs.modal.closeModal)
