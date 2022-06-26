@@ -23,7 +23,7 @@ class SyncPayments implements ShouldQueue, ShouldBeUnique
      */
     public function __construct()
     {
-        Log::info("Job de sincronização de pagamentos iniciado");
+        //
     }
 
     /**
