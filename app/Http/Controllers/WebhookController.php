@@ -75,8 +75,9 @@ class WebhookController extends Controller
             );
         }
 
-        $payment->update($data);
-
-        $payment->save();
+        if($payment->status !== $mppayment->status) {
+            $payment->update($data);
+            $payment->save();
+        }
     }
 }

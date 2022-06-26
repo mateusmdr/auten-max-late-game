@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\SyncPayments;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -23,6 +24,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('model:prune')
             ->daily()
             ->sendOutputTo(storage_path('/logs/laravel.log'), true);
+
+        $schedule->job(new SyncPayments)->everyMinute();
     }
 
     /**
