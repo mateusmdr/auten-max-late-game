@@ -42,8 +42,8 @@
                     <div class="row mb-2">
                         <div class="col-6">
                             <TextInput
-                                label="CPF do titular"
-                                v-model="inputs.cpf"
+                                label="CPF/CNPF do titular"
+                                v-model="inputs.identificationNumber"
                             />
                         </div>
                         <div class="col-3">
@@ -104,7 +104,7 @@ export default {
                 paymentMethod: this.currentUser.payment_method,
                 cardNumber: null,
                 cardholderName: null,
-                cpf: null,
+                identificationNumber: null,
                 expireDate: null,
                 cvv: null,
             },
@@ -145,20 +145,29 @@ export default {
             }
         },
         creditCardTransaction() {
-            if(!(this.inputs.cardNumber &&  this.inputs.cardholderName && this.inputs.cpf &&
+            const cpf_cnpf = this.inputs.identificationNumber.replace(/\D/g,'');
+            const cardNumber = this.inputs.cardNumber.replace(/\D/g,'');
+            const cardExpirationMonth = ("00" + (this.inputs.expireDate.month + 1).toString()).slice(-2);
+
+            if(!(cardNumber &&  this.inputs.cardholderName && this.inputs.identificationNumber &&
                 this.inputs.expireDate && this.inputs.cvv)) {
                 alert("Há dados não preenchidos");
+                return;
+            }
+
+            if(![11,14].includes(cpf_cnpf.length)) {
+                alert("Verifique o CPF/CNPJ");
                 return;
             }
             
             this.mercadoPago
                 .createCardToken({
-                    cardNumber: this.inputs.cardNumber,
+                    cardNumber: cardNumber,
                     cardholderName: this.inputs.cardholderName,
-                    identificationType: "CPF",
-                    identificationNumber: this.inputs.cpf,
+                    identificationNumber: cpf_cnpf,
+                    identificationType: cpf_cnpf.length === 11 ? 'CPF' : 'CNPJ',
                     securityCode: this.inputs.cvv,
-                    cardExpirationMonth: (this.inputs.expireDate.month + 1).toString(),
+                    cardExpirationMonth: cardExpirationMonth,
                     cardExpirationYear: this.inputs.expireDate.year.toString(),
                 })
                 .then(({ id }) => {
@@ -166,7 +175,7 @@ export default {
                         "is_ticket": false,
                         "card_token": id,
                         "cardholderName": this.inputs.cardholderName,
-                        "identificationNumber": this.inputs.cpf
+                        "identificationNumber": cpf_cnpf
                     })
                     .then(() => {
                         this.currentUserStore.refresh();
@@ -176,7 +185,7 @@ export default {
                     })
                     .catch(error => alert(error.response ? error.response.data?.error : error));
                 })
-                .catch(() => alert("Verifique os dados inseridos"));
+                .catch((e) => {alert("Verifique os dados inseridos");console.error(e)});
         }
     },
     computed: {

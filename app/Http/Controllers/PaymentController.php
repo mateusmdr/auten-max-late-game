@@ -77,7 +77,8 @@ class PaymentController extends Controller
                 return 'Ops! Algo deu errado: Você atingiu o limite de tentativas permitido. Entre em contato com a operadora ou tente outra forma de pagamento.';
 
             default:
-                return 'Ops! Algo deu errado: não conseguimos processar o seu pagamento. Entre em contato com a operadora ou tente outra forma de pagamento.';
+                return 'Ops! Algo deu errado: não conseguimos processar o seu pagamento. Entre em contato com a operadora ou tente outra forma de pagamento.'
+                    . ' Status do pagamento: ' . $status;
         }
     }
 
@@ -114,10 +115,10 @@ class PaymentController extends Controller
             if($payment_method === 'credit_card') {
                 $payment->token = $request->input('card_token');
                 $name = $request->input('cardholderName');
-                $cpf = $request->input('identificationNumber');
+                $identificationNumber = $request->input('identificationNumber');
             }else {
                 $name = Auth::user()->name;
-                $cpf = Auth::user()->cpf;
+                $identificationNumber = Auth::user()->cpf;
                 $dateOfExpiration = now()->addDays(5);
                 $payment->date_of_expiration = $dateOfExpiration->format(DateTime::RFC3339_EXTENDED);
                 $payment->payment_method_id = $payment_method;
@@ -130,8 +131,8 @@ class PaymentController extends Controller
                 "first_name" => $name[0],
                 "last_name" => $name[array_key_last($name)],
                 "identification" => array(
-                    "type" => "CPF",
-                    "number" => $cpf
+                    "type" => $identificationNumber === 11 ? 'CPF' : 'CNPJ',
+                    "number" => $identificationNumber
                 ),
                 //  "address"=>  array(
                 //      "zip_code" => $cep,
@@ -179,6 +180,12 @@ class PaymentController extends Controller
             }else {
                 // Cancel all pending tickets from that user
                 Payment::whereBelongsTo(Auth::user())->where('payment_method','bolbradesco')->where('status','pending')->get()->map->cancel();
+
+                if($payment->status !== 'approved') {
+                    return response()->json([
+                        'error' => $this->getErrorMessage($payment->status_detail)
+                    ], 422);
+                }
             }
         // });
     }

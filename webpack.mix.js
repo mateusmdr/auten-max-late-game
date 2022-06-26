@@ -18,7 +18,8 @@ mix
     .alias({
         '@images': path.join(__dirname, 'resources/images'),
     })
-    .copy('resources/images/dark_logo.png', 'public/images');
+    .copy('resources/images/dark_logo.png', 'public/images')
+    .copy('resources/images/raw/platforms/notifications', 'public/images');
 
 if (mix.inProduction()) {
     mix

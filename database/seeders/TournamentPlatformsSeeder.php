@@ -16,10 +16,10 @@ class TournamentPlatformsSeeder extends Seeder
     public function run()
     {
         DB::table('tournament_platforms')->insert([
-            ['name' => 'Poker Stars', 'img_filename' => url('/images/pokerstars.png')],
-            ['name' => 'Party Poker', 'img_filename' => url('/images/partypoker.png')],
-            ['name' => 'GG Poker', 'img_filename' => url('/images/ggpoker.png')],
-            ['name' => 'WPN', 'img_filename' => url('/images/wpn.png')]
+            ['name' => 'Poker Stars', 'img_filename' => url('/images/pokerstars_notification.png')],
+            ['name' => 'Party Poker', 'img_filename' => url('/images/partypoker_notification.png')],
+            ['name' => 'GG Poker', 'img_filename' => url('/images/ggpoker_notification.png')],
+            ['name' => 'WPN', 'img_filename' => url('/images/wpn_notification.png')]
         ]);
     }
 }
