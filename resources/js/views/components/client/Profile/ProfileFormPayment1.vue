@@ -24,6 +24,7 @@ import { storeToRefs } from "pinia";
 import {useCurrentUserStore,usePaymentPlanStore} from '../../../../stores/client';
 
 export default {
+    emits: ['update'],
     setup() {
         const currentUserStore = useCurrentUserStore();
         const paymentPlanStore = usePaymentPlanStore();
@@ -62,6 +63,7 @@ export default {
                     period: this.inputs.paymentPlan
                 })
                 .then(() => this.currentUserStore.refresh())
+                .then(() => this.$emit('update'))
                 .catch(() => alert("Verifique os dados inseridos"));
         }
     }

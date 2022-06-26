@@ -94,13 +94,15 @@ class PaymentController extends Controller
 
             // Show latest ticket if exists in the last 24h
             if($payment_method === 'bolbradesco') {
-                $lastTicket = Payment::query()->whereBelongsTo(Auth::user())->where('payment_method','bolbradesco')
+                $lastTicket = Payment::query()->whereBelongsTo(Auth::user())->where('payment_method','bolbradesco')->where('payment_plan_id', $payment_plan->id)
                     ->where('status','pending')->whereDate('date_of_expiration', '>', now())->orderBy('datetime','desc')->first();
                 if($lastTicket !== null) {
                     return response()->json([
                         'url' => $lastTicket->url
                     ]);
                 }
+
+                Payment::whereBelongsTo(Auth::user())->where('payment_method','bolbradesco')->where('status','pending')->get()->map->cancel();
             }
             
             //General payment data
@@ -131,7 +133,7 @@ class PaymentController extends Controller
                 "first_name" => $name[0],
                 "last_name" => $name[array_key_last($name)],
                 "identification" => array(
-                    "type" => $identificationNumber === 11 ? 'CPF' : 'CNPJ',
+                    "type" => strlen($identificationNumber) <= 11 ? 'CPF' : 'CNPJ',
                     "number" => $identificationNumber
                 ),
                 //  "address"=>  array(

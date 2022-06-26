@@ -124,9 +124,7 @@ export default {
                 })
                 .then(() => this.currentUserStore.refresh())
                 .then(() => {
-                    if(method === 'bolbradesco') {
-                        this.generateTicket();
-                    }
+                    this.generateTicket();
                 })
                 .catch(() => alert("Verifique os dados inseridos"));
         },

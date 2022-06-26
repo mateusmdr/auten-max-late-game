@@ -24,8 +24,12 @@ class Kernel extends ConsoleKernel
         $schedule->command('model:prune')
             ->daily()
             ->sendOutputTo(storage_path('/logs/laravel.log'), true);
+        
+        $schedule
+            ->command('logs:clear')
+            ->monthlyOn(1);
 
-        $schedule->job(new SyncPayments)->everyMinute();
+        $schedule->job(new SyncPayments)->everyFifteenMinutes();
     }
 
     /**

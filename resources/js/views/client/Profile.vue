@@ -6,8 +6,8 @@
             </template>
             <template #step-1>
                 <div class="d-flex flex-row justify-content-stretch">
-                    <ClientProfileFormPayment1/>
-                    <ClientProfileFormPayment2 v-if="user.plan_period !== 'free'"/>
+                    <ClientProfileFormPayment1 @update="componentKey++"/>
+                    <ClientProfileFormPayment2 v-if="user.plan_period !== 'free'" :key="componentKey"/>
                 </div>
             </template>
         </Stepper>
@@ -27,6 +27,16 @@ export default {
         return {
             isRegular,
             user
+        }
+    },
+    methods: {
+        forceRerender() {
+            this.componentKey += 1;  
+        }
+    },
+    data() {
+        return {
+            componentKey: 0
         }
     },
     created() {
