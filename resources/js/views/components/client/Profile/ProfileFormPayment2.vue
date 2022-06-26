@@ -96,9 +96,7 @@ export default {
             }
         ];
 
-        if(this.currentUser.payment_method === 'bolbradesco' && !this.currentUser.isRegular) {
-            this.generateTicket();
-        }
+        this.generateTicket();
     },
     data() {
         return {
@@ -133,16 +131,18 @@ export default {
                 .catch(() => alert("Verifique os dados inseridos"));
         },
         generateTicket() {
-            this.ticketLoading = true;
-            const self = this;
-            
-            axios
-                .post("/api/payment", {
-                    "is_ticket": true
-                })
-                .then((res) => {self.ticket_url = res.data.url; return res.data.url})
-                .catch(() => alert("Falha ao gerar o boleto"))
-                .finally(() => {self.ticketLoading = false});
+            if(this.currentUser.payment_method === 'bolbradesco' && !this.currentUser.isRegular) {
+                this.ticketLoading = true;
+                const self = this;
+                
+                axios
+                    .post("/api/payment", {
+                        "is_ticket": true
+                    })
+                    .then((res) => {self.ticket_url = res.data.url; return res.data.url})
+                    .catch(() => alert("Falha ao gerar o boleto"))
+                    .finally(() => {self.ticketLoading = false});
+            }
         },
         creditCardTransaction() {
             if(!(this.inputs.cardNumber &&  this.inputs.cardholderName && this.inputs.cpf &&

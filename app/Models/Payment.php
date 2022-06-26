@@ -17,7 +17,7 @@ class Payment extends Model
 
     public function prunable()
     {
-        return static::where('status', 'pending')->whereDate('date_of_expiration', '<=', now())
+        return static::where('status', 'pending')->whereDate('date_of_expiration', '<=', today())
             ->orWhere('status','cancelled')->where('payment_method', 'bolbradesco');
     }
 

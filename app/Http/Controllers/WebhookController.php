@@ -22,21 +22,58 @@ class WebhookController extends Controller
     }
 
     public function notify(Request $request) {
-        Log::info(var_export($request, true));
         if($request->input("type") === "payment") {
-            $mppayment = MPPayment::find_by_id($request->input($data)["id"]);
+            $mppayment = MPPayment::find_by_id($request->input('data')["id"]);
+        }else {
+            return Log::warning(
+                "Notificação mercadopago de um tipo não suportado"
+                . " do tipo ["
+                . $request->input("type", "não providenciado")
+                . "] com action ["
+                . $request->input("action", "não providenciada")
+                . "] objeto do request: "
+                . var_export($request->all(), true)
+            );
         }
 
-        $payment = Payment::query()->where('mercadopago_id', $mppayment->id)->first();
-        $user = User::query()->where('email', $mppayment->payer->email)->first();
-        $payment_plan = PaymentPlan::query()->where('price', $mppayment->transaction_amount)->first();
+        if($mppayment === null) {
+            return response(null,404);
+        }
 
-        if($user === null || $payment === null) return;
+        $payment = Payment::query()->where('mercado_pago_id', $request->input('data')["id"])->first();
 
         $data = [
             "datetime" => $mppayment->date_last_updated,
             "status" => $mppayment->status,
         ];
+
+        if($payment === null) {
+            return Log::warning(
+                "Notificação mercadopago para um pagamento não existente"
+                . " do tipo ["
+                . $request->input("type", "não providenciado")
+                . "] com action ["
+                . $request->input("action", "não providenciada")
+                . "] objeto do pagamento: "
+                . var_export($mppayment, true)
+                . " objeto do request: "
+                . var_export($request->all(), true)
+            );
+        }else {
+            Log::info(
+                "Notificação mercadopago para o pagamento ["
+                . $payment->id
+                . "] do tipo ["
+                . $request->input("type", "não providenciado")
+                . "] com action ["
+                . $request->input("action", "não providenciada")
+                . "] mudou o status de ["
+                . $payment->status
+                . "] para ["
+                . $mppayment->status
+                . "]"
+            );
+        }
 
         $payment->update($data);
 

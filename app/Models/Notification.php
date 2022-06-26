@@ -15,7 +15,7 @@ class Notification extends Model
     // Prune Notifications older than 7 days from now
     public function prunable()
     {
-        return static::whereDate('datetime', '<=', now()->subDays(7));
+        return static::whereDate('datetime', '<=', today()->subDays(7));
     }
 
     public function user() {

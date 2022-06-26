@@ -19,7 +19,7 @@ class Tournament extends Model
     // Prune Tournaments older than 7 days from now
     public function prunable()
     {
-        return static::whereDate('date', '<=', now()->subDays(7));
+        return static::whereDate('date', '<=', today()->subDays(7));
     }
 
     public function tournament_type() {
