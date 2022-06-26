@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "55734cc06c3f97de6d076a1670519ec0",
+    "content-hash": "359ae9f26da4a1e370934f895c682f70",
     "packages": [
         {
             "name": "brick/math",
@@ -65,6 +65,47 @@
                 }
             ],
             "time": "2021-08-15T20:50:18+00:00"
+        },
+        {
+            "name": "crazynds/interval-expression",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/crazynds/IntervalExpression-PHP.git",
+                "reference": "f7eefd1291ed444aa317e0d6caa45cbabbcc58b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/crazynds/IntervalExpression-PHP/zipball/f7eefd1291ed444aa317e0d6caa45cbabbcc58b8",
+                "reference": "f7eefd1291ed444aa317e0d6caa45cbabbcc58b8",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "^2.0",
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Crazynds\\IntervalExpression\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "crazynds",
+                    "email": "luli.broch@gmail.com"
+                }
+            ],
+            "description": "Create complex interval for calendar",
+            "support": {
+                "issues": "https://github.com/crazynds/IntervalExpression-PHP/issues",
+                "source": "https://github.com/crazynds/IntervalExpression-PHP/tree/v1.0.2"
+            },
+            "time": "2022-06-25T03:36:19+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -8505,5 +8546,5 @@
         "php": "^8.0.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

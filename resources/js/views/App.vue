@@ -17,8 +17,6 @@ export default {
     setup() {
         const currentUserStore = useCurrentUserStore();
         currentUserStore.refresh();
-        const paymentPlanStore = usePaymentPlanStore();
-        paymentPlanStore.refresh();
         const {isRegular} = storeToRefs(currentUserStore);
 
         return {
@@ -39,6 +37,9 @@ export default {
         if (!this.user.is_admin) {
             const notificationStore = useNotificationStore();
             notificationStore.refresh();
+            const paymentPlanStore = usePaymentPlanStore();
+            paymentPlanStore.refresh();
+            
             setInterval(() => {
                 notificationStore.refresh();
             }, 60 * 1 * 1000);

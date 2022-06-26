@@ -1,6 +1,7 @@
 {
     "require": {
         "php": "^8.0.2",
+        "crazynds/interval-expression": "^1.0",
         "dragonmantank/cron-expression": "^3.3",
         "geekcom/validator-docs": "^3.7",
         "guzzlehttp/guzzle": "^7.2",

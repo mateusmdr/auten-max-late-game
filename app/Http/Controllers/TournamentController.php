@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DateTime;
+use DateInterval;
 use Carbon\Carbon;
 use Cron\CronExpression;
 use App\Models\Tournament;
@@ -10,13 +11,13 @@ use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 use App\Models\TournamentRecurrence;
 use Illuminate\Support\Facades\Auth;
+use Crazynds\IntervalExpression\Interval;
 use App\Http\Resources\TournamentResource;
 use Illuminate\Console\Scheduling\Schedule;
 use App\Http\Requests\StoreTournamentRequest;
 use App\Http\Requests\UpdateTournamentRequest;
 use App\Http\Requests\EnableNotificationRequest;
 use App\Http\Requests\DisableNotificationRequest;
-use DateInterval;
 
 class TournamentController extends Controller
 {
@@ -75,51 +76,61 @@ class TournamentController extends Controller
 
         DB::transaction(function () use ($data) {
             if(isset($data['schedule']) && str_contains($data['schedule'], '*/15')) {
-                $ends_at = new DateTime($data['ends_at']);
-                $date = new DateTime($data['date']);
+                $interval = new Interval();
+                $weekdays = explode(" ",$data['schedule']);
+                $weekdays = $weekdays[array_key_last($weekdays)];
+
+                $expression = '2 weekly ' .$weekdays;
+                $interval->parse($expression);
+
+                $ends_at = new Carbon($data['ends_at']);
+                $date = new Carbon($data['date']);
+
+                $generator = $interval->generator($date, $ends_at);
 
                 $tournamentData = [];
 
                 $recurrence = TournamentRecurrence::create($data);
-                $fourteenDays = DateInterval::createFromDateString('14 days');
-
-                $weekdays = explode(" ",$data['schedule']);
-                $weekdays = $weekdays[array_key_last($weekdays)];
-                $weekdays = explode(",",$weekdays);
 
                 unset($data['is_recurrent']);
                 unset($data['schedule']);
                 unset($data['ends_at']);
 
-                foreach($weekdays as $weekday) {
-                    $weekdayDate = clone $date;
-                    // set to first day of week
-                    $weekdayDate->setISODate((int)$weekdayDate->format('o'), (int)$weekdayDate->format('W'), 0);
-                    // set to next weekday occurence
-                    $weekdayDate->modify('- 7 days');
-                    $weekdayDate->modify('+'.($weekday).' days');
-
-                    do {
-                        $tournamentData[] = array_merge(
-                            $data,
-                            [
-                                'tournament_recurrence_id' => $recurrence->id,
-                                'date' => $weekdayDate->format('Y-m-d')
-                            ]
-                        );
-                        $weekdayDate->add($fourteenDays);
-                    }while($weekdayDate->diff($ends_at)->format('%R') == '+');
+                if(in_array($date->dayOfWeek, explode(",",$weekdays))) {
+                    $next = $generator->current();
+                    $tournamentData[] = array_merge(
+                        $data,
+                        [
+                            'tournament_recurrence_id' => $recurrence->id,
+                            'date' => $next->toDateString()
+                        ]
+                    );
                 }
+
+                $generator->next();
+                do {
+                    $next = $generator->current();
+
+                    $tournamentData[] = array_merge(
+                        $data,
+                        [
+                            'tournament_recurrence_id' => $recurrence->id,
+                            'date' => $next->toDateString()
+                        ]
+                    );
+                }while($generator->next());
 
                 Tournament::insert($tournamentData);
             }else if($data['is_recurrent']) {
 
                 $ends_at = new DateTime($data['ends_at']);
-                $date = new DateTime($data['date']);
+                $date = new Carbon($data['date']);
+                $date = $date->subDay();
             
                 $recurrence = TournamentRecurrence::create($data);
 
                 $cron = new CronExpression($data['schedule']);
+                $date = $cron->getNextRunDate($date);
                 
                 $tournamentData = [];
 

@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
             ->command('logs:clear')
             ->monthlyOn(1);
 
-        $schedule->job(new SyncPayments)->everyMinute();
+        $schedule->job(new SyncPayments)->everyFifteenMinutes();
     }
 
     /**
