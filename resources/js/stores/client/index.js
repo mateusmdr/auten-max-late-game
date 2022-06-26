@@ -229,3 +229,45 @@ export const useAdStore = defineStore('ad', {
         }
     }
 });
+
+//PaymentPlans
+export const usePaymentPlanStore = defineStore('paymentPlan', {
+    state: () => ({
+        paymentPlans: [],
+        isLoading: true
+    }),
+    actions: {
+        refresh() {
+            return (
+                axios
+                .get('/api/payment_plan')
+                .then((res) => res.data.data)
+                .then(plans => {
+                    return {
+                        monthly: plans.find(item => item.period === 'monthly'),
+                        biannual: plans.find(item => item.period === 'biannual'),
+                        yearly: plans.find(item => item.period === 'yearly'),
+                    }
+                })
+                .then(({monthly, biannual, yearly}) => {
+                    this.paymentPlans = [
+                        {
+                            value: 'yearly',
+                            text: `${yearly.name} - R$ ${yearly.price}`,
+                        },
+                        {
+                            value: 'biannual',
+                            text: `${biannual.name} - R$ ${biannual.price}`,
+                        },
+                        {
+                            value: 'monthly',
+                            text: `${monthly.name} - R$ ${monthly.price}`,
+                        }
+                    ]
+                })
+                .catch(e => console.error(e))
+                .finally(() => this.isLoading = false)
+            );
+        }
+    }
+});

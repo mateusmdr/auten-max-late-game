@@ -11,12 +11,14 @@
 
 <script>
 import { storeToRefs } from 'pinia';
-import {useNotificationStore, useCurrentUserStore} from '../stores/client';
+import {useNotificationStore, useCurrentUserStore, usePaymentPlanStore} from '../stores/client';
 
 export default {
     setup() {
         const currentUserStore = useCurrentUserStore();
         currentUserStore.refresh();
+        const paymentPlanStore = usePaymentPlanStore();
+        paymentPlanStore.refresh();
         const {isRegular} = storeToRefs(currentUserStore);
 
         return {

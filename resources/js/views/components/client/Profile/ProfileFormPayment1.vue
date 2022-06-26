@@ -21,39 +21,28 @@
 import axios from "axios";
 import { storeToRefs } from "pinia";
 
-import {useCurrentUserStore} from '../../../../stores/client';
+import {useCurrentUserStore,usePaymentPlanStore} from '../../../../stores/client';
 
 export default {
     setup() {
         const currentUserStore = useCurrentUserStore();
+        const paymentPlanStore = usePaymentPlanStore();
+        paymentPlanStore.refresh();
 
         const {user} = storeToRefs(currentUserStore);
 
+        const {paymentPlans} = storeToRefs(paymentPlanStore);
+
         return {
             currentUser: user,
-            currentUserStore
+            currentUserStore,
+            paymentPlans
         }
-    },
-    created() {
-        this.paymentPlans = [
-            {
-                value: 'yearly',
-                text: 'Anual - R$ 199,00',
-            },
-            {
-                value: 'biannual',
-                text: 'Semestral - R$ 119,99',
-            },
-            {
-                value: 'monthly',
-                text: 'Mensal - R$ 29,99',
-            }
-        ];
     },
     data() {
         return {
             inputs: {
-                paymentPlan: this.currentUser.plan_period
+                paymentPlan: this.currentUser.plan_period,
             }
         }
     },
