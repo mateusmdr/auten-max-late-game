@@ -116,9 +116,10 @@ return [
         ],
 
         'database' => [
-            'driver' => 'single',
+            'driver' => 'daily',
             'path' => storage_path('logs/database.log'),
             'level' => env('LOG_LEVEL', 'debug'),
+            'days' => 14
         ]
     ],
 
