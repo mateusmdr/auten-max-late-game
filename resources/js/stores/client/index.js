@@ -151,7 +151,7 @@ export const useNotificationStore = defineStore('notification', {
                                         {
                                             tag: notification.id, // a unique ID
                                             body: notification.type !== 'tournament' ? notification.description :
-                                                `Inscrição: ${notification.tournament.subscription} \n` +
+                                                `${notification.description} \n` +
                                                 `Plataforma: ${notification.tournament.platform_name}`,
                                                 // content of the push notification
                                             data: {

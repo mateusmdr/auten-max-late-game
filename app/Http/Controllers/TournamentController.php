@@ -218,6 +218,7 @@ class TournamentController extends Controller
         if($data['before'] ?? false){
             $notificationData['datetime'] =
                 Carbon::parse($tournament->date)->setTimeFrom($tournament->subscription_begin_at);
+            $notificationData['description'] = "O torneio " . $tournament->name . " começou.";
             
             Notification::create($notificationData);
         }
@@ -226,6 +227,7 @@ class TournamentController extends Controller
             $notificationData['datetime'] = 
                 Carbon::parse($tournament->date)->setTimeFrom($tournament->subscription_end_at)
                 ->subMinutes($data['interval']);
+            $notificationData['description'] = "Faltam " . $data['interval'] . " minutos para o torneio começar.";
 
             Notification::create($notificationData);
         }
