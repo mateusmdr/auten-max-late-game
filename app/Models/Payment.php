@@ -4,9 +4,10 @@ namespace App\Models;
 
 use App\Models\User;
 use App\Models\PaymentPlan;
+use App\Models\Notification;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
-use Illuminate\Support\Facades\Log;
 use MercadoPago\Payment as MercadoPagoPayment;
 
 class Payment extends Model
@@ -33,6 +34,17 @@ class Payment extends Model
         }else {
             Log::alert("Tentativa inválida de cancelar pagamento", $this);
         }
+    }
+
+    public function notifyApproval() {
+        $data = [
+            'user_id' => $this->user_id,
+            'datetime' => now(),
+            'type' => 'financial',
+            'description' => 'Identificamos o pagamento da sua mensalidade no valor de R$ ' . $this->price
+        ];
+
+        Notification::create($data);
     }
 
     public function user() {
