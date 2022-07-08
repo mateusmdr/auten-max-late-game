@@ -26,6 +26,6 @@ if (mix.inProduction()) {
         .version()
         .sourceMaps()
 }else {
-    mix
-        .browserSync(process.env.APP_URL)
+    // mix
+    //     .browserSync(process.env.APP_URL)
 }
