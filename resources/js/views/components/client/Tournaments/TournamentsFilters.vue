@@ -6,10 +6,10 @@
     
     <div class="input-container my-5">
         <div class="row">
-            <div class="col-1">
+            <div class="col-2">
                 <DateInput v-model="inputs.date"/>
             </div>
-            <div class="col-1">
+            <div class="col-2">
                 <TimeInput v-model="inputs.time"/>
             </div>
             <div class="col-2">

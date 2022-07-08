@@ -119,6 +119,7 @@ export default {
 
 <style scoped>
     .form-container {
-        display: inline-block;
+        width: 35vw;
+        min-width: 450px;
     }
 </style>

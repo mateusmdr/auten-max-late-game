@@ -45,6 +45,8 @@ export default {
 
         display: flex;
         align-items: center;
+        padding-right: 42px;
+        min-width: 128px;
 
         &.primary{
             background-color: #232323;

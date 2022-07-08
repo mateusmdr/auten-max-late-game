@@ -7,10 +7,10 @@
                     v-model="inputs.username"
                 />
             </div>
-            <div class="col-1">
+            <div class="col-2">
                 <DateInput v-model="inputs.date" :minDate="false"/>
             </div>
-            <div class="col-1">
+            <div class="col-2">
                 <TimeInput v-model="inputs.time"/>
             </div>
             <div class="col-2">

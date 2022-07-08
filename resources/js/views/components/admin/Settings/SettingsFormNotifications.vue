@@ -97,6 +97,6 @@ export default {
 
 <style scoped>
     .form-container {
-        width: 45vw;
+        width: 55vw;
     }
 </style>

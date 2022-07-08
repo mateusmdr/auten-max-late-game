@@ -7,7 +7,7 @@
                     name="Nome"
                 />
             </div>
-            <div class="col-1">
+            <div class="col-2">
                 <DateInput v-model="inputs.date"/>
             </div>
         </div>

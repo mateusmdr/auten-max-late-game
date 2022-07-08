@@ -76,3 +76,9 @@ export default {
         }
     }
 </style>
+
+<style scoped>
+    ::v-deep .dp__main {
+        min-width: 128px;
+    }
+</style>
