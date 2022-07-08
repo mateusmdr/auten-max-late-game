@@ -36,6 +36,6 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
-        SDK::setAccessToken(env('MERCADO_PAGO_TOKEN'));
+        SDK::setAccessToken(env('MERCADO_PAGO_TOKEN', null));
     }
 }

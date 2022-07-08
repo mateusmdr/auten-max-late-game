@@ -184,12 +184,7 @@ export const useNotificationIntervalStore = defineStore('notificationInterval', 
                 .get('/api/notification_interval')
                 .then((res) => this.notificationIntervals = res.data.data)
                 .then(() => {
-                    this.notificationIntervals = this.notificationIntervals.map(interval => {
-                        return ({
-                            id: interval.minutes,
-                            name: `${interval.minutes} minutos antes`
-                        })
-                    })
+                    this.notificationIntervals = this.notificationIntervals.map(interval => interval.minutes)
                 })
                 .catch(e => console.error(e))
         }

@@ -26,11 +26,16 @@
                     v-model="inputs.after"
                 />
             </div>
-            <div class="col-6" v-if="inputs.after">
-                <Select
-                    :options="notificationIntervals"
-                    v-model="inputs.interval"
-                />
+            <div class="col-6 mt-4" v-if="inputs.after">
+                <InputContainer name="Minutos antes do fim">
+                    <v-select 
+                        :options="notificationIntervals"
+                        v-model="inputs.interval"
+                        taggable
+                        class="v-select"
+                        :clearable="false"
+                    />
+                </InputContainer>
             </div>
         </div>
         <div v-if="tournament.is_recurrent">
@@ -94,3 +99,40 @@ export default {
     }
 }
 </script>
+
+<style>
+.v-select {
+    --vs-controls-color: #BFC9DB;
+    --vs-border-color: #333333;
+
+    --vs-dropdown-bg: #3E3E3E;
+    --vs-dropdown-color: #F2F5FA;
+    --vs-dropdown-option-color: #F2F5FA;
+
+    --vs-selected-bg: #333333;
+    --vs-selected-color: #F2F5FA;
+
+    --vs-search-input-color: #F2F5FA;
+
+    --vs-dropdown-option--active-bg: #333333;
+    --vs-dropdown-option--active-color: #F2F5FA;
+}
+
+.v-select .vs__dropdown-toggle {
+    height: 3rem;
+    border-radius: .5rem;
+    width: 100%;
+    border: 0;
+    margin-bottom: 0;
+
+    background-color: #4F4F4F;
+    color: #BFC9DB;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+.v-select .vs__selected-options {
+    align-items: center;
+}
+
+</style>
