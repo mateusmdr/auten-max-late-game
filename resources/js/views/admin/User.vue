@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style scoped>
-::v-deep .return-button {
+:deep(.return-button) {
     color: #7F8896;
     text-decoration: none;
     font-weight: 600;

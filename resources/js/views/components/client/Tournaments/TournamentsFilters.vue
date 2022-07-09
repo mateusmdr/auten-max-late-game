@@ -113,8 +113,8 @@ export default {
                         (now.date ? tournament.date === format(now.date, 'DD/MM/YYYY') : true) &&
                         (now.time ? (now.time <= end || now.time >= begin) : true) &&
                         (now.tournamentPlatform ? tournament.platform_id == now.tournamentPlatform : true) &&
-                        (now.minBuyIn ? (now.minBuyIn >= tournament.buy_in) : true) &&
-                        (now.maxBuyIn ? (now.maxBuyIn <= tournament.buy_in) : true) &&
+                        (now.minBuyIn ? (now.minBuyIn <= tournament.buy_in) : true) &&
+                        (now.maxBuyIn ? (now.maxBuyIn >= tournament.buy_in) : true) &&
                         (now.tournamentType ? tournament.type_id == now.tournamentType : true)
                     );
                 };
