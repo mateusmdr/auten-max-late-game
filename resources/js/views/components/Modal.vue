@@ -80,7 +80,7 @@ export default {
 		color: #BFC9DB;
 	}
 
-	::v-deep .modal-container {
+	:deep(.modal-container) {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -105,7 +105,7 @@ export default {
 		transform: translate(-50%, -50%);
 	}
 
-	::v-deep .modal-content {
+	:deep(.modal-content) {
 		background-color: #232323;
 		border-radius: .5rem;
 		padding: 4rem 2rem;
