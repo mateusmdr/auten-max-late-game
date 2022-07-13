@@ -31,5 +31,6 @@
         <footer>
             @yield('footer')
         </footer>
+        @include('components.whatsapp_button')
     </body>
 </html>
