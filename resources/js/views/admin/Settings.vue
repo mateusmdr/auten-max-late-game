@@ -5,15 +5,12 @@
                 <AdminSettingsFormPlans/>
             </template>
             <template #step-1>
-                <AdminSettingsFormNotifications/>
-            </template>
-            <template #step-2>
                 <div class="d-flex flex-row align-items-start">
                     <AdminSettingsFormTournaments1/>
                     <AdminSettingsFormTournaments2/>
                 </div>
             </template>
-            <template #step-3>
+            <template #step-2>
                 <AdminSettingsFormUseTerms/>
             </template>
         </Stepper>

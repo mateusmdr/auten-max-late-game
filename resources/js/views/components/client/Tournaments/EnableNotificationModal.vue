@@ -26,7 +26,7 @@
                     v-model="inputs.after"
                 />
             </div>
-            <div class="col-6 mt-4" v-if="inputs.after">
+            <!-- <div class="col-6 mt-4" v-if="inputs.after">
                 <InputContainer name="Minutos antes do fim">
                     <v-select 
                         :options="notificationIntervals"
@@ -36,7 +36,7 @@
                         :clearable="false"
                     />
                 </InputContainer>
-            </div>
+            </div> -->
         </div>
         <div v-if="tournament.is_recurrent">
         
@@ -45,19 +45,14 @@
 </template>
 
 <script>
-import {useNotificationIntervalStore, useTournamentStore} from '../../../../stores/client';
 import {storeToRefs} from 'pinia';
 
 export default {
     emits: ['close'],
     setup() {
-        const notificationIntervalStore = useNotificationIntervalStore();
-        notificationIntervalStore.refresh();
         const tournamentStore = useTournamentStore();
-        const {notificationIntervals} = storeToRefs(notificationIntervalStore);
 
         return {
-            notificationIntervals,
             tournamentStore
         }
     },
