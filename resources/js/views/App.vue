@@ -110,7 +110,7 @@ export default {
     }
 
     .thin-table {
-        width: 80%;
+        width: 100%;
     }
 
     button {
