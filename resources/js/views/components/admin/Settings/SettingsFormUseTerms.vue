@@ -4,11 +4,11 @@
             :showSubmitButton="!!inputs.file"
             submitText="Atualizar termos"
             @submit="upload"
+            title="Termos de uso"
         >
             <div class="row">
                 <div class="col-12 mb-4">
                     <FileInput
-                        label="Termos de uso"
                         @change="(file) => inputs.file = file"
                         hint="Apenas arquivos .pdf"
                         mime="application/pdf"

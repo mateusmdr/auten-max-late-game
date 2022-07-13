@@ -16,7 +16,7 @@ class EnableNotificationRequest extends BaseRequest
         return [
             'before' => 'required_if:after,0|required_without:after|boolean',
             'after' => 'required_if:after,0|required_without:before|boolean',
-            'interval' => 'required_if:after,1|integer|min:0',
+            'interval' => 'required_if:after,1|date_format:H:i',
         ];
     }
 }

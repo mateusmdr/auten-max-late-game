@@ -20,7 +20,7 @@
 <script>
 export default {
     created() {
-        this.steps = ['Planos', 'Notificações', 'Torneios', 'Termos de uso']
+        this.steps = ['Planos', 'Torneios', 'Termos de uso']
     }
 }
 </script>
