@@ -29,6 +29,7 @@ class UserResource extends JsonResource
             'block_reason' => $this->block_reason,
             'isInactive' => $this->isInactive(),
             'isRegular' => $this->isRegular(),
+            'isPastTestPeriod' => $this->isPastTestPeriod(),
             'is_admin' => $this->is_admin
         ]);
     }

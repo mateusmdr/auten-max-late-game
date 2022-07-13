@@ -179,14 +179,18 @@ import {getCurrentInstance} from 'vue';
 export const useCurrentUserStore = defineStore('currentUser', {
     state: () => ({
         user: getCurrentInstance().appContext.config.globalProperties.user,
-        isRegular: getCurrentInstance().appContext.config.globalProperties.user.isRegular
+        isRegular: getCurrentInstance().appContext.config.globalProperties.user.isRegular,
+        isPastTestPeriod: getCurrentInstance().appContext.config.globalProperties.user.isPastTestPeriod
     }),
     actions: {
         refresh() {
             axios
                 .get('/api/user/' + this.user.id)
-                .then((res) => this.user = res.data.data)
-                .then(() => this.isRegular = this.user.isRegular)
+                .then((res) => {
+                    this.user = res.data.data;
+                    this.isRegular = this.user.isRegular;
+                    this.isPastTestPeriod = this.user.isPastTestPeriod;
+                })
                 .catch(e => console.error(e))
         }
     }

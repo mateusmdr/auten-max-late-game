@@ -70,10 +70,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function isRegular() {
-        if(!$this->isPastTestPeriod()) {
-            return true;
-        }
-
         $builder = Payment::query();
         $builder->whereBelongsTo($this);
         $builder->where('status', 'approved');
