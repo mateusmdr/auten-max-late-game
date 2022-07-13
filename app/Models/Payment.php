@@ -18,7 +18,9 @@ class Payment extends Model
 
     public function prunable()
     {
-        return static::where('status', 'pending')->whereDate('date_of_expiration', '<=', today())->orWhereIn('status',['cancelled', 'rejected']);
+        return static::query()
+            ->whereDate('date_of_expiration', '<=', today()->subYear())->where('status', 'pending')
+            ->orWhereIn('status',['cancelled', 'rejected']);
     }
 
     public function cancel() {
@@ -60,6 +62,6 @@ class Payment extends Model
     }
 
     public function is_pending() {
-        return true;
+        return $this->status === 'pending';
     }
 }
