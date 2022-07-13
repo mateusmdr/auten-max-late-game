@@ -37,6 +37,9 @@
                     />
                 </InputContainer>
             </div> -->
+            <div class="col-6 mt-4" v-if="inputs.after">
+                <TimeInput/>
+            </div>
         </div>
         <div v-if="tournament.is_recurrent">
         
@@ -45,7 +48,7 @@
 </template>
 
 <script>
-import {storeToRefs} from 'pinia';
+import {useTournamentStore} from '../../../../stores/client';
 
 export default {
     emits: ['close'],
