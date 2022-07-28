@@ -46,6 +46,15 @@
                         v-model="inputs.phone"
                     />
                 </div>
+                <div class="col-6 mt-3">
+                    <input-container name="Garantir acesso completo à plataforma">
+                        <Toggle 
+                            v-model="inputs.has_full_access"
+                            onLabel="sim"
+                            offLabel="não"
+                        />
+                    </input-container>
+                </div>
             </div>
         </EditForm>
     </div>
@@ -57,7 +66,10 @@ import deepEqual from "deep-equal";
 
 import {useUserStore} from '../../../../stores/admin';
 
+import Toggle from '@vueform/toggle'
+
 export default {
+    components: {Toggle},
     setup() {
         const userStore = useUserStore();
 
@@ -72,6 +84,7 @@ export default {
                 cpf: this.user.cpf,
                 phone: this.user.phone,
                 email: this.user.email,
+                has_full_access: this.user.has_full_access
             },
             blockReason: this.user.block_reason,
         }
@@ -83,6 +96,7 @@ export default {
                 cpf: this.user.cpf,
                 phone: this.user.phone,
                 email: this.user.email,
+                has_full_access: this.user.has_full_access
             }
 
             return !deepEqual(this.inputs, mapped);

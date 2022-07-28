@@ -30,7 +30,8 @@ class UserResource extends JsonResource
             'isInactive' => $this->isInactive(),
             'isRegular' => $this->isRegular(),
             'isPastTestPeriod' => $this->isPastTestPeriod(),
-            'is_admin' => $this->is_admin
+            'is_admin' => $this->is_admin,
+            'has_full_access' => $this->has_full_access
         ]);
     }
 }

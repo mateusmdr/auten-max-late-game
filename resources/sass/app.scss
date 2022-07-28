@@ -1,2 +1,21 @@
 // Variables
 @import 'variables';
+
+@import '@vueform/toggle/themes/default.css';
+
+:root {
+    --toggle-width: 4rem;
+    --toggle-height: 1.5rem;
+    --toggle-border: 0.125rem;
+    --toggle-font-size: 1rem;
+    --toggle-duration: 150ms;
+    --toggle-bg-on: #05F28E;
+    --toggle-bg-off: #BFC9DB;
+    --toggle-border-on: #05F28E;
+    --toggle-border-off: #BFC9DB;
+    --toggle-ring-width: 3px;
+    --toggle-ring-color: #05F28E30;
+    --toggle-text-on: #1C1C1C;
+    --toggle-text-off: #1C1C1C;
+    --toggle-handle-enabled: #ffffff;
+}

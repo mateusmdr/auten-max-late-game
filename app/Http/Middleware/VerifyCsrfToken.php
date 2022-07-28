@@ -18,15 +18,16 @@ class VerifyCsrfToken extends Middleware
     public function __construct(Application $app, Encrypter $encrypter)
     {
         parent::__construct($app, $encrypter);
-        $this->except = [
-            route('logout'),
-            route('mercado_pago_webhook')
-        ];
-
+        
         if(env('APP_DEBUG',false)) {
             $this->except = [
                 route('logout'),
                 '/api/*',
+                route('mercado_pago_webhook')
+            ];
+        }else {
+            $this->except = [
+                route('logout'),
                 route('mercado_pago_webhook')
             ];
         }

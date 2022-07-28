@@ -27,7 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'block_reason',
         'email_verified_at',
         'payment_method',
-        'last_login'
+        'last_login',
+        'has_full_access'
     ];
 
     /**
@@ -70,6 +71,8 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function isRegular() {
+        if($this->has_full_access) return true;
+        
         $builder = Payment::query();
         $builder->whereBelongsTo($this);
         $builder->where('status', 'approved');

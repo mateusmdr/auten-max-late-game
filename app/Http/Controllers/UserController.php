@@ -9,6 +9,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\ChangePaymentPlanRequest;
 use App\Models\PaymentPlan;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -84,9 +85,18 @@ class UserController extends Controller
             'name',
             'cpf',
             'phone',
-            'is_blocked',
-            'block_reason'
         ]);
+
+        if(Auth::user()->is_admin) {
+            $data = array_merge(
+                $data,
+                $request->only([
+                    'is_blocked',
+                    'block_reason',
+                    'has_full_access'
+                ])
+            );
+        }
         
         if(!empty($data)) {
             if(isset($data['is_blocked'])) {

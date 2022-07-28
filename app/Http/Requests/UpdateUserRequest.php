@@ -36,6 +36,7 @@ class UpdateUserRequest extends BaseRequest
             'phone'=> 'integer|digits_between:10,14',
             'is_blocked' => 'boolean',
             'block_reason' => 'required_if:is_blocked,1|string|max:' . DBSizes::STRING,
+            'has_full_access' => 'boolean'
         ];
     }
 }
