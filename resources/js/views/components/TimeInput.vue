@@ -12,6 +12,7 @@
             selectText="Selecionar"
             cancelText="Cancelar"
             :startTime="startTime"
+            :textInput="true"
         />
     </InputContainer>
 </template>
