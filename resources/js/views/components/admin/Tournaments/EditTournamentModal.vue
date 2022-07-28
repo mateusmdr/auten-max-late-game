@@ -52,8 +52,8 @@
                 />
             </div>
             <div class="col-3">
-                <NumberInput 
-                    v-model.number="inputs.prize"
+                <TextInput 
+                    v-model="inputs.prize"
                     name="Prêmio *"
                 />
             </div>
