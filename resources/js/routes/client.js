@@ -3,6 +3,7 @@ import Home from '../views/client/Home.vue';
 import Notifications from '../views/client/Notifications.vue';
 import Tournaments from '../views/client/Tournaments.vue';
 import Profile from '../views/client/Profile.vue';
+import Instructions from '../views/client/Instructions.vue';
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     name: 'profile',
     component: Profile,
   },
+  {
+    path: '/notificacoes/instrucoes',
+    name: 'instructions',
+    component: Instructions
+  }
 ];
 
 const router = createRouter({
