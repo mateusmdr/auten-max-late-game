@@ -23,7 +23,7 @@
                         Depois de efetuado, o pagamento será compensado em até dois dias úteis.
                     </p>
                     <p class="col-12">
-                        Após a compensação, seu acesso à plataforma será rehabilitado.
+                        Após a compensação, seu acesso à plataforma será reabilitado.
                     </p>
                 </div>
 
