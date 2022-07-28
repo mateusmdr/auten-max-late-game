@@ -48,9 +48,12 @@ export const useTournamentStore = defineStore('tournament', {
 
                         begin = format(begin, 'HH:mm');
                         end = format(end, 'HH:mm');
+                        
+                        const formattedDate = format(parse(tournament.date, "DD/MM/YYYY"), "DD/MM");
 
                         return ({
                             ...tournament,
+                            formattedDate,
                             subscription: `${begin} ${subscription[1]} ${end}`
                         })
                     });

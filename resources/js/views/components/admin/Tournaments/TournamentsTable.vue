@@ -36,7 +36,7 @@ export default {
     },
     created() {
         this.fields = [
-            {name: '', value: 'date', width: 1},
+            {name: '', value: 'formattedDate', width: 1},
             {name: 'Nome', value: 'name', width: 2},
             {name: 'Inscrição', value: 'subscription', width: 2},
             {name: 'Plataforma', value: 'platform_name', width: 2},
