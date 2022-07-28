@@ -12,10 +12,10 @@ class Notification extends Model
 
     protected $guarded = [];
 
-    // Prune Notifications older than 7 days from now
+    // Prune Notifications older than 15 days from now
     public function prunable()
     {
-        return static::whereDate('datetime', '<=', today()->subDays(7));
+        return static::whereDate('datetime', '<=', today()->subDays(15));
     }
 
     public function user() {
