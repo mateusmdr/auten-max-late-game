@@ -36,5 +36,6 @@
 </head>
 <body>
     <div id="app" class="container-fluid"></div>
+    @include('components.whatsapp_button')
 </body>
 </html>

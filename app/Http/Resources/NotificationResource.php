@@ -25,7 +25,7 @@ class NotificationResource extends JsonResource
             'user_id' => $this->user->id,
             'datetime' => $datetime,
             'type' => $this->type,
-            'description' => is_null($tournament) ?  $this->description : null,
+            'description' => $this->description,
             'tournament' => is_null($tournament) ? null : new TournamentResource($tournament)
         ];
     }

@@ -209,20 +209,3 @@ export const useInsightsStore = defineStore('insights', {
         }
     }
 });
-
-// NotificationIntervals
-export const useNotificationIntervalStore = defineStore('notificationInterval', {
-    state: () => ({
-        notificationIntervals: [],
-    }),
-    actions: {
-        refresh() {
-            return (
-                axios
-                .get('/api/notification_interval')
-                .then((res) => this.notificationIntervals = res.data.data)
-                .catch(e => console.error(e))
-            );
-        }
-    }
-});

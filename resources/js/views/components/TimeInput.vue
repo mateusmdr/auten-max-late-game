@@ -11,12 +11,12 @@
             @update:modelValue="updateValue"
             selectText="Selecionar"
             cancelText="Cancelar"
+            :startTime="startTime"
         />
     </InputContainer>
 </template>
 
 <script>
-import { ref } from 'vue';
 import Datepicker from '@vuepic/vue-datepicker';
 import { parse, format } from 'date-format-parse';
 
@@ -37,6 +37,13 @@ export default {
                 hours: format(this.modelValue, 'HH'),
                 minutes: format(this.modelValue, 'mm'),
             } : null
+        },
+        startTime() {
+            return this.default ?
+            {
+                hours: format(this.default, 'HH'),
+                minutes: format(this.default, 'mm'),
+            } : null
         }
     },
     components: {Datepicker},
@@ -45,7 +52,8 @@ export default {
         label: {
             type: String,
             default: "Hora"
-        }
+        },
+        default: Object
     }
 }
 </script>

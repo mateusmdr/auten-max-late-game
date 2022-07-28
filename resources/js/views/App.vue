@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header :is-admin="user.is_admin" :disable="!(this.user.is_admin || isRegular)"/>
+        <Header :is-admin="user.is_admin" :disable="!(this.user.is_admin || this.isRegular || !this.isPastTestPeriod)"/>
         <main class="mt-5">
             <router-view/>
         </main>
@@ -17,10 +17,11 @@ export default {
     setup() {
         const currentUserStore = useCurrentUserStore();
         currentUserStore.refresh();
-        const {isRegular} = storeToRefs(currentUserStore);
+        const {isRegular, isPastTestPeriod} = storeToRefs(currentUserStore);
 
         return {
             isRegular,
+            isPastTestPeriod,
             currentUserStore
         }
     },
@@ -30,7 +31,7 @@ export default {
         }
     },
     mounted() {
-        if(!(this.user.is_admin || this.isRegular)) {
+        if(!(this.user.is_admin || this.isRegular || !this.isPastTestPeriod)) {
             return this.$router.push({name: 'profile'});
         }
 
@@ -109,7 +110,7 @@ export default {
     }
 
     .thin-table {
-        width: 80%;
+        width: 100%;
     }
 
     button {

@@ -15,7 +15,6 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TournamentTypeController;
 use App\Http\Controllers\TournamentPlatformController;
-use App\Http\Controllers\NotificationIntervalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,8 +58,7 @@ Route::middleware('auth', 'blocked')->group(function () {
             Route::apiResource('tournament_platform',TournamentPlatformController::class);
             Route::apiResource('tournament_type',TournamentTypeController::class);
             Route::apiResource('notification', NotificationController::class);
-            Route::post('eula',[EULAController::class,'update']);        
-            Route::apiResource('notification_interval',NotificationIntervalController::class,['only' => ['index', 'store', 'show', 'destroy']]);        
+            Route::post('eula',[EULAController::class,'update']);
             Route::get('insights',[InsightsController::class,'index']);
         });
 

@@ -103,7 +103,7 @@ export default {
                 .finally(this.tournamentPlatformStore.refresh);
         },
         handleDelete(tournamentPlatform) {
-            const res = confirm("Tem certeza que quer remover o tipo \"" + tournamentPlatform.name + "\" ?");
+            const res = confirm("Tem certeza que quer remover a plataforma \"" + tournamentPlatform.name + "\" ?");
 
             if(!res) {
                 return;

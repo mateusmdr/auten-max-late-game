@@ -5,15 +5,12 @@
                 <AdminSettingsFormPlans/>
             </template>
             <template #step-1>
-                <AdminSettingsFormNotifications/>
-            </template>
-            <template #step-2>
                 <div class="d-flex flex-row align-items-start">
                     <AdminSettingsFormTournaments1/>
                     <AdminSettingsFormTournaments2/>
                 </div>
             </template>
-            <template #step-3>
+            <template #step-2>
                 <AdminSettingsFormUseTerms/>
             </template>
         </Stepper>
@@ -23,7 +20,7 @@
 <script>
 export default {
     created() {
-        this.steps = ['Planos', 'Notificações', 'Torneios', 'Termos de uso']
+        this.steps = ['Planos', 'Torneios', 'Termos de uso']
     }
 }
 </script>

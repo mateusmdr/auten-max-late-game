@@ -16,10 +16,10 @@ class Tournament extends Model
 
     protected $guarded = [];
 
-    // Prune Tournaments older than 7 days from now
+    // Prune Tournaments older than 1 year from now
     public function prunable()
     {
-        return static::whereDate('date', '<=', today()->subDays(7));
+        return static::whereDate('date', '<=', today()->subYear(1));
     }
 
     public function tournament_type() {

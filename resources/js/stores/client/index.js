@@ -173,44 +173,30 @@ export const useNotificationStore = defineStore('notification', {
     }
 });
 
-// NotificationIntervals
-export const useNotificationIntervalStore = defineStore('notificationInterval', {
-    state: () => ({
-        notificationIntervals: [],
-    }),
-    actions: {
-        refresh() {
-            axios
-                .get('/api/notification_interval')
-                .then((res) => this.notificationIntervals = res.data.data)
-                .then(() => {
-                    this.notificationIntervals = this.notificationIntervals.map(interval => interval.minutes)
-                })
-                .catch(e => console.error(e))
-        }
-    }
-});
-
 // Current User data
 import {getCurrentInstance} from 'vue';
 
 export const useCurrentUserStore = defineStore('currentUser', {
     state: () => ({
         user: getCurrentInstance().appContext.config.globalProperties.user,
-        isRegular: getCurrentInstance().appContext.config.globalProperties.user.isRegular
+        isRegular: getCurrentInstance().appContext.config.globalProperties.user.isRegular,
+        isPastTestPeriod: getCurrentInstance().appContext.config.globalProperties.user.isPastTestPeriod
     }),
     actions: {
         refresh() {
             axios
                 .get('/api/user/' + this.user.id)
-                .then((res) => this.user = res.data.data)
-                .then(() => this.isRegular = this.user.isRegular)
+                .then((res) => {
+                    this.user = res.data.data;
+                    this.isRegular = this.user.isRegular;
+                    this.isPastTestPeriod = this.user.isPastTestPeriod;
+                })
                 .catch(e => console.error(e))
         }
     }
 });
 
-// NotificationIntervals
+// Ads
 export const useAdStore = defineStore('ad', {
     state: () => ({
         ad: null,

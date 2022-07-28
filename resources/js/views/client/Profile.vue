@@ -22,10 +22,11 @@ export default {
     setup() {
         const currentUserStore = useCurrentUserStore();
         currentUserStore.refresh();
-        const {isRegular, user} = storeToRefs(currentUserStore);
+        const {isRegular, isPastTestPeriod, user} = storeToRefs(currentUserStore);
 
         return {
             isRegular,
+            isPastTestPeriod,
             user
         }
     },
@@ -42,7 +43,7 @@ export default {
     created() {
         this.steps = ["Dados pessoais", "Plano e Pagamento"];
 
-        if(!this.isRegular) {
+        if(!this.isRegular && this.isPastTestPeriod) {
             alert("Não identificamos o pagamento da sua assinatura da plataforma. Para retomar o acesso, escolha um dos métodos de pagamento disponíveis.\n\n"
                 + "Desconsidere esta mensagem caso já tenha efetuado o pagamento da assinatura.");
         }

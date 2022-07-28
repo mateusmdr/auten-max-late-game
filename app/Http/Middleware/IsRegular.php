@@ -17,7 +17,7 @@ class IsRegular
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!(Auth::user()->is_admin || Auth::user()->isRegular())) {
+        if(!(Auth::user()->is_admin || Auth::user()->isRegular() || !Auth::user()->isPastTestPeriod())) {
             return response()->json(['error' => 'Último pagamento não registrado'], 402);
         }
 

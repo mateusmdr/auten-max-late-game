@@ -5,3 +5,17 @@
 @import '~normalize.css';
 @import '~bootstrap/scss/bootstrap';
 @import '~material-icons/iconfont/outlined.css';
+
+a:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+// Assets
+img{
+    &.img-wpp {
+        content: url('../images/whatsapp.png');
+        width: max(72px, 5vw);
+        height: max(72px, 5vw);
+    }
+}

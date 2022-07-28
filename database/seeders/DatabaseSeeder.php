@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             PaymentPlansSeeder::class,
-            NotificationIntervalSeeder::class,
             TournamentPlatformsSeeder::class,
             TournamentTypesSeeder::class,
         ]);

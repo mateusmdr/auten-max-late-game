@@ -27,15 +27,10 @@
                 />
             </div>
             <div class="col-6 mt-4" v-if="inputs.after">
-                <InputContainer name="Minutos antes do fim">
-                    <v-select 
-                        :options="notificationIntervals"
-                        v-model="inputs.interval"
-                        taggable
-                        class="v-select"
-                        :clearable="false"
-                    />
-                </InputContainer>
+                <TimeInput
+                    v-model="inputs.interval"
+                    :default="this.end"
+                />
             </div>
         </div>
         <div v-if="tournament.is_recurrent">
@@ -45,19 +40,15 @@
 </template>
 
 <script>
-import {useNotificationIntervalStore, useTournamentStore} from '../../../../stores/client';
-import {storeToRefs} from 'pinia';
+import {useTournamentStore} from '../../../../stores/client';
+import {parse, format} from 'date-format-parse';
 
 export default {
     emits: ['close'],
     setup() {
-        const notificationIntervalStore = useNotificationIntervalStore();
-        notificationIntervalStore.refresh();
         const tournamentStore = useTournamentStore();
-        const {notificationIntervals} = storeToRefs(notificationIntervalStore);
 
         return {
-            notificationIntervals,
             tournamentStore
         }
     },
@@ -66,10 +57,12 @@ export default {
     },
     mounted() {
 		this.$refs.modal.openModal();
+
+        this.subscription = this.tournament.subscription.split(' ');
+        this.begin = parse(this.subscription[0], 'HH:mm');
+        this.end = parse(this.subscription[2], 'HH:mm');
 	},
     data() {
-        this.subscription = this.tournament.subscription.split(' ');
-
         return {
             inputs: {
                 before: false,
@@ -89,7 +82,7 @@ export default {
                 .post(`/api/tournament/${this.tournament.id}/notification`, {
                     before: this.inputs.before,
                     after: this.inputs.after,
-                    interval: this.inputs.interval ? this.inputs.interval : undefined,
+                    interval: this.inputs.interval ? format(this.inputs.interval, 'HH:mm') : undefined,
                 })
                 .then(() => {
                     this.tournamentStore.refresh();

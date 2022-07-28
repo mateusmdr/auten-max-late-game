@@ -225,9 +225,13 @@ class TournamentController extends Controller
 
         if($data['after'] ?? false) {
             $notificationData['datetime'] = 
-                Carbon::parse($tournament->date)->setTimeFrom($tournament->subscription_end_at)
-                ->subMinutes($data['interval']);
-            $notificationData['description'] = "Faltam " . $data['interval'] . " minutos para o torneio começar.";
+                Carbon::parse($tournament->date)
+                    ->setTimeFrom(Carbon::parse($data['interval']));
+                    $notificationData['description'] = (
+                        "As inscrições do torneio terminam às " .
+                        Carbon::parse($tournament->subscription_end_at)->format('H:i') .
+                        "."
+                    );
 
             Notification::create($notificationData);
         }
