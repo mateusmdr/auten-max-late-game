@@ -25,6 +25,8 @@ class TournamentResource extends JsonResource
 
         $img_filename = $this->tournament_platform ? Storage::disk('public')->url($this->tournament_platform->img_filename) : null;
 
+        $notifications = $this->notifications()->whereBelongsTo(Auth::user())->get('datetime');
+
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -39,7 +41,8 @@ class TournamentResource extends JsonResource
             'prize' => $this->prize,
             'isRecurrent' => !is_null($this->tournament_recurrence_id),
             'isApproved' => $this->is_approved,
-            'isNotifiable' => Auth::user()->is_admin ? null : $this->notifications()->whereBelongsTo(Auth::user())->exists(),
+            'isNotifiable' => Auth::user()->is_admin ? null : $notifications->count() > 0,
+            'notifications' => Auth::user()->is_admin ? null : $notifications
         ];
     }
 }

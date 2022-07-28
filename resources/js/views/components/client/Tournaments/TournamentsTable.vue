@@ -1,7 +1,7 @@
 <template>
     <Table
-        defaultActionIcon='alarm_add'
-        defaultActionText='Ativar'
+        :actionIcon="(item) => item.isNotifiable ? 'alarm_off' : 'alarm_add'"
+        :actionText="(item) => item.isNotifiable ? 'Desativar' : 'Ativar'"
         :fields="fields"
         :items="tournaments"
         :colorPicker="(item) => {
@@ -14,8 +14,7 @@
             
             return '#05F28E';
         }"
-        :disableAction="item => item.isNotifiable"
-        :action="(item) => selectTournament(item)"
+        :action="(item) => item.isNotifiable ? disableTournament(item) : selectTournament(item)"
     />
 </template>
 
@@ -27,14 +26,19 @@ export default {
             {name: '', value: 'formattedDate', width: 1},
             {name: 'Nome', value: 'name', width: 2},
             {name: 'Inscrição', value: 'subscription', width: 2},
-            {name: 'Plataforma', value: 'platform_name', width: 2},
-            {name: 'Tipo torneio', value: 'type_name', width: 2},
+            {name: 'Plataforma', value: 'platform_name', width: 1},
+            {name: 'Tipo torneio', value: 'type_name', width: 1},
             {name: 'Buy-in', value: 'buy_in', width: 1},
-            {name: 'Prêmio', value: 'prize', width: 1}
+            {name: 'Prêmio', value: 'prize', width: 1},
+            {name: 'Notificação às', value: 'notifications', width: 2}
         ];
     },
     methods: {
         selectTournament(tournament) {
+            this.$emit('select',tournament);
+        },
+        disableTournament(tournament) {
+            this.$emit('disable');
             this.$emit('select',tournament);
         }
     },

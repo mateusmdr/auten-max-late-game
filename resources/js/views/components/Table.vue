@@ -18,8 +18,8 @@
             :color="colorPicker(item)"
             :item="item"
             :defaultAction="() => action(item)"
-            :defaultActionIcon="defaultActionIcon"
-            :defaultActionText="defaultActionText"
+            :defaultActionIcon="defaultActionIcon || actionIcon(item)"
+            :defaultActionText="defaultActionText || actionText(item)"
             :isEditable="isEditable(item)"
             :actions="{
                 'delete': () => deleteAction(item),
@@ -64,6 +64,14 @@ export default {
             default: () => null
         },
         action: {
+            type: Function,
+            default: () => null
+        },
+        actionText: {
+            type: Function,
+            default: () => null
+        },
+        actionIcon: {
             type: Function,
             default: () => null
         },

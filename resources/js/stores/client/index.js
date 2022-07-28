@@ -26,8 +26,13 @@ export const useTournamentStore = defineStore('tournament', {
 
                         const formattedDate = format(parse(tournament.date, "DD/MM/YYYY"), "DD/MM");
 
+                        const notifications = tournament.notifications
+                            .map(({datetime}) => format(parse(datetime, "YYYY-MM-DD HH:mm:ss"), "HH:mm"))
+                            .join(" e ");
+
                         return ({
                             ...tournament,
+                            notifications,
                             formattedDate,
                             subscription: `${begin} ${subscription[1]} ${end}`
                         })

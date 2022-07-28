@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {useNotificationStore, useTournamentStore} from '../../../../stores/client';
+import {useNotificationStore, useTournamentStore} from '../../../stores/client';
 
 export default {
     emits: ['close'],

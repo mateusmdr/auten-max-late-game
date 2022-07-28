@@ -8,12 +8,19 @@
         <ClientTournamentsTable
             :tournaments="filteredTournaments"
             @select="(tournament) => selectedTournament = tournament"
+            @disable="disable = true"
         />
 
         <ClientEnableNotificationModal
             v-if="!!selectedTournament"
             :tournament="selectedTournament"
             @close="selectedTournament = null"
+        />
+
+        <ClientDisableNotificationModal
+            v-if="!!selectedTournament && disable"
+            :tournament="selectedTournament"
+            @close="selectedTournament = null; disable = false"
         />
     </Section>
 </template>
@@ -45,7 +52,8 @@ export default {
     data() {
         return {
             filter: () => true,
-            selectedTournament: null
+            selectedTournament: null,
+            disable: false
         }
     },
 }
