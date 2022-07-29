@@ -103,7 +103,7 @@ class UserController extends Controller
                 $data['block_reason'] = $data['is_blocked'] ? $data['block_reason'] : null;
             }
 
-            if(isset($data['email'])) {
+            if(isset($data['email']) && $data['email'] != $user->email) {
                 $data['email_verified_at'] = null;
             }
             
