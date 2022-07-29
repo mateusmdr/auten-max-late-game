@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\URL;
 use MercadoPago\SDK;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,6 +30,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+	   if($this->app->environment('production')) {
+    	       URL::forceScheme('https');
+	   }
         DB::listen(function($query) {
             Log::channel('database')->info(
                 $query->sql.' -- '.$query->time.'ms -- ',
