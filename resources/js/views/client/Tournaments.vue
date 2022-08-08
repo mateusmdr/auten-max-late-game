@@ -12,13 +12,13 @@
         />
 
         <ClientEnableNotificationModal
-            v-if="!!selectedTournament"
+            v-if="!!selectedTournament && !disable"
             :tournament="selectedTournament"
             @close="selectedTournament = null"
         />
 
         <ClientDisableNotificationModal
-            v-if="!!selectedTournament && disable"
+            v-if="disable"
             :tournament="selectedTournament"
             @close="selectedTournament = null; disable = false"
         />

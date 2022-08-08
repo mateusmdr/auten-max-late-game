@@ -127,7 +127,7 @@ export default {
     data() {
         return {
             inputs: {
-                before: false,
+                before: true,
                 after: false,
                 interval: null,
                 weekDays: Array(6).fill(false),
@@ -143,8 +143,8 @@ export default {
     },
     methods: {
         submit() {
-            const schedule = this.tournament.isRecurrent ?
-                "* * " +
+            const schedule = this.tournament.isRecurrent && this.inputs.option === 'custom' ?
+                "0 0 * * " +
                 this.inputs.weekDays
                     .map((item, index) => index)
                     .filter((index) => this.inputs.weekDays[index])
@@ -156,7 +156,7 @@ export default {
                     before: this.inputs.before,
                     after: this.inputs.after,
                     interval: this.inputs.interval ? format(this.inputs.interval, 'HH:mm') : undefined,
-                    option: this.tournament.isRecurrent ? this.inputs.option : undefined,
+                    option: this.inputs.option,
                     schedule
                 })
                 .then(() => {

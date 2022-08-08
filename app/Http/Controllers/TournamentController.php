@@ -126,12 +126,12 @@ class TournamentController extends Controller
                 $ends_at = new DateTime($data['ends_at']);
                 $date = new Carbon($data['date']);
                 $date = $date->subDay();
-            
+
                 $recurrence = TournamentRecurrence::create($data);
 
                 $cron = new CronExpression($data['schedule']);
                 $date = $cron->getNextRunDate($date);
-                
+
                 $tournamentData = [];
 
                 unset($data['is_recurrent']);
@@ -146,7 +146,7 @@ class TournamentController extends Controller
                             'date' => $date->format('Y-m-d')
                         ]
                     );
-                    
+
                     $date = $cron->getNextRunDate($date);
 
                 }while($date->diff($ends_at)->format('%R') == '+');
@@ -156,7 +156,7 @@ class TournamentController extends Controller
                 unset($data['is_recurrent']);
                 unset($data['schedule']);
                 unset($data['ends_at']);
-                
+
                 Tournament::create($data);
             }
         });
@@ -182,7 +182,7 @@ class TournamentController extends Controller
             'tournament_platform_id',
             'tournament_type_id',
         ]);
-        
+
         if(!empty($data)) {
             $tournament->update($data);
             $tournament->save();
@@ -206,36 +206,30 @@ class TournamentController extends Controller
         $data = $request->only([
             'before',
             'after',
-            'interval'
+            'interval',
+            'option',
+            'schedule'
         ]);
 
-        $notificationData = [
-            'type' => 'tournament',
-            'tournament_id' => $tournament->id,
-            'user_id' => Auth::user()->id
-        ];
-
-        if($data['before'] ?? false){
-            $notificationData['datetime'] =
-                Carbon::parse($tournament->date)->setTimeFrom($tournament->subscription_begin_at);
-            $notificationData['description'] = "O torneio " . $tournament->name . " começou.";
-            
-            Notification::create($notificationData);
-        }
-
-        if($data['after'] ?? false) {
-            $notificationData['datetime'] = 
-                Carbon::parse($tournament->date)
-                    ->setTimeFrom(Carbon::parse($data['interval']));
-                    $notificationData['description'] = (
-                        "As inscrições do torneio terminam às " .
-                        Carbon::parse($tournament->subscription_end_at)->format('H:i') .
-                        "."
-                    );
-
-            Notification::create($notificationData);
+        if($tournament->tournament_recurrence !== null && $data['option'] !== 'one') {
+            if($data['option'] === 'all') {
+                $tournament->tournament_recurrence->tournaments->map->createNotification($data);
+            }else { // Custom
+                $tournaments = $tournament->tournament_recurrence->tournaments;
+                $cron = new CronExpression($data['schedule']);
+                $weekdays = explode(",",$cron->getParts()[4]);
+                foreach ($tournaments as $t) {
+                    if(in_array(Carbon::parse($t->date)->dayOfWeek, $weekdays)) {
+                        $t->createNotification($data);
+                    }
+                }
+            }
+        }else {
+            $tournament->createNotification($data);
         }
     }
+
+
 
     public function disableNotification(DisableNotificationRequest $request, Tournament $tournament) {
         $all = $request->input('all',false);
