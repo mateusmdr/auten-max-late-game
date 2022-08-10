@@ -3,7 +3,7 @@
         :chips="tournamentStatuses"
         v-model="inputs.tournamentStatus"
     />
-    
+
     <div class="input-container my-5">
         <div class="row">
             <div class="col-2">
@@ -13,26 +13,26 @@
                 <TimeInput v-model="inputs.time"/>
             </div>
             <div class="col-2">
-                <Select 
+                <Select
                     :options="tournamentPlatforms"
                     v-model="inputs.tournamentPlatform"
                     name="Plataforma"
                 />
             </div>
             <div class="col-2">
-                <NumberInput 
+                <NumberInput
                     v-model.number="inputs.minBuyIn"
                     name="Buy-in mínimo"
                 />
             </div>
             <div class="col-2">
-                <NumberInput 
+                <NumberInput
                     v-model.number="inputs.maxBuyIn"
                     name="Buy-in máximo"
                 />
             </div>
             <div class="col-2">
-                <Select 
+                <Select
                     :options="tournamentTypes"
                     v-model="inputs.tournamentType"
                     name="Tipo de torneio"
@@ -108,13 +108,15 @@ export default {
                             tournamentStatusFilter = tournament.isApproved && !tournament.isRecurrent;
                     }
 
+                    const buyIn = Number(tournament.buy_in.toString().replace(',','.'));
+
                     return (
                         tournamentStatusFilter &&
                         (now.date ? tournament.date === format(now.date, 'DD/MM/YYYY') : true) &&
                         (now.time ? (now.time <= end && now.time >= begin) : true) &&
                         (now.tournamentPlatform ? tournament.platform_id == now.tournamentPlatform : true) &&
-                        (now.minBuyIn ? (now.minBuyIn <= tournament.buy_in) : true) &&
-                        (now.maxBuyIn ? (now.maxBuyIn >= tournament.buy_in) : true) &&
+                        (now.minBuyIn ? (now.minBuyIn <= buyIn) : true) &&
+                        (now.maxBuyIn ? (now.maxBuyIn >= buyIn) : true) &&
                         (now.tournamentType ? tournament.type_id == now.tournamentType : true)
                     );
                 };

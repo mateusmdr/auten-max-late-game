@@ -37,7 +37,7 @@ class TournamentResource extends JsonResource
             'platform_img' => $img_filename,
             'type_name' => $this->tournament_type?->name,
             'type_id' => $this->tournament_type_id,
-            'buy_in' => $this->buy_in,
+            'buy_in' => number_format($this->buy_in,2,",",""),
             'prize' => $this->prize,
             'isRecurrent' => !is_null($this->tournament_recurrence_id),
             'isApproved' => $this->is_approved,

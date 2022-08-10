@@ -1,6 +1,9 @@
 <template>
     <InputContainer :name="name">
-        <input type="number" v-model.number="modelValue" @input="$emit('update:modelValue',$event.target.value)" :min="positive && '0'"/>
+        <input type="number" v-model.number="modelValue" @input="$emit('update:modelValue',$event.target.value)"
+               :min="positive && '0'"
+               :step="integer ? 1 : 0.01"
+        />
     </InputContainer>
 </template>
 
@@ -13,6 +16,10 @@ export default {
         },
         modelValue: Number,
         positive: {
+            type: Boolean,
+            default: true
+        },
+        integer: {
             type: Boolean,
             default: true
         }

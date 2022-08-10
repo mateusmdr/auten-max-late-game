@@ -30,14 +30,14 @@
                 />
             </div>
             <div class="col-4">
-                <Select 
+                <Select
                     :options="tournamentPlatforms"
                     v-model="inputs.tournamentPlatform"
                     name="Plataforma *"
                 />
             </div>
             <div class="col-4">
-                <Select 
+                <Select
                     :options="tournamentTypes"
                     v-model="inputs.tournamentType"
                     name="Tipo de torneio *"
@@ -46,13 +46,14 @@
         </div>
         <div class="row mb-3">
             <div class="col-4">
-                <NumberInput 
+                <NumberInput
                     v-model.number="inputs.buy_in"
+                    :integer="false"
                     name="Buy-in"
                 />
             </div>
             <div class="col-3">
-                <TextInput 
+                <TextInput
                     v-model="inputs.prize"
                     name="Prêmio *"
                 />
@@ -60,13 +61,13 @@
         </div>
         <div class="row mb-3">
             <div class="col-2">
-                <DateInput 
+                <DateInput
                     v-model="inputs.date"
                     label="Data início *"
                 />
             </div>
             <div class="col-2">
-                <TimeInput 
+                <TimeInput
                     label="Inscrição *"
                     v-model="inputs.subscription_begin"
                 />
@@ -75,7 +76,7 @@
                 <span class="mt-3">às</span>
             </div>
             <div class="col-2">
-                <TimeInput 
+                <TimeInput
                     label=""
                     v-model="inputs.subscription_end"
                 />
