@@ -42,8 +42,11 @@ class TournamentController extends Controller
         if(!Auth::user()->is_admin) {
             $builder->where('is_approved',true);
         }
-        $builder->whereDate('date','>=', now());
-        $builder->whereTime('subscription_end_at','>=', now());
+        $builder->whereDate('date','>=', today());
+        $builder->where(function ($query) {
+            $query->whereTime('subscription_end_at','>=',now())
+                ->orWhereDate('date','>',today());
+        });
 
         return TournamentResource::collection($builder->orderBy('date')->get());
     }
