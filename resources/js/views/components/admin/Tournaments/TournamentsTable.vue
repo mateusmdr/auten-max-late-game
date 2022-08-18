@@ -11,7 +11,7 @@
             if(item.isRecurrent) {
                 return '#F5A847';
             }
-            
+
             return '#05F28E';
         }"
         :action="viewTournament"
@@ -26,7 +26,7 @@
 import {useTournamentStore} from '../../../../stores/admin';
 
 export default {
-    emits: ['select', 'editMode', 'viewMode'],
+    emits: ['select', 'editMode', 'viewMode', 'removeMode'],
     setup() {
         const tournamentStore = useTournamentStore();
 
@@ -53,7 +53,7 @@ export default {
             }else {
                 res = confirm("Tem certeza que deseja aprovar este torneio?");
             }
-            
+
             if(res) {
                 axios
                     .put(`/api/tournament/${tournament.id}`, {
@@ -72,19 +72,8 @@ export default {
             this.$emit('viewMode');
         },
         deleteTournament(tournament) {
-            let res;
-            if(tournament.isRecurrent) {
-                res = confirm("Tem certeza que deseja cancelar esta ocorrência de torneio?");
-            }else {
-                res = confirm("Tem certeza que deseja cancelar este torneio?");
-            }
-
-            if(res) {
-                axios
-                    .delete(`/api/tournament/${tournament.id}`)
-                    .catch(res => {alert("Falha ao cancelar o torneio: " + res.response.data?.errors)})
-                    .finally(this.tournamentStore.refresh);
-            }
+            this.$emit('select',tournament);
+            this.$emit('removeMode');
         },
     },
     props: {

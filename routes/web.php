@@ -54,7 +54,8 @@ Route::middleware('auth', 'blocked')->group(function () {
         Route::middleware('is_regular')->group(function() {
             Route::apiResource('tournament',TournamentController::class);
             Route::post('tournament/{tournament}/notification',[TournamentController::class, 'enableNotification']);
-            Route::delete('tournament/{tournament}/notification', [TournamentController::class, 'disableNotification']);        
+            Route::delete('tournament/{tournament}/notification', [TournamentController::class, 'disableNotification']);
+            Route::delete('tournament/{tournament}/recurrence', [TournamentController::class, 'destroyAfter']);
             Route::apiResource('tournament_platform',TournamentPlatformController::class);
             Route::apiResource('tournament_type',TournamentTypeController::class);
             Route::apiResource('notification', NotificationController::class);

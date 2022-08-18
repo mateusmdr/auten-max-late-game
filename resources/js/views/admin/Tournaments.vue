@@ -4,6 +4,12 @@
             v-if="!selectedTournament"
         />
 
+        <AdminRemoveTournamentModal
+            v-else-if="removeMode"
+            :tournament="selectedTournament"
+            @close="selectedTournament = null;removeMode = false"
+        />
+
         <AdminEditTournamentModal
             v-else
             :tournament="selectedTournament"
@@ -15,12 +21,13 @@
         <AdminTournamentsFilters
             @change="(newFilter) => this.filter = newFilter"
         />
-        
+
         <AdminTournamentsTable
             :tournaments="filteredTournaments"
-            @select="(tournament) => selectedTournament = tournament"
+            @select="(tournament) => this.selectedTournament = tournament"
             @editMode="viewMode = false"
             @viewMode="viewMode = true"
+            @removeMode="removeMode = true"
         />
     </Section>
 </template>
@@ -49,6 +56,7 @@ export default {
             filter: () => true,
             selectedTournament: null,
             viewMode: false,
+            removeMode: false
         }
     },
 }

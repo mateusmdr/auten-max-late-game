@@ -205,6 +205,12 @@ class TournamentController extends Controller
         $tournament->delete();
     }
 
+    public function destroyAfter(Tournament $tournament)
+    {
+        $this->authorizeResource(Tournament::class, 'destroy');
+        $tournament->tournament_recurrence->tournaments->where('date','>=',$tournament->date)->map->delete();
+    }
+
     public function enableNotification(EnableNotificationRequest $request, Tournament $tournament) {
         $data = $request->only([
             'before',
