@@ -5,7 +5,7 @@
             title="Pagamento"
             submitText="Alterar método de pagamento"
             @submit="submit"
-        >   
+        >
             <div class="d-flex flex-row gap-4 mb-3">
                 <RadioGroup
                     :options="paymentMethods"
@@ -70,6 +70,30 @@
                         <DynamicButton @click="creditCardTransaction" text="Realizar pagamento" type="button"/>
                     </div>
                 </div>
+                <div class="manual-form" v-else-if="currentUser.payment_method === paymentMethods[2].value && !hasChanged">
+                    <h4>Nossa chave pix:</h4>
+                    <CopyButton
+                        text="46715964000117"
+                    />
+                    <h4 class="my-4">Quando a transferência for realizada, envie o comprovante para o nosso WhatsApp: </h4>
+                    <DynamicButton
+                        text="Ir para o WhatsApp"
+                        type="button"
+                        @click.prevent="openWhatsapp"
+                    />
+                </div>
+                <div class="manual-form" v-else-if="currentUser.payment_method === paymentMethods[3].value && !hasChanged">
+                    <h4>Nosso código é:</h4>
+                    <CopyButton
+                        text="19994933553"
+                    />
+                    <h4 class="my-4">Quando a transferência for realizada, envie o comprovante para o nosso WhatsApp: </h4>
+                    <DynamicButton
+                        text="Ir para o WhatsApp"
+                        type="button"
+                        @click.prevent="openWhatsapp"
+                    />
+                </div>
             </div>
             <p v-else>Nenhuma fatura pendente encontrada.</p>
         </EditForm>
@@ -80,8 +104,11 @@
 import { storeToRefs } from "pinia";
 
 import {useCurrentUserStore} from '../../../../stores/client';
+import DynamicButton from "../../DynamicButton";
+import StaticButton from "../../StaticButton";
 
 export default {
+    components: {StaticButton, DynamicButton},
     setup() {
         const currentUserStore = useCurrentUserStore();
         const { user } = storeToRefs(currentUserStore);
@@ -99,6 +126,14 @@ export default {
             {
                 value: "credit_card",
                 text: "Cartão de crédito",
+            },
+            {
+                value: "pix",
+                text: "Pix",
+            },
+            {
+                value: "muchbetter",
+                text: "MuchBetter",
             }
         ];
 
@@ -119,6 +154,9 @@ export default {
         };
     },
     methods: {
+        openWhatsapp() {
+            window.open('https://api.whatsapp.com/send?phone=5519992153608&text=Ol%C3%A1,%20gostaria%20de%20tirar%20algumas%20d%C3%BAvidas%20sobre%20a%20plataforma%20MLG!');
+        },
         submit() {
             const method = this.inputs.paymentMethod;
             const res = confirm("Tem certeza que deseja alterar o plano de pagamento para \n" + this.paymentMethods.find((val) => val.value === method).text + " ?");
@@ -141,7 +179,7 @@ export default {
             if(this.currentUser.payment_method === 'bolbradesco' && !this.currentUser.isRegular) {
                 this.ticketLoading = true;
                 const self = this;
-                
+
                 axios
                     .post("/api/payment", {
                         "is_ticket": true
@@ -166,7 +204,7 @@ export default {
                 alert("Verifique o CPF/CNPJ");
                 return;
             }
-            
+
             this.mercadoPago
                 .createCardToken({
                     cardNumber: cardNumber,
