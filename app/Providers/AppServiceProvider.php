@@ -31,7 +31,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 	   if($this->app->environment('production')) {
-    	       URL::forceScheme('https');
+           URL::forceScheme('https');
+           SDK::setAccessToken(env('MERCADO_PAGO_TOKEN', null));
 	   }
         DB::listen(function($query) {
             Log::channel('database')->info(
@@ -39,7 +40,5 @@ class AppServiceProvider extends ServiceProvider
                 $query->bindings
             );
         });
-
-        SDK::setAccessToken(env('MERCADO_PAGO_TOKEN', null));
     }
 }

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Cron\CronExpression;
 use App\Models\Tournament;
 use App\Models\Notification;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\TournamentRecurrence;
 use Illuminate\Support\Facades\Auth;
@@ -31,14 +32,53 @@ class TournamentController extends Controller
         $this->authorizeResource(Tournament::class);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
+        $qtd = $request->query('qtd', 5);
+
+        $filters = $request->only([
+            'date_equals',
+            'tournament_platform_id_equals',
+            'buy_in_gte',
+            'buy_in_ste',
+            'tournament_type_id_equals'
+        ]);
+
         $builder = Tournament::query();
+
+        foreach($filters as $filter=>$value) {
+            $filter = explode('_', $filter);
+            if(count($filter) < 2) continue;
+
+            $comparison = array_pop($filter);
+            $field = implode('_', $filter);
+
+            if(str_contains('date',$field)) {
+                $value = Carbon::createFromFormat("d/m/Y", $value);
+            }
+
+            switch($comparison) {
+                case 'like':
+                    $builder->where($field, 'like', $value);
+                    break;
+                case 'gte':
+                    $builder->where($field, '>=', $value);
+                    break;
+                case 'ste':
+                    $builder->where($field, '<=', $value);
+                    break;
+                case 'gt':
+                    $builder->where($field, '>', $value);
+                    break;
+                case 'st':
+                    $builder->where($field, '<', $value);
+                    break;
+                case 'equals':
+                    $builder->where($field, '=', $value);
+                    break;
+            }
+        }
+
         if(!Auth::user()->is_admin) {
             $builder->where('is_approved',true);
         }
@@ -48,7 +88,7 @@ class TournamentController extends Controller
                 ->orWhereDate('date','>',today());
         });
 
-        return TournamentResource::collection($builder->orderBy('date')->get());
+        return TournamentResource::collection($builder->orderBy('date')->simplePaginate($qtd));
     }
 
     public function show(Tournament $tournament){

@@ -1,6 +1,6 @@
 {
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.1",
         "crazynds/interval-expression": "^1.0",
         "doctrine/dbal": "^3.3",
         "dragonmantank/cron-expression": "^3.3",
