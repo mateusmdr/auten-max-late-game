@@ -88,34 +88,18 @@ export default {
     watch: {
         inputs: {
             handler(before, now) {
-                const newFilter = (tournament) => {
-                    const subscription = tournament.subscription.split(' ');
-                    const begin = parse(subscription[0], 'HH:mm');
-                    const end = parse(subscription[2], 'HH:mm');
-
-                    let tournamentStatusFilter = true;
-                    switch(now.tournamentStatus) {
-                        case 1:
-                            tournamentStatusFilter = tournament.isNotifiable;
-                            break;
-                        case 2:
-                            tournamentStatusFilter = !tournament.isNotifiable && tournament.isRecurrent;
-                            break;
-                        case 3:
-                            tournamentStatusFilter = !tournament.isNotifiable && !tournament.isRecurrent;
+                this.$emit('change',
+                    {
+                        tournament_recurrence_id_null: now.tournamentStatus === 3 ? true : undefined,
+                        tournament_recurrence_id_present: now.tournamentStatus === 2 ? true : undefined,
+                        enabled_notifications: now.tournamentStatus === 1 ? true : now.tournamentStatus === 0 ? undefined : false,
+                        date_equals: now.date ? format(now.date, 'DD/MM/YYYY') : undefined,
+                        tournament_platform_id_equals: now.tournamentPlatform ? now.tournamentPlatform  : undefined,
+                        buy_in_gte: now.minBuyIn ? now.minBuyIn : undefined,
+                        buy_in_ste: now.maxBuyIn ? now.maxBuyIn : undefined,
+                        tournament_type_id_equals: now.tournamentType ? now.tournamentType : undefined
                     }
-
-                    return (
-                        tournamentStatusFilter &&
-                        (now.date ? tournament.date === format(now.date, 'DD/MM/YYYY') : true) &&
-                        (now.tournamentPlatform ? tournament.platform_id == now.tournamentPlatform : true) &&
-                        (now.minBuyIn ? (now.minBuyIn <= tournament.buy_in) : true) &&
-                        (now.maxBuyIn ? (now.maxBuyIn >= tournament.buy_in) : true) &&
-                        (now.tournamentType ? tournament.type_id == now.tournamentType : true)
-                    );
-                };
-
-                this.$emit('change',newFilter);
+                );
             },
             deep: true
         }

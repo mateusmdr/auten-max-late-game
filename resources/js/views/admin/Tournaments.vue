@@ -19,22 +19,23 @@
         />
 
         <AdminTournamentsFilters
-            @change="(newFilter) => this.filter = newFilter"
+            @change="filters = $event; updateTournaments()"
         />
 
         <AdminTournamentsTable
-            :tournaments="filteredTournaments"
+            :tournaments="tournaments"
             @select="(tournament) => this.selectedTournament = tournament"
             @editMode="viewMode = false"
             @viewMode="viewMode = true"
             @removeMode="removeMode = true"
         />
+        <Paginator @click="qtd += 7;updateTournaments()" :visible="qtd<=tournaments.length"/>
     </Section>
 </template>
 
 <script>
 import { storeToRefs } from 'pinia';
-import {useTournamentPlatformStore, useTournamentTypeStore, useTournamentStore} from '../../stores/admin';
+import {useTournamentStore} from '../../stores/admin';
 
 export default {
     setup() {
@@ -43,21 +44,23 @@ export default {
 
         const {tournaments} = storeToRefs(tournamentStore);
         return {
-            tournaments
-        }
-    },
-    computed: {
-        filteredTournaments() {
-            return this.tournaments.filter(this.filter);
+            tournaments,
+            tournamentStore
         }
     },
     data() {
         return {
-            filter: () => true,
             selectedTournament: null,
             viewMode: false,
-            removeMode: false
+            removeMode: false,
+            qtd: 7,
+            filters: {}
         }
     },
+    methods: {
+        updateTournaments() {
+            this.tournamentStore.refresh(this.qtd, this.filters);
+        }
+    }
 }
 </script>

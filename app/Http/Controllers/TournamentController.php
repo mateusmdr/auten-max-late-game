@@ -37,14 +37,31 @@ class TournamentController extends Controller
         $qtd = $request->query('qtd', 5);
 
         $filters = $request->only([
+            'tournament_recurrence_id_null',
+            'tournament_recurrence_id_present',
+            'is_approved_is',
             'date_equals',
             'tournament_platform_id_equals',
             'buy_in_gte',
             'buy_in_ste',
-            'tournament_type_id_equals'
+            'tournament_type_id_equals',
         ]);
 
         $builder = Tournament::query();
+
+        if($request->has('enabled_notifications')) {
+            $callback = function($query) {
+                $query->select(DB::raw(1))
+                    ->from('notifications')
+                    ->whereColumn('tournament_id', 'tournaments.id')
+                    ->where('user_id', '=', Auth::user()->id);
+            };
+            if($request->boolean('enabled_notifications')) {
+                $builder->whereExists($callback);
+            }else {
+                $builder->whereNotExists($callback);
+            }
+        }
 
         foreach($filters as $filter=>$value) {
             $filter = explode('_', $filter);
@@ -56,7 +73,6 @@ class TournamentController extends Controller
             if(str_contains('date',$field)) {
                 $value = Carbon::createFromFormat("d/m/Y", $value);
             }
-
             switch($comparison) {
                 case 'like':
                     $builder->where($field, 'like', $value);
@@ -76,6 +92,15 @@ class TournamentController extends Controller
                 case 'equals':
                     $builder->where($field, '=', $value);
                     break;
+                case 'is':
+                    $builder->where($field, $value);
+                    break;
+                case 'null':
+                    $builder->whereNull($field);
+                    break;
+                case 'present':
+                    $builder->whereNotNull($field);
+                    break;
             }
         }
 
@@ -88,7 +113,7 @@ class TournamentController extends Controller
                 ->orWhereDate('date','>',today());
         });
 
-        return TournamentResource::collection($builder->orderBy('date')->simplePaginate($qtd));
+        return TournamentResource::collection($builder->orderBy('date')->orderBy('name')->simplePaginate($qtd));
     }
 
     public function show(Tournament $tournament){

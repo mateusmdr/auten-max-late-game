@@ -3,6 +3,27 @@ import {parse, format} from 'date-format-parse';
 import axios from 'axios';
 
 // Tournaments
+const formatTournament = tournament => {
+    const subscription = tournament.subscription.split(' ');
+    let begin = parse(subscription[0], 'HH:mm')
+    let end = parse(subscription[2], 'HH:mm')
+
+    begin = format(begin, 'HH:mm');
+    end = format(end, 'HH:mm');
+
+    const formattedDate = format(parse(tournament.date, "DD/MM/YYYY"), "DD/MM");
+
+    const notifications = tournament.notifications
+        .map(({datetime}) => format(parse(datetime, "YYYY-MM-DD HH:mm:ss"), "HH:mm"))
+        .join(" e ");
+
+    return ({
+        ...tournament,
+        notifications,
+        formattedDate,
+        subscription: `${begin} ${subscription[1]} ${end}`
+    })
+};
 export const useTournamentStore = defineStore('tournament', {
     state: () => ({
         tournaments: [],
@@ -10,33 +31,13 @@ export const useTournamentStore = defineStore('tournament', {
         enabledTournaments: [],
     }),
     actions: {
-        refresh() {
+        refresh(qtd=7, filters={}) {
             axios
-                .get('/api/tournament')
+                .get('/api/tournament', {params: {...filters, qtd}})
                 .then((res) => {
                     this.errors = res.data.errors;
                     return res.data.data
-                        .map(tournament =>{
-                        const subscription = tournament.subscription.split(' ');
-                        let begin = parse(subscription[0], 'HH:mm')
-                        let end = parse(subscription[2], 'HH:mm')
-
-                        begin = format(begin, 'HH:mm');
-                        end = format(end, 'HH:mm');
-
-                        const formattedDate = format(parse(tournament.date, "DD/MM/YYYY"), "DD/MM");
-
-                        const notifications = tournament.notifications
-                            .map(({datetime}) => format(parse(datetime, "YYYY-MM-DD HH:mm:ss"), "HH:mm"))
-                            .join(" e ");
-
-                        return ({
-                            ...tournament,
-                            notifications,
-                            formattedDate,
-                            subscription: `${begin} ${subscription[1]} ${end}`
-                        })
-                    });
+                        .map(formatTournament);
                 })
                 .then((tournaments) => {
                     this.tournaments = tournaments;
@@ -90,7 +91,7 @@ export const useNotificationStore = defineStore('notification', {
             if(notification.type === 'tournament') {
                 return notification.tournament.name;
             }
-            
+
             if(notification.type === 'administrative') {
                 return 'Administração';
             }
@@ -152,7 +153,7 @@ export const useNotificationStore = defineStore('notification', {
                         const timeout = notification.datetime.getTime() - Date.now();
 
                         if(timeout <= 24*60*60*1000) {
-                            this.timeouts.push(setTimeout(() => 
+                            this.timeouts.push(setTimeout(() =>
                                 {
                                     new Notification(
                                         notification.title,

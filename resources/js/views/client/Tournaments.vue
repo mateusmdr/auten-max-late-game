@@ -2,14 +2,15 @@
     <Section title="Próximos torneios" icon="emoji_events">
 
         <ClientTournamentsFilters
-            @change="(newFilter) => this.filter = newFilter"
+            @change="filters = $event; updateTournaments()"
         />
 
         <ClientTournamentsTable
-            :tournaments="filteredTournaments"
+            :tournaments="tournaments"
             @select="(tournament) => selectedTournament = tournament"
             @disable="disable = true"
         />
+        <Paginator @click="qtd += 7;updateTournaments()" :visible="qtd <= tournaments.length"/>
 
         <ClientEnableNotificationModal
             v-if="!!selectedTournament && !disable"
@@ -36,24 +37,24 @@ export default {
 
         const {tournaments} = storeToRefs(tournamentStore);
         return {
-            tournaments
-        }
-    },
-    computed: {
-        filteredTournaments() {
-            return this.tournaments.filter(this.filter);
+            tournaments,
+            tournamentStore
         }
     },
     methods: {
         selectTournament(tournament) {
             this.selectedTournament = tournament;
+        },
+        updateTournaments() {
+            this.tournamentStore.refresh(this.qtd, this.filters);
         }
     },
     data() {
         return {
-            filter: () => true,
             selectedTournament: null,
-            disable: false
+            disable: false,
+            qtd: 7,
+            filters: {}
         }
     },
 }

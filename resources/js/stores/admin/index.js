@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import {parse, format} from 'date-format-parse';
+import axios from "axios";
 
 // Tournaments
 
@@ -36,9 +37,9 @@ export const useTournamentStore = defineStore('tournament', {
         tournaments: [],
     }),
     actions: {
-        refresh() {
+        refresh(qtd=7, filters={}) {
             axios
-                .get('/api/tournament')
+                .get('/api/tournament', {params: {...filters, qtd}})
                 .then((res) => this.tournaments = res.data.data)
                 .then(() => {
                     this.tournaments = this.tournaments.map(tournament =>{
@@ -48,7 +49,7 @@ export const useTournamentStore = defineStore('tournament', {
 
                         begin = format(begin, 'HH:mm');
                         end = format(end, 'HH:mm');
-                        
+
                         const formattedDate = format(parse(tournament.date, "DD/MM/YYYY"), "DD/MM");
 
                         return ({
@@ -169,7 +170,7 @@ export const useNotificationStore = defineStore('notification', {
             if(notification.type === 'tournament') {
                 return notification.tournament.name;
             }
-            
+
             if(notification.type === 'administrative') {
                 return 'Administração';
             }
