@@ -38,7 +38,6 @@ class TournamentResource extends JsonResource
             'type_name' => $this->tournament_type?->name,
             'type_id' => $this->tournament_type_id,
             'buy_in' => number_format($this->buy_in,2,",",""),
-            'prize' => $this->prize,
             'isRecurrent' => !is_null($this->tournament_recurrence_id),
             'isApproved' => $this->is_approved,
             'isNotifiable' => Auth::user()->is_admin ? null : $notifications->count() > 0,

@@ -15,7 +15,6 @@ class UpdateTournamentRequest extends BaseRequest
     {
         return [
             'name' => 'string|max:' . DBSizes::STRING,
-            'prize' => 'string|max:' . DBSizes::STRING,
             'buy_in' => 'numeric|min:0',
             'date' => 'date_format:Y-m-d|after:yesterday',
             'subscription_begin_at' => 'required_with:subscription_end_at,date_format:H:i',

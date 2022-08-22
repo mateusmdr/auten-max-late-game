@@ -39,12 +39,6 @@
                     name="Buy-in"
                 />
             </div>
-            <div class="col-3">
-                <TextInput
-                    v-model="inputs.prize"
-                    name="Prêmio *"
-                />
-            </div>
         </div>
         <div class="row mb-3">
             <div class="col-2">
@@ -194,7 +188,6 @@ export default {
                 date: null,
                 subscription_begin: null,
                 subscription_end: null,
-                prize: null,
                 buy_in: null,
                 tournamentPlatform: null,
                 tournamentType: null,
@@ -208,7 +201,6 @@ export default {
                 date: null,
                 subscription_begin: null,
                 subscription_end: null,
-                prize: null,
                 buy_in: null,
                 tournament_platform_id: null,
                 tournament_type_id: null,
@@ -264,7 +256,6 @@ export default {
             axios
                 .post('/api/tournament', {
 					'name': this.inputs.name,
-                    'prize': this.inputs.prize,
                     'buy_in': this.inputs.buy_in ? this.inputs.buy_in : undefined,
                     'date': format(this.inputs.date, 'YYYY-MM-DD'),
                     'subscription_begin_at': format(subscription_begin, 'HH:mm'),
@@ -283,7 +274,6 @@ export default {
                         date: null,
                         subscription_begin: null,
                         subscription_end: null,
-                        prize: null,
                         buy_in: null,
                         tournamentPlatform: null,
                         tournamentType: null,

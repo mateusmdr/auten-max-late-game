@@ -52,12 +52,6 @@
                     name="Buy-in"
                 />
             </div>
-            <div class="col-3">
-                <TextInput
-                    v-model="inputs.prize"
-                    name="Prêmio *"
-                />
-            </div>
         </div>
         <div class="row mb-3">
             <div class="col-2">
@@ -131,21 +125,15 @@ export default {
                 date: parse(this.tournament.date, 'DD/MM/YYYY'),
                 subscription_begin: parse(this.subscription[0],'HH:mm'),
                 subscription_end: parse(this.subscription[2],'HH:mm'),
-                prize: this.tournament.prize,
                 buy_in: this.tournament.buy_in,
                 tournamentPlatform: this.tournament.platform_id,
                 tournamentType: this.tournament.type_id,
-                // is_recurrent: false,
-                // recurrence_type: 'monthly',
-                // weekDays: Array(6).fill(false),
-                // ends_at: null
             },
             errors: {
                 name: null,
                 date: null,
                 subscription_begin: null,
                 subscription_end: null,
-                prize: null,
                 buy_in: null,
                 tournament_platform_id: null,
                 tournament_type_id: null,
@@ -159,7 +147,6 @@ export default {
             axios
                 .put(`/api/tournament/${this.tournament.id}`, {
 					'name': this.inputs.name,
-                    'prize': this.inputs.prize,
                     'buy_in': this.inputs.buy_in,
                     'date': format(this.inputs.date, 'YYYY-MM-DD'),
                     'subscription_begin_at': format(subscription_begin, 'HH:mm'),

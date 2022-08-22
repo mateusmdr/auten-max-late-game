@@ -10,7 +10,7 @@
             <div :class="`col-${actionWidth}`" v-if="!noAction"></div>
         </div>
 
-        <table-row 
+        <table-row
             v-for="item in items"
             :key="item.id"
             :fields="fields"
@@ -98,5 +98,12 @@ export default {
     .table-header h4 {
         margin-bottom: 0;
         font-weight: 700;
+        font-size: 1rem;
+    }
+
+    @media only screen and (max-width: 1366px) {
+        .table-header h4 {
+            font-size: 0.75rem;
+        }
     }
 </style>

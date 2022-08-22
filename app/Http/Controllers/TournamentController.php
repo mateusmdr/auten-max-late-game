@@ -130,7 +130,6 @@ class TournamentController extends Controller
     {
         $data = $request->only([
             'name',
-            'prize',
             'buy_in',
             'date',
             'subscription_begin_at',
@@ -242,7 +241,6 @@ class TournamentController extends Controller
         $data = $request->only([
             'is_approved',
             'name',
-            'prize',
             'buy_in',
             'date',
             'subscription_begin_at',

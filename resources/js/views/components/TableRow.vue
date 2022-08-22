@@ -93,4 +93,10 @@ export default {
         height: 2.25rem;
         width: auto;
     }
+
+    @media only screen and (max-width: 1366px) {
+        .action-col h4, .title-col h4, .default-col h4 {
+            font-size: 0.85rem;
+        }
+    }
 </style>

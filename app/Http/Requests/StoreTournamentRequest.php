@@ -16,7 +16,6 @@ class StoreTournamentRequest extends BaseRequest
     {
         return [
             'name' => 'required|string|max:' . DBSizes::STRING,
-            'prize' => 'required|string|max:' . DBSizes::STRING,
             'buy_in' => 'numeric|min:0',
             'date' => 'required|date_format:Y-m-d|after:yesterday',
             'subscription_begin_at' => 'required|date_format:H:i',

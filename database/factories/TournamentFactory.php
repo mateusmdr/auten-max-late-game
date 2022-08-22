@@ -22,7 +22,6 @@ class TournamentFactory extends Factory
         $end = $this->faker->time('H:i');
         return [
             'name' => $this->faker->sentence(4),
-            'prize'=> rand(0,350),
             'buy_in'=> rand(0,100),
             'date' => now()->addDays(rand(0,85)),
             'subscription_begin_at' => $this->faker->time('H:i',$end),
