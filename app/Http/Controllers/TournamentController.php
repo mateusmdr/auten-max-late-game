@@ -113,7 +113,13 @@ class TournamentController extends Controller
                 ->orWhereDate('date','>',today());
         });
 
-        return TournamentResource::collection($builder->orderBy('date')->orderBy('name')->simplePaginate($qtd));
+        return TournamentResource::collection(
+            $builder
+                ->orderBy('date')
+                ->orderBy('subscription_begin_at')
+                ->orderBy('name')
+                ->simplePaginate($qtd)
+        );
     }
 
     public function show(Tournament $tournament){
