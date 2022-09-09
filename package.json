@@ -39,6 +39,7 @@
         "pinia": "^2.0.13",
         "vue-final-modal": "^3.4.3",
         "vue-router": "^4.0.14",
-        "vue-template-compiler": "^2.6.14"
+        "vue-template-compiler": "^2.6.14",
+        "vue-the-mask": "^0.11.1"
     }
 }

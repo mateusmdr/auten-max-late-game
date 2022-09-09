@@ -48,7 +48,7 @@ export default {
                         (now.username ? search1.includes(now.username.toLowerCase()) : true) &&
                         (now.search ? search2.includes(now.search.toLowerCase()) : true) &&
                         (now.date ? notification.date === format(now.date, 'DD/MM/YYYY') : true) &&
-                        (now.time ? notification.time === format(now.time, 'HH:mm') : true)
+                        (now.time ? notification.time === now.time : true)
                     );
                 };
 

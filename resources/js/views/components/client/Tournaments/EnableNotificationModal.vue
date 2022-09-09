@@ -30,7 +30,7 @@
                 <div class="col-6 mt-4" v-if="inputs.after">
                     <TimeInput
                         v-model="inputs.interval"
-                        :default="this.end"
+                        :default="end"
                     />
                 </div>
             </div>
@@ -116,13 +116,13 @@ export default {
             {text: 'Apenas esta ocorrência', value: 'one'},
             {text: 'Personalizado', value: 'custom'},
         ]
-    },
-    mounted() {
-		this.$refs.modal.openModal();
 
         this.subscription = this.tournament.subscription.split(' ');
         this.begin = parse(this.subscription[0], 'HH:mm');
         this.end = parse(this.subscription[2], 'HH:mm');
+    },
+    mounted() {
+		this.$refs.modal.openModal();
 	},
     data() {
         return {
@@ -155,7 +155,7 @@ export default {
                 .post(`/api/tournament/${this.tournament.id}/notification`, {
                     before: this.inputs.before,
                     after: this.inputs.after,
-                    interval: this.inputs.interval ? format(this.inputs.interval, 'HH:mm') : undefined,
+                    interval: this.inputs.interval,
                     option: this.inputs.option,
                     schedule
                 })

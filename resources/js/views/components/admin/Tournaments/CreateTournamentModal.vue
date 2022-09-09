@@ -41,13 +41,13 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-2">
+            <div class="col-3">
                 <DateInput
                     v-model="inputs.date"
                     label="Data início *"
                 />
             </div>
-            <div class="col-2">
+            <div class="col-3">
                 <TimeInput
                     label="Inscrição *"
                     v-model="inputs.subscription_begin"
@@ -56,7 +56,7 @@
             <div class="col-1 d-flex justify-content-center align-items-center flex-column">
                 <span class="mt-3">às</span>
             </div>
-            <div class="col-2">
+            <div class="col-3">
                 <TimeInput
                     label=""
                     v-model="inputs.subscription_end"
@@ -251,15 +251,13 @@ export default {
             return schedule;
         },
         submit() {
-            const subscription_begin = this.inputs.subscription_begin;
-            const subscription_end = this.inputs.subscription_end;
             axios
                 .post('/api/tournament', {
 					'name': this.inputs.name,
                     'buy_in': this.inputs.buy_in ? this.inputs.buy_in : undefined,
                     'date': format(this.inputs.date, 'YYYY-MM-DD'),
-                    'subscription_begin_at': format(subscription_begin, 'HH:mm'),
-                    'subscription_end_at': format(subscription_end, 'HH:mm'),
+                    'subscription_begin_at': this.inputs.subscription_begin,
+                    'subscription_end_at': this.inputs.subscription_end,
                     'tournament_platform_id': this.inputs.tournamentPlatform,
                     'tournament_type_id': this.inputs.tournamentType,
                     'is_recurrent': this.inputs.is_recurrent,

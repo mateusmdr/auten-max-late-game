@@ -123,8 +123,8 @@ export default {
             inputs: {
                 name: this.tournament.name,
                 date: parse(this.tournament.date, 'DD/MM/YYYY'),
-                subscription_begin: parse(this.subscription[0],'HH:mm'),
-                subscription_end: parse(this.subscription[2],'HH:mm'),
+                subscription_begin: this.subscription[0],
+                subscription_end: this.subscription[2],
                 buy_in: this.tournament.buy_in,
                 tournamentPlatform: this.tournament.platform_id,
                 tournamentType: this.tournament.type_id,
@@ -142,15 +142,13 @@ export default {
     },
     methods: {
         submit() {
-            const subscription_begin = this.inputs.subscription_begin;
-            const subscription_end = this.inputs.subscription_end;
             axios
                 .put(`/api/tournament/${this.tournament.id}`, {
 					'name': this.inputs.name,
                     'buy_in': this.inputs.buy_in,
                     'date': format(this.inputs.date, 'YYYY-MM-DD'),
-                    'subscription_begin_at': format(subscription_begin, 'HH:mm'),
-                    'subscription_end_at': format(subscription_end, 'HH:mm'),
+                    'subscription_begin_at': this.inputs.subscription_begin,
+                    'subscription_end_at': this.inputs.subscription_end,
                     'tournament_platform_id': this.inputs.tournamentPlatform,
                     'tournament_type_id': this.inputs.tournamentType,
 				})

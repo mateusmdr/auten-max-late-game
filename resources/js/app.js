@@ -47,4 +47,8 @@ import { vfmPlugin } from 'vue-final-modal'
 
 app.use(vfmPlugin);
 
+//Load masks plugin
+import VueTheMask from 'vue-the-mask';
+app.use(VueTheMask);
+
 app.mount('#app');

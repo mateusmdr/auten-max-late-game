@@ -1,60 +1,42 @@
 <template>
     <InputContainer :name="label">
-        <Datepicker
-            timePicker
-            placeholder="00:00"
-            locale="pt-BR"
-            dark
-            hideInputIcon
-            format="HH:mm"
-            v-model="date"
-            @update:modelValue="updateValue"
-            selectText="Selecionar"
-            cancelText="Cancelar"
-            :startTime="startTime"
-            :textInput="true"
-        />
+        <div class="position-relative">
+            <input
+                type="text"
+                @input="$emit('update:modelValue',$event.target.value)"
+                :value="modelValue"
+                placeholder="HH:mm"
+                v-mask="'##:##'"
+            />
+            <div class="input-icon">
+                <Icon name="access_time"/>
+            </div>
+        </div>
     </InputContainer>
 </template>
 
 <script>
-import Datepicker from '@vuepic/vue-datepicker';
-import { parse, format } from 'date-format-parse';
-
 export default {
-    setup(props, context) {
-        const updateValue = (time) => {
-            context.emit('update:modelValue', time ? parse(`${time.hours}:${time.minutes}`,'H:m') : null);
-        }
-
-        return {
-            updateValue
-        }
-    },
-    computed: {
-        date() {
-            return this.modelValue ?
-            {
-                hours: format(this.modelValue, 'HH'),
-                minutes: format(this.modelValue, 'mm'),
-            } : null
-        },
-        startTime() {
-            return this.default ?
-            {
-                hours: format(this.default, 'HH'),
-                minutes: format(this.default, 'mm'),
-            } : null
-        }
-    },
-    components: {Datepicker},
     props: {
-        modelValue: Object,
-        label: {
-            type: String,
-            default: "Hora"
-        },
-        default: Object
-    }
+        modelValue: String,
+        label: String,
+    },
 }
 </script>
+
+<style scoped>
+input {
+    height: 3rem;
+    border-radius: .5rem;
+    width: 100%;
+
+    background-color: #4F4F4F;
+    color: #BFC9DB;
+    padding: 0 1rem;
+    box-sizing: border-box;
+
+    border: 0;
+    outline: 0;
+}
+
+</style>

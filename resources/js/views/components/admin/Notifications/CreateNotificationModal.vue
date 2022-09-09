@@ -10,7 +10,7 @@
 	>
 		<div class="row mb-3">
             <div class="col-4">
-                <Select 
+                <Select
                     :options="[
 						{id: 'administrative', name: 'Administração'},
 						{id: 'financial', name: 'Financeiro'}
@@ -23,7 +23,7 @@
         </div>
 		<div class="row mb-3">
             <div class="col-6">
-                <Select 
+                <Select
                     :options="users"
                     v-model="inputs.user_id"
                     name="Destinatário"
@@ -32,14 +32,14 @@
                 />
             </div>
 			<div class="col-4">
-                <DateInput 
+                <DateInput
                     v-model="inputs.date"
                     label="Data *"
 					:error-message="errors.datetime"
                 />
 			</div>
 			<div class="col-2">
-                <TimeInput 
+                <TimeInput
                     label="Hora *"
                     v-model="inputs.time"
 					:error-message="errors.datetime"
@@ -48,7 +48,7 @@
         </div>
 		<div class="row mb-3">
             <div class="col-12">
-                <TextInput 
+                <TextInput
                     v-model="inputs.description"
                     name="Mensagem *"
 					:error-message="errors.type"
@@ -83,7 +83,7 @@ export default {
                 type: 'administrative',
 				user_id: null,
 				date: new Date(),
-				time: new Date(),
+				time: null,
 				description: null,
             },
             errors: {
@@ -97,12 +97,11 @@ export default {
 				const res = confirm("Tem certeza que deseja enviar uma mensagem para TODOS os usuários cadastrados?");
 				if(!res) return;
 			}
-            const time = this.inputs.time;
             axios
                 .post('/api/notification', {
 					type: this.inputs.type,
 					user_id: !this.inputs.user_id ? undefined : this.inputs.user_id,
-					datetime: this.inputs.date.toISOString().slice(0, 10) + ' ' + format(time, 'HH:mm'),
+					datetime: this.inputs.date.toISOString().slice(0, 10) + ' ' + this.inputs.time,
 					description:  this.inputs.description,
 				})
                 .then(this.$refs.modal.closeModal)
@@ -111,7 +110,7 @@ export default {
 						type: 'administrative',
 						user_id: null,
 						date: new Date(),
-						time: new Date(),
+						time: null,
 						description: null,
 					}
 				})

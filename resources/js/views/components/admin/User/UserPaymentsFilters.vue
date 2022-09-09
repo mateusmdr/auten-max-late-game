@@ -83,10 +83,10 @@ export default {
                         paymentStatusFilter &&
                         (now.search ? search.includes(now.search.toLowerCase()) : true) &&
                         (now.date ? payment.date === format(now.date, 'DD/MM/YYYY') : true) &&
-                        (now.time ? payment.time === format(now.time, 'HH:mm') : true)
+                        (now.time ? payment.time === now.time : true)
                     );
                 };
-                
+
                 this.$emit('change',newFilter);
             },
             deep: true
