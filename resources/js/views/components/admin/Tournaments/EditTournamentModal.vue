@@ -54,13 +54,13 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-2">
+            <div class="col-3">
                 <DateInput
                     v-model="inputs.date"
                     label="Data início *"
                 />
             </div>
-            <div class="col-2">
+            <div class="col-3">
                 <TimeInput
                     label="Inscrição *"
                     v-model="inputs.subscription_begin"
@@ -69,7 +69,7 @@
             <div class="col-1 d-flex justify-content-center align-items-center flex-column">
                 <span class="mt-3">às</span>
             </div>
-            <div class="col-2">
+            <div class="col-3">
                 <TimeInput
                     label=""
                     v-model="inputs.subscription_end"

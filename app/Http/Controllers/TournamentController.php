@@ -71,36 +71,37 @@ class TournamentController extends Controller
             $field = implode('_', $filter);
 
             if(str_contains('date',$field)) {
-                $value = Carbon::createFromFormat("d/m/Y", $value);
-            }
-            switch($comparison) {
-                case 'like':
-                    $builder->where($field, 'like', $value);
-                    break;
-                case 'gte':
-                    $builder->where($field, '>=', $value);
-                    break;
-                case 'ste':
-                    $builder->where($field, '<=', $value);
-                    break;
-                case 'gt':
-                    $builder->where($field, '>', $value);
-                    break;
-                case 'st':
-                    $builder->where($field, '<', $value);
-                    break;
-                case 'equals':
-                    $builder->where($field, '=', $value);
-                    break;
-                case 'is':
-                    $builder->where($field, $value);
-                    break;
-                case 'null':
-                    $builder->whereNull($field);
-                    break;
-                case 'present':
-                    $builder->whereNotNull($field);
-                    break;
+                $builder->whereDate($field, '=', Carbon::createFromFormat("d/m/Y", $value)->format("Y-m-d"));
+            }else {
+                switch ($comparison) {
+                    case 'like':
+                        $builder->where($field, 'like', $value);
+                        break;
+                    case 'gte':
+                        $builder->where($field, '>=', $value);
+                        break;
+                    case 'ste':
+                        $builder->where($field, '<=', $value);
+                        break;
+                    case 'gt':
+                        $builder->where($field, '>', $value);
+                        break;
+                    case 'st':
+                        $builder->where($field, '<', $value);
+                        break;
+                    case 'equals':
+                        $builder->where($field, '=', $value);
+                        break;
+                    case 'is':
+                        $builder->where($field, $value);
+                        break;
+                    case 'null':
+                        $builder->whereNull($field);
+                        break;
+                    case 'present':
+                        $builder->whereNotNull($field);
+                        break;
+                }
             }
         }
 

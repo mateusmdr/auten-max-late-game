@@ -19,7 +19,10 @@
 export default {
     props: {
         modelValue: String,
-        label: String,
+        label: {
+            type: String,
+            default: "Hora"
+        },
     },
 }
 </script>
