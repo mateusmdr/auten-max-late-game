@@ -12,7 +12,10 @@
 	>
         <div class="row mb-3">
             <div :class="tournament.isRecurrent ? 'col-6 row align-content-start' : 'col-12 row'">
-                <div class="col-12 mb-3">
+                <div class="col-12 mb-2">
+                    <h5 class="fw-bold">Intervalo das inscrições: {{tournament.subscription}}</h5>
+                </div>
+                <div class="col-12 mb-4">
                     <h4>Quando você deseja ser notificado?</h4>
                 </div>
                 <div class="col-12 mb-3">

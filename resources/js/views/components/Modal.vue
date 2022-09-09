@@ -1,5 +1,11 @@
 <template>
-	<vue-final-modal v-model="showModal" classes="modal-container" :styles="{padding: `0 ${(100-width)/2}vw`}" content-class="modal-content" @before-close="$emit('close')">
+	<vue-final-modal
+        v-model="showModal"
+        classes="modal-container"
+        :styles="{padding: `0 ${(100-width)/2}vw`}"
+        content-class="modal-content"
+        @before-close="$emit('close')"
+    >
 		<form @submit.prevent="$emit('submit')" autocomplete="off">
 			<a class="modal__close" @click="closeModal">
 				<Icon name="close"/>
@@ -19,7 +25,7 @@
 				<DynamicButton text="Não" @click="closeModal" :primary="false" v-if="confirm"/>
 				<DynamicButton text="Sim" v-if="confirm"/>
 			</div>
-			
+
 		</form>
 	</vue-final-modal>
 	<div class="absolute-top-right" v-if="!noButton">
@@ -81,10 +87,8 @@ export default {
 	}
 
 	:deep(.modal-container) {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin: auto;
+		margin: 32px auto 0 auto;
+        overflow-y: auto;
 	}
 
 	.modal__title {

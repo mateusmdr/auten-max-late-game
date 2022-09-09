@@ -10,6 +10,21 @@
 	>
         <div class="row mb-3">
             <div class="col-4">
+                <Checkbox
+                    v-model="inputs.calculate"
+                    label="Cálculo de blinds"
+                />
+            </div>
+            <div class="col-4">
+                <Checkbox
+                    label="Torneio Recorrente"
+                    v-model="inputs.is_recurrent"
+                />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-4">
                 <TextInput
                     label="Nome *"
                     placeholder="Nome do torneio"
@@ -39,9 +54,7 @@
                     name="Buy-in"
                 />
             </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-3">
+            <div class="col-4">
                 <DateInput
                     v-model="inputs.date"
                     label="Data início *"
@@ -49,25 +62,38 @@
             </div>
             <div class="col-3">
                 <TimeInput
-                    label="Inscrição *"
+                    label="Início das inscrições *"
                     v-model="inputs.subscription_begin"
                 />
             </div>
-            <div class="col-1 d-flex justify-content-center align-items-center flex-column">
-                <span class="mt-3">às</span>
-            </div>
-            <div class="col-3">
-                <TimeInput
-                    label=""
-                    v-model="inputs.subscription_end"
-                />
-            </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-4">
-                <Checkbox
-                    label="Torneio Recorrente"
-                    v-model="inputs.is_recurrent"
+
+        <div class="row mb-3">
+            <template v-if="inputs.calculate">
+                <div class="col-4">
+                    <NumberInput
+                        v-model.number="inputs.blinds"
+                        name="Número de blinds *"
+                    />
+                </div>
+                <div class="col-4">
+                    <NumberInput
+                        v-model.number="inputs.blind_duration"
+                        name="Duração de cada blind *"
+                        placeholder="Ex: 15 (minutos)"
+                    />
+                </div>
+                <div class="col-3">
+                    <DisabledInput
+                        :value="subscription_end"
+                        name="Fim das inscrições"
+                    />
+                </div>
+            </template>
+            <div class="col-3" v-else>
+                <TimeInput
+                    label="Fim das inscrições *"
+                    v-model="inputs.subscription_end"
                 />
             </div>
         </div>
@@ -141,7 +167,7 @@
                 <h5 class="fw-bold">*O torneio se repetirá a cada duas semanas, nos dias da semana informados acima (ou a partir da data inicial, caso nenhum tenha sido informado).</h5>
             </div>
             <div class="row mt-4">
-                <div class="col-3">
+                <div class="col-4">
                     <DateInput
                         v-model="inputs.ends_at"
                         label="Data final da recorrência *"
@@ -156,9 +182,12 @@
 import {useTournamentTypeStore, useTournamentPlatformStore, useTournamentStore} from '../../../../stores/admin';
 import {storeToRefs} from 'pinia';
 
-import {format} from 'date-format-parse';
+import moment from 'moment';
+import DisabledInput from "../../DisabledInput";
+import {format} from "date-format-parse";
 
 export default {
+    components: {DisabledInput},
     setup() {
         const tournamentTypeStore = useTournamentTypeStore();
         const tournamentPlatformStore = useTournamentPlatformStore();
@@ -194,7 +223,10 @@ export default {
                 is_recurrent: false,
                 recurrence_type: 'monthly',
                 weekDays: Array(6).fill(false),
-                ends_at: null
+                ends_at: null,
+                calculate: true,
+                blinds: null,
+                blind_duration: null
             },
             errors: {
                 name: null,
@@ -209,6 +241,28 @@ export default {
                 weekDays: null,
                 ends_at: null
             }
+        }
+    },
+    computed: {
+        subscription_end() {
+            if(!this.inputs.blinds || !this.inputs.blind_duration) {
+                return null;
+            }
+            let time = moment(this.inputs.subscription_begin, "HH:mm");
+
+            for(let c = 0; c<this.inputs.blinds; c++) {
+                let m0 = time.minutes();
+                let h0 = time.hours();
+                time.add(this.inputs.blind_duration, "minutes");
+                let mf = time.minutes();
+                let hf = time.hours();
+
+                if(h0<hf && m0 < 55 && mf < 55) {
+                    time.add(5,"minutes")
+                }
+            }
+
+            return time.format("HH:mm");
         }
     },
     methods: {
@@ -257,7 +311,7 @@ export default {
                     'buy_in': this.inputs.buy_in ? this.inputs.buy_in : undefined,
                     'date': format(this.inputs.date, 'YYYY-MM-DD'),
                     'subscription_begin_at': this.inputs.subscription_begin,
-                    'subscription_end_at': this.inputs.subscription_end,
+                    'subscription_end_at': this.inputs.calculate ? this.subscription_end : this.inputs.subscription_end,
                     'tournament_platform_id': this.inputs.tournamentPlatform,
                     'tournament_type_id': this.inputs.tournamentType,
                     'is_recurrent': this.inputs.is_recurrent,
