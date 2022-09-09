@@ -31,7 +31,7 @@ export const useTournamentStore = defineStore('tournament', {
         enabledTournaments: [],
     }),
     actions: {
-        refresh(qtd=7, filters={}) {
+        refresh(qtd=20, filters={}) {
             axios
                 .get('/api/tournament', {params: {...filters, qtd}})
                 .then((res) => {

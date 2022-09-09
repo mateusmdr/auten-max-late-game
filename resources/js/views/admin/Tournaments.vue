@@ -29,7 +29,7 @@
             @viewMode="viewMode = true"
             @removeMode="removeMode = true"
         />
-        <Paginator @click="qtd += 7;updateTournaments()" :visible="qtd<=tournaments.length"/>
+        <Paginator @click="qtd += 20;updateTournaments()" :visible="qtd<=tournaments.length"/>
     </Section>
 </template>
 

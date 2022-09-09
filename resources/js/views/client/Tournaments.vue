@@ -10,7 +10,7 @@
             @select="(tournament) => selectedTournament = tournament"
             @disable="disable = true"
         />
-        <Paginator @click="qtd += 7;updateTournaments()" :visible="qtd <= tournaments.length"/>
+        <Paginator @click="qtd += 20;updateTournaments()" :visible="qtd <= tournaments.length"/>
 
         <ClientEnableNotificationModal
             v-if="!!selectedTournament && !disable"
