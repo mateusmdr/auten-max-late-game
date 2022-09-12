@@ -11,14 +11,20 @@
         <div class="row mb-3">
             <div class="col-4">
                 <Checkbox
-                    v-model="inputs.calculate"
-                    label="Cálculo de blinds"
+                    label="Torneio Recorrente"
+                    v-model="inputs.is_recurrent"
                 />
             </div>
             <div class="col-4">
                 <Checkbox
-                    label="Torneio Recorrente"
-                    v-model="inputs.is_recurrent"
+                    v-model="inputs.calculate"
+                    label="Cálculo de blinds"
+                />
+            </div>
+            <div class="col-4" v-if="inputs.calculate">
+                <Checkbox
+                    label="Considerar intervalos"
+                    v-model="inputs.hasIntervals"
                 />
             </div>
         </div>
@@ -226,7 +232,8 @@ export default {
                 ends_at: null,
                 calculate: true,
                 blinds: null,
-                blind_duration: null
+                blind_duration: null,
+                hasIntervals: true
             },
             errors: {
                 name: null,
@@ -248,18 +255,19 @@ export default {
             if(!this.inputs.blinds || !this.inputs.blind_duration) {
                 return null;
             }
-            let time = moment(this.inputs.subscription_begin, "HH:mm");
+            const time = moment(this.inputs.subscription_begin, "HH:mm");
+            if(this.inputs.hasIntervals){
+                for(let c=0; c<this.inputs.blinds; c++) {
+                    let h0 = time.hours();
+                    time.add(this.inputs.blind_duration, "minutes");
+                    let hf = time.hours();
 
-            for(let c = 0; c<this.inputs.blinds; c++) {
-                let m0 = time.minutes();
-                let h0 = time.hours();
-                time.add(this.inputs.blind_duration, "minutes");
-                let mf = time.minutes();
-                let hf = time.hours();
-
-                if(h0<hf && m0 < 55 && mf < 55) {
-                    time.add(5,"minutes")
+                    if(Math.abs(hf - h0) > 0) { // Houve salto de hora
+                        time.add(5, "minutes");
+                    }
                 }
+            }else {
+                time.add(this.inputs.blinds * this.inputs.blind_duration, "minutes");
             }
 
             return time.format("HH:mm");
