@@ -53,7 +53,7 @@ export default {
             selectedTournament: null,
             viewMode: false,
             removeMode: false,
-            qtd: 7,
+            qtd: 20,
             filters: {}
         }
     },
