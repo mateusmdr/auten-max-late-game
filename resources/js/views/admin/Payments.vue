@@ -1,6 +1,8 @@
 <template>
   <Section title="Últimos Pagamentos" icon="request_quote">
-        
+
+        <AdminCreatePaymentModal/>
+
         <AdminPaymentsFilters
             @change="(newFilter) => this.filter = newFilter"
         />

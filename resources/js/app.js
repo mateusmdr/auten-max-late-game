@@ -37,6 +37,12 @@ adminComponents.keys().map(key => app.component('Admin' + key.split('/').pop().s
 const clientComponents = require.context('./views/components/client', true, /\.vue$/i)
 clientComponents.keys().map(key => app.component('Client' + key.split('/').pop().split('.')[0], clientComponents(key).default))
 
+// Register v-select component
+import vSelect from 'vue-select'
+
+import "vue-select/dist/vue-select.css";
+app.component('v-select', vSelect)
+
 //Load pinia root store
 import { createPinia } from 'pinia'
 
