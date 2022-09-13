@@ -1,11 +1,12 @@
 <template>
     <InputContainer :name="label">
-        <Datepicker 
+        <Datepicker
             :placeholder="monthPicker ? '00/00' : '00/00/0000'"
             :enableTimePicker="false"
             locale="pt-BR"
             autoApply
             :minDate="minDate ? now : null"
+            :maxDate="maxDate ? now : null"
             dark
             hideInputIcon
             @update:modelValue="$emit('update:modelValue', $event)"
@@ -42,6 +43,10 @@ export default {
             type: Boolean,
             default: true
         },
+        maxDate: {
+            type: Boolean,
+            default: false
+        },
         modelValue: Object,
     },
 }
@@ -49,7 +54,7 @@ export default {
 
 <style lang="scss">
     @import '@vuepic/vue-datepicker/dist/main.css';
-    
+
     .dp__theme_dark {
         --dp-background-color: #4F4F4F;
         --dp-text-color: #BFC9DB;

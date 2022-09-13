@@ -1,9 +1,9 @@
 <template>
 	<Modal
-		openModalText="Cadastrar novo pagamento"
-        modalTitle= "Novo Pagamento"
+		noButton
+        modalTitle= "Editar Pagamento"
         modalIcon= "request_quote"
-        submitModalText= "Cadastrar"
+        submitModalText= "Salvar"
         :width="55"
         @submit="submit"
         ref="modal"
@@ -75,7 +75,7 @@ import {mapState, mapStores, storeToRefs} from 'pinia';
 
 import moment from 'moment';
 import DisabledInput from "../../DisabledInput";
-import {format} from "date-format-parse";
+import {format, parse} from "date-format-parse";
 import NumberInput from "../../NumberInput";
 import InputContainer from "../../InputContainer";
 
@@ -90,6 +90,7 @@ export default {
             users
         }
     },
+    props: ['payment'],
     created() {
         this.paymentPlans = [
             {
@@ -117,15 +118,18 @@ export default {
             }
         ];
     },
+    mounted() {
+        this.$refs.modal.openModal();
+    },
     data() {
         return {
             inputs: {
-                user: null,
-                date: null,
-                time: null,
-                price: null,
-                paymentPlan: null,
-                paymentMethod: null
+                user: this.payment.user,
+                date: parse(this.payment.date, "DD/MM/YYYY"),
+                time: this.payment.time,
+                price: Number(this.payment.price.slice(3)),
+                paymentPlan: this.payment.plan_period,
+                paymentMethod: this.payment.payment_method.toLocaleLowerCase().replaceAll(' ','')
             }
         }
     },
@@ -135,11 +139,12 @@ export default {
     methods: {
         submit() {
             axios
-                .post(`/api/payment/user/${this.inputs.user.id}`, {
+                .put(`/api/payment/${this.payment.id}`, {
                     datetime: format(this.inputs.date, "YYYY-MM-DD") + " " + this.inputs.time,
                     price: this.inputs.price,
                     payment_plan: this.inputs.paymentPlan,
-                    payment_method: this.inputs.paymentMethod
+                    payment_method: this.inputs.paymentMethod,
+                    user_id: this.inputs.user.id
 				})
                 .then(this.$refs.modal.closeModal)
 				.then(() => {

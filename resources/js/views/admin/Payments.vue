@@ -1,7 +1,12 @@
 <template>
-  <Section title="Últimos Pagamentos" icon="request_quote">
+    <Section title="Últimos Pagamentos" icon="request_quote">
 
-        <AdminCreatePaymentModal/>
+        <AdminCreatePaymentModal v-if="!selectedPayment"/>
+        <AdminEditPaymentModal
+            v-else
+            :payment="selectedPayment"
+            @close="selectedPayment = null"
+        />
 
         <AdminPaymentsFilters
             @change="(newFilter) => this.filter = newFilter"
@@ -9,8 +14,9 @@
 
         <AdminPaymentsTable
             :payments="filteredPayments"
+            @edit="selectedPayment = $event"
         />
-  </Section>
+    </Section>
 </template>
 
 <script>
@@ -29,7 +35,8 @@ export default {
     },
     data() {
         return {
-            filter: () => true
+            filter: () => true,
+            selectedPayment: null
         }
     },
     computed: {

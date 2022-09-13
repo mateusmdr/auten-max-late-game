@@ -43,4 +43,12 @@ class PaymentPolicy
     {
         return !$user->isRegular();
     }
+
+    public function update(User $user, Payment $payment) {
+        return $user->is_admin && $payment->status === 'manual';
+    }
+
+    public function delete(User $user, Payment $payment) {
+        return $user->is_admin && $payment->status === 'manual';
+    }
 }

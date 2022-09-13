@@ -19,13 +19,13 @@
             </div>
 
             <div class="action-col" v-else>
-                <span @click="actions.delete">
-                    <icon name="block" color="#EB4263" size="1.5rem"/>
+                <span @click="actions.delete" v-if="actions.delete">
+                    <icon :name="removeIcon" color="#EB4263" size="1.5rem"/>
                 </span>
-                <span @click="actions.edit" class="mx-3">
+                <span @click="actions.edit" v-if="actions.edit" class="mx-3">
                     <icon name="mode" color="#B376F8" size="1.5rem"/>
                 </span>
-                <span @click="actions.approve">
+                <span @click="actions.approve" v-if="actions.approve">
                     <icon name="check" color="#05F28E" size="1.5rem"/>
                 </span>
             </div>
@@ -49,7 +49,8 @@ export default {
             default: false
         },
         actionWidth: Number,
-        noAction: Boolean
+        noAction: Boolean,
+        removeIcon: String
     }
 }
 </script>

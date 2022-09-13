@@ -67,7 +67,9 @@ Route::middleware('auth', 'blocked')->group(function () {
         Route::apiResource('ad',AdController::class,['only' => ['index', 'store', 'update', 'destroy']]);
         Route::put('user/{user}/payment_plan', [UserController::class, 'changePaymentPlan']);
         Route::apiResource('payment_plan', PaymentPlanController::class);
-        Route::apiResource('payment',PaymentController::class,['only' => ['index', 'show', 'store']]);
+        Route::apiResource('payment',PaymentController::class);
+
+        Route::post('payment/user/{user}', [PaymentController::class, 'storeFromUser']);
     });
 });
 

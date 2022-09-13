@@ -22,12 +22,13 @@
             :defaultActionText="defaultActionText || actionText(item)"
             :isEditable="isEditable(item)"
             :actions="{
-                'delete': () => deleteAction(item),
-                'edit': () => editAction(item),
-                'approve': () => approveAction(item),
+                'delete': deleteAction ? () => deleteAction(item) : null,
+                'edit': editAction ? () => editAction(item) : null,
+                'approve': approveAction ? () => approveAction(item) : null,
             }"
             :actionWidth="actionWidth"
             :noAction="noAction || disableAction(item)"
+            :removeIcon="removeIcon"
         />
     </div>
 </template>
@@ -41,15 +42,15 @@ export default {
         items: Array,
         approveAction: {
             type: Function,
-            default: () => null
+            default: null
         },
         editAction: {
             type: Function,
-            default: () => null
+            default: null
         },
         deleteAction: {
             type: Function,
-            default: () => null
+            default: null
         },
         actionWidth: {
             type: Number,
@@ -74,6 +75,10 @@ export default {
         actionIcon: {
             type: Function,
             default: () => null
+        },
+        removeIcon: {
+            type: String,
+            default: 'block'
         },
         disableAction: {
             type: Function,

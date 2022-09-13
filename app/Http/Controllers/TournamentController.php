@@ -308,8 +308,6 @@ class TournamentController extends Controller
         }
     }
 
-
-
     public function disableNotification(DisableNotificationRequest $request, Tournament $tournament) {
         $all = $request->input('all',false);
 
