@@ -11,6 +11,9 @@
                 </div>
             </template>
             <template #step-2>
+                <AdminSettingsBanners/>
+            </template>
+            <template #step-3>
                 <AdminSettingsFormUseTerms/>
             </template>
         </Stepper>
@@ -20,7 +23,7 @@
 <script>
 export default {
     created() {
-        this.steps = ['Planos', 'Torneios', 'Termos de uso']
+        this.steps = ['Planos', 'Torneios', 'Banners', 'Termos de uso']
     }
 }
 </script>

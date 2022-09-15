@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BannerController;
 use App\Models\PaymentPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -59,9 +60,11 @@ Route::middleware('auth', 'blocked')->group(function () {
             Route::apiResource('tournament_platform',TournamentPlatformController::class);
             Route::apiResource('tournament_type',TournamentTypeController::class);
             Route::apiResource('notification', NotificationController::class);
-            Route::post('eula',[EULAController::class,'update']);
-            Route::get('insights',[InsightsController::class,'index']);
         });
+
+        Route::apiResource('banner', BannerController::class);
+        Route::post('eula',[EULAController::class,'update']);
+        Route::get('insights',[InsightsController::class,'index']);
 
         Route::apiResource('user',UserController::class);
         Route::apiResource('ad',AdController::class,['only' => ['index', 'store', 'update', 'destroy']]);
