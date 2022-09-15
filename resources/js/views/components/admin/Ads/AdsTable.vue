@@ -1,16 +1,21 @@
 <template>
     <div class="thin-table">
         <Table
-            defaultActionIcon='edit'
+            :editAction="editAd"
+            :deleteAction="deleteAd"
+            removeIcon="delete"
+            :isEditable="() => true"
             :fields="fields"
             :items="ads"
             :colorPicker="() => '#B376F8'"
-            :action="action"
         />
     </div>
 </template>
 
 <script>
+import {mapActions} from "pinia";
+import {useAdStore} from "../../../../stores/admin";
+
 export default {
     created() {
         this.fields = [
@@ -26,8 +31,17 @@ export default {
     },
     emits: ['select'],
     methods: {
-        action(ad) {
+        ...mapActions(useAdStore, ['refresh']),
+        editAd(ad) {
             this.$emit('select', ad);
+        },
+        deleteAd(ad) {
+            const res = confirm("Tem certeza que deseja remover este anúncio?");
+            if(res) {
+                axios.delete(`/api/ad/${ad.id}`)
+                    .catch(() => alert("Falha ao remover o anúncio"))
+                    .then(this.refresh);
+            }
         }
     }
 }

@@ -37,7 +37,7 @@ export default {
             const res = confirm("Tem certeza que deseja remover este banner?");
             if(res) {
                 axios.delete(`/api/banner/${banner.id}`)
-                    .catch(() => alert("Falha ao remover o pagamento"))
+                    .catch(() => alert("Falha ao remover o banner"))
                     .then(this.refresh);
             }
         }
