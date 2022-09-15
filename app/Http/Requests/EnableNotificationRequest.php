@@ -16,9 +16,10 @@ class EnableNotificationRequest extends BaseRequest
     public function rules()
     {
         return [
-            'before' => 'required_if:after,0|required_without:after|boolean',
-            'after' => 'required_if:after,0|required_without:before|boolean',
+            'before' => 'required_if:after,0|boolean',
+            'after' => 'required_if:after,0|boolean',
             'interval' => 'required_if:after,1|date_format:H:i',
+            'time' => 'date_format:H:i',
             'option' => 'required|in:' . implode(',',DBTypes::NOTIFICATION_OPTIONS),
             'schedule' => [
                 'required_if:option,custom',

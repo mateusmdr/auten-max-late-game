@@ -24,15 +24,28 @@
                         v-model="inputs.before"
                     />
                 </div>
-                <div class="col-12">
+                <div class="col-12 mb-3">
                     <Checkbox
                         label="Antes do final das inscrições"
                         v-model="inputs.after"
                     />
                 </div>
-                <div class="col-6 mt-4" v-if="inputs.after">
-                    <TimeInput
+                <div class="col-6 mb-3" v-if="inputs.after">
+                    <NumberInput
+                        name="Minutos antes do fim"
+                        placeholder=""
                         v-model="inputs.interval"
+                    />
+                </div>
+                <div class="col-12 mb-3">
+                    <Checkbox
+                        label="Em um horário específico"
+                        v-model="inputs.specific"
+                    />
+                </div>
+                <div class="col-6 mb-3" v-if="inputs.specific">
+                    <TimeInput
+                        v-model="inputs.time"
                         :default="end"
                     />
                 </div>
@@ -100,8 +113,11 @@
 <script>
 import {useTournamentStore} from '../../../../stores/client';
 import {parse, format} from 'date-format-parse';
+import NumberInput from "../../NumberInput";
+import moment from "moment";
 
 export default {
+    components: {NumberInput},
     emits: ['close'],
     setup() {
         const tournamentStore = useTournamentStore();
@@ -132,7 +148,9 @@ export default {
             inputs: {
                 before: true,
                 after: false,
-                interval: null,
+                specific: false,
+                time: null,
+                interval: 5,
                 weekDays: Array(6).fill(false),
                 option: 'one'
             },
@@ -158,8 +176,9 @@ export default {
                 .post(`/api/tournament/${this.tournament.id}/notification`, {
                     before: this.inputs.before,
                     after: this.inputs.after,
-                    interval: this.inputs.interval,
+                    interval: this.inputs.after ? moment(this.end, 'HH:mm').add(this.inputs.interval, 'minutes').format('HH:mm') : undefined,
                     option: this.inputs.option,
+                    time: this.inputs.specific ? this.inputs.time : undefined,
                     schedule
                 })
                 .then(() => {

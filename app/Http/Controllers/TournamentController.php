@@ -287,7 +287,8 @@ class TournamentController extends Controller
             'after',
             'interval',
             'option',
-            'schedule'
+            'schedule',
+            'time'
         ]);
 
         if($tournament->tournament_recurrence !== null && $data['option'] !== 'one') {

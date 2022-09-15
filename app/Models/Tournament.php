@@ -25,6 +25,18 @@ class Tournament extends Model
             'user_id' => Auth::user()->id
         ];
 
+        if($data['time'] ?? false) {
+            $notificationData['datetime'] =
+                Carbon::parse($this->date)->setTimeFrom($data['time']);
+            $notificationData['description'] = (
+                "As inscrições do torneio ". $this->name ." terminam às " .
+                Carbon::parse($this->subscription_end_at)->format('H:i') .
+                "."
+            );
+
+            Notification::create($notificationData);
+        }
+
         if($data['before'] ?? false){
             $notificationData['datetime'] =
                 Carbon::parse($this->date)->setTimeFrom($this->subscription_begin_at);
@@ -38,7 +50,7 @@ class Tournament extends Model
                 Carbon::parse($this->date)
                     ->setTimeFrom(Carbon::parse($data['interval']));
             $notificationData['description'] = (
-                "As inscrições do torneio terminam às " .
+                "As inscrições do torneio ". $this->name ." terminam às " .
                 Carbon::parse($this->subscription_end_at)->format('H:i') .
                 "."
             );
