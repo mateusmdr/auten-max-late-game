@@ -23,17 +23,8 @@
 </template>
 
 <script>
-import {useTournamentStore} from '../../../../stores/admin';
-
 export default {
-    emits: ['select', 'editMode', 'viewMode', 'removeMode'],
-    setup() {
-        const tournamentStore = useTournamentStore();
-
-        return {
-            tournamentStore
-        }
-    },
+    emits: ['select', 'editMode', 'viewMode', 'removeMode', 'update'],
     created() {
         this.fields = [
             {name: '', value: 'formattedDate', width: 1},
@@ -59,7 +50,7 @@ export default {
                         'is_approved': true
                     })
                     .catch(res => {alert("Falha ao aprovar o torneio: " + res.response.data?.errors)})
-                    .finally(this.tournamentStore.refresh);
+                    .finally(this.$emit('update'));
             }
         },
         editTournament(tournament) {
