@@ -12,11 +12,14 @@
 <script>
 import { storeToRefs } from 'pinia';
 import {useNotificationStore, useCurrentUserStore, usePaymentPlanStore} from '../stores/client';
+import {useBannerStore} from "../stores/admin";
 
 export default {
     setup() {
         const currentUserStore = useCurrentUserStore();
         currentUserStore.refresh();
+        const bannerStore = useBannerStore();
+        bannerStore.refresh();
         const {isRegular, isPastTestPeriod} = storeToRefs(currentUserStore);
 
         return {
@@ -40,7 +43,7 @@ export default {
             notificationStore.refresh();
             const paymentPlanStore = usePaymentPlanStore();
             paymentPlanStore.refresh();
-            
+
             setInterval(() => {
                 notificationStore.refresh();
             }, 60 * 1 * 1000);

@@ -1,6 +1,8 @@
 <template>
+    <div class="position-absolute banner">
+        <ClientBanner :position="5"/>
+    </div>
     <Section title="Próximos torneios" icon="emoji_events">
-
         <ClientTournamentsFilters
             @change="filters = $event; updateTournaments()"
         />
@@ -59,3 +61,13 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.banner {
+    height: 168px;
+    width: 45vw;
+    top: 80px;
+    right: 0;
+    z-index: 300;
+}
+</style>

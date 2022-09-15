@@ -72,7 +72,7 @@
         </Section>
 
         <div class="py-4"></div>
-        
+
         <Section title="Resumo do mês" description="Principais índices" icon="timeline">
             <div class="row my-5">
                 <div class="col-3 card-col">

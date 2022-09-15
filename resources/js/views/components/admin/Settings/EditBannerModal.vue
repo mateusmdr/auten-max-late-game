@@ -1,13 +1,14 @@
 <template>
 	<Modal
-        modalTitle= "Novo Banner"
+        modalTitle= "Editar Banner"
         modalIcon= "picture_in_picture"
         submitModalText= "Cadastrar"
-        :width="40"
+        :width="50"
         @submit="submit"
         ref="modal"
         noButton
         @close="$emit('close')"
+        titleColor="#B376F8"
 	>
         <div class="row mb-3">
             <div class="col-6">

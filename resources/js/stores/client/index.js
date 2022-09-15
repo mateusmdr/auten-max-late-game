@@ -2,6 +2,21 @@ import { defineStore } from 'pinia';
 import {parse, format} from 'date-format-parse';
 import axios from 'axios';
 
+// Banners
+export const useBannerStore = defineStore('banner', {
+    state: () => ({
+        banners: [],
+    }),
+    actions: {
+        refresh() {
+            axios
+                .get('/api/banner')
+                .then((res) => this.banners = res.data.data)
+                .catch(e => console.error(e));
+        }
+    }
+});
+
 // Tournaments
 const formatTournament = tournament => {
     const subscription = tournament.subscription.split(' ');

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BannerController;
+use App\Models\Banner;
 use App\Models\PaymentPlan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,10 @@ use App\Http\Controllers\TournamentPlatformController;
 
 Route::get('/', function () {
     $builder = PaymentPlan::query()->orderBy('price');
-    return view('welcome', ['payment_plans' => $builder->get()]);
+    return view('welcome', [
+        'payment_plans' => $builder->get(),
+        'banners' => Banner::all()
+    ]);
 });
 
 Auth::routes(['verify' => true, 'register' => false]);

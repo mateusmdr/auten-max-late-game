@@ -17,6 +17,11 @@
             </aside>
         </div>
     </section>
+
+    <section class="container">
+        @include('components.banner', ['banner' => $banners->where('position','=',1)->first()])
+    </section>
+
     <section class="section container text-md-start text-center px-sm-0 px-5">
         <div class="row">
             <hgroup class="col-md-6 col-12 mb-5">
@@ -80,6 +85,11 @@
             @endcomponent
         </aside>
     </section>
+
+    <section class="container">
+        @include('components.banner', ['banner' => $banners->where('position','=',2)->first()])
+    </section>
+
     <section class="section container text-center px-sm-0 px-5">
         <h2 class="mb-5">Conheça nossos planos</h2>
         <div class="row px-6">
@@ -110,7 +120,7 @@
         <div class="mx-auto my-4">
             @include('components.submit_button',['text' => "Quero me cadastrar", 'href' => "./register"])
         </div>
-        
+
         <div class="mx-auto my-5">
             <img class="img-header-logo"/>
         </div>

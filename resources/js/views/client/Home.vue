@@ -1,6 +1,16 @@
 <template>
-    <div class="container d-flex justify-content-center mb-3">
-        <img src="@images/poker_chips_4.png" class="img-home unselectable">
+    <div class="container mb-3">
+        <div class="row top-images align-items-center">
+            <div class="col-4 text-center">
+                <ClientBanner :position="3"/>
+            </div>
+            <div class="col-4 text-center">
+                <img src="@images/poker_chips_4.png" class="w-50 unselectable my-auto">
+            </div>
+            <div class="col-4 text-center">
+                <ClientBanner :position="4"/>
+            </div>
+        </div>
     </div>
 
     <Section title="Notificações" description="Últimos avisos" icon="notifications">
@@ -10,7 +20,7 @@
     </Section>
 
     <ClientScheduledTournamentsTable/>
-    
+
 </template>
 
 <script>
@@ -31,7 +41,7 @@ export default {
 </script>
 
 <style scoped>
-    .custom-card-body {
-        min-height: 5.25rem;
+    .top-images {
+        height: 168px;
     }
 </style>
