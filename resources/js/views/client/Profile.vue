@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         forceRerender() {
-            this.componentKey += 1;  
+            this.componentKey += 1;
         }
     },
     data() {

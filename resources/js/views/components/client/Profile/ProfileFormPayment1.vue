@@ -70,9 +70,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .form-container {
-        width: calc(4/12 * 100% - 4rem);
+        width: 35vw;
         margin-right: 4rem;
     }
 

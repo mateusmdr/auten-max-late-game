@@ -234,15 +234,23 @@ export const useAdStore = defineStore('ad', {
         }
     }
 });
-
+const language = navigator.language.toLocaleLowerCase();
+const isEnglish = language === 'en' || language === 'en-us';
 //PaymentPlans
 export const usePaymentPlanStore = defineStore('paymentPlan', {
     state: () => ({
         paymentPlans: [],
-        isLoading: true
+        isLoading: true,
+        dollarPrice: null
     }),
     actions: {
-        refresh() {
+        async refresh() {
+            if(isEnglish) {
+                await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL')
+                    .then(res => res.json())
+                    .then((res) => this.dollarPrice = res.USDBRL.high)
+                    .catch(e => console.error(e));
+            }
             return (
                 axios
                 .get('/api/payment_plan')
@@ -255,18 +263,20 @@ export const usePaymentPlanStore = defineStore('paymentPlan', {
                     }
                 })
                 .then(({monthly, biannual, yearly}) => {
+                    const coin = isEnglish ? '$' : 'R$';
+                    const calcValue = (value) => isEnglish ? (this.dollarPrice * value).toFixed(2).replace('.',',') : value;
                     this.paymentPlans = [
                         {
                             value: 'yearly',
-                            text: `${yearly.name} - R$ ${yearly.price}`,
+                            text: `${yearly.name} - ${coin} ${calcValue(yearly.price)}`,
                         },
                         {
                             value: 'biannual',
-                            text: `${biannual.name} - R$ ${biannual.price}`,
+                            text: `${biannual.name} - ${coin} ${calcValue(biannual.price)}`,
                         },
                         {
                             value: 'monthly',
-                            text: `${monthly.name} - R$ ${monthly.price}`,
+                            text: `${monthly.name} - ${coin} ${calcValue(monthly.price)}`,
                         }
                     ]
                 })

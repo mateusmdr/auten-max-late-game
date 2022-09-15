@@ -14,7 +14,7 @@
         const PHP_USER = @json($user);
         const MERCADO_PAGO_PK = "{{ env('MERCADO_PAGO_PK') }}";
     </script>
-    
+
     <!-- Load Vue -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
