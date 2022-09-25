@@ -7,6 +7,7 @@
         :width="40"
         @submit="submit"
         ref="modal"
+        :isLoading="isLoading"
 	>
         <div class="row mb-3">
             <div class="col-6">
@@ -63,6 +64,7 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             inputs: {
                 title: null,
                 position: null,
@@ -82,6 +84,7 @@ export default {
     },
     methods: {
         submit() {
+            this.isLoading = true;
             const formData = new FormData();
 
             for ( let key in this.inputs ) {
@@ -106,8 +109,11 @@ export default {
                         link_url: null,
                     }
 				})
-                .catch(res => {alert("Verifique os dados inseridos.")})
-                .finally(this.bannerStore.refresh);
+                .catch(() => {alert("Verifique os dados inseridos.")})
+                .finally(() => {
+                    this.bannerStore.refresh();
+                    this.isLoading = false;
+                });
         }
     }
 }

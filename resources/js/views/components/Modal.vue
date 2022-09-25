@@ -17,14 +17,14 @@
 			<div class="modal__content mb-5">
 				<slot/>
 			</div>
-			<div class="submit-button" v-if="!noSubmit">
+			<div class="submit-button" v-if="!noSubmit && !isLoading">
 				<DynamicButton :text="submitModalText"/>
 			</div>
-
-			<div class="d-flex justify-content-around flex-row">
+			<div class="d-flex justify-content-around flex-row" v-else-if="!isLoading">
 				<DynamicButton text="Não" @click="closeModal" :primary="false" v-if="confirm"/>
 				<DynamicButton text="Sim" v-if="confirm"/>
 			</div>
+            <loading :active="true" v-else :is-full-page="true" color="rgb(5, 242, 142)" background-color="#000"/>
 
 		</form>
 	</vue-final-modal>
@@ -34,7 +34,11 @@
 </template>
 
 <script>
+import Loading from 'vue3-loading-overlay';
+import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
+
 export default {
+    components: {Loading},
 	emits: ['submit','open','close'],
     props: {
         openModalText: String,
@@ -60,7 +64,11 @@ export default {
 		confirm: {
 			type: Boolean,
 			default: false
-		}
+		},
+        isLoading: {
+            type: Boolean,
+            default: false
+        }
     },
 	data() {
 		return {

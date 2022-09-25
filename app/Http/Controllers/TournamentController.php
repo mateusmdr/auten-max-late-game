@@ -47,7 +47,7 @@ class TournamentController extends Controller
             'tournament_type_id_equals',
         ]);
 
-        $builder = Tournament::query();
+        $builder = Tournament::query()->with(['notifications','tournament_type','tournament_platform']);
 
         if($request->has('enabled_notifications')) {
             $callback = function($query) {
@@ -93,7 +93,11 @@ class TournamentController extends Controller
                         $builder->where($field, '=', $value);
                         break;
                     case 'is':
-                        $builder->where($field, $value);
+                        if(strtolower($value) == 'true') {
+                            $builder->where($field, true);
+                        }else {
+                            $builder->where($field, false);
+                        }
                         break;
                     case 'null':
                         $builder->whereNull($field);

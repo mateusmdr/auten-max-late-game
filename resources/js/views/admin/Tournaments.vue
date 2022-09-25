@@ -7,7 +7,7 @@
         <AdminRemoveTournamentModal
             v-else-if="removeMode"
             :tournament="selectedTournament"
-            @close="selectedTournament = null;removeMode = false"
+            @close="selectedTournament = null;removeMode = false; updateTournaments()"
         />
 
         <AdminEditTournamentModal

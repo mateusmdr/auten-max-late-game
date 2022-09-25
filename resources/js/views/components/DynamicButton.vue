@@ -1,5 +1,5 @@
 <template>
-    <button :class="primary ? 'primary':'secondary'" :type="type">
+    <button :class="primary ? 'primary':'secondary'" :type="type" v-if="!isLoading">
         {{ text }}
     </button>
 </template>

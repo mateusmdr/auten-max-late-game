@@ -10,6 +10,7 @@
         noButton
         @close="$emit('close')"
         :noSubmit="viewMode"
+        :isLoading="isLoading"
 	>
         <div class="d-flex flex-row mb-3" v-if="viewMode">
             <div class="action-col me-4" @click="$emit('editMode')">
@@ -120,6 +121,7 @@ export default {
         this.subscription = this.tournament.subscription.split(' ');
 
         return {
+            isLoading: false,
             inputs: {
                 name: this.tournament.name,
                 date: parse(this.tournament.date, 'DD/MM/YYYY'),
@@ -142,6 +144,7 @@ export default {
     },
     methods: {
         submit() {
+            this.isLoading = true;
             axios
                 .put(`/api/tournament/${this.tournament.id}`, {
 					'name': this.inputs.name,
@@ -154,7 +157,10 @@ export default {
 				})
                 .then(() => this.$emit('close'))
                 .catch(res => this.errors = res.response.data.errors)
-                .finally(this.tournamentStore.refresh);
+                .finally(() => {
+                    this.tournamentStore.refresh();
+                    this.isLoading = false;
+                });
         },
         deleteTournament() {
             let res;
@@ -165,10 +171,15 @@ export default {
             }
 
             if(res) {
+                this.isLoading = true;
                 axios
                     .delete(`/api/tournament/${this.tournament.id}`)
                     .catch(res => {alert("Falha ao cancelar o torneio: " + res.response.data?.errors)})
-                    .finally(() => {this.tournamentStore.refresh(); this.$refs.modal.closeModal();});
+                    .finally(() => {
+                        this.tournamentStore.refresh();
+                        this.isLoading = false;
+                        this.$refs.modal.closeModal();
+                    });
             }
         },
     }

@@ -9,6 +9,7 @@
         noButton
         @close="$emit('close')"
         titleColor="#B376F8"
+        :isLoading="isLoading"
 	>
         <div class="row mb-3">
             <div class="col-6">
@@ -70,6 +71,7 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             inputs: {
                 title: this.banner.title,
                 position: this.banner.position,
@@ -84,6 +86,7 @@ export default {
     },
     methods: {
         submit() {
+            this.isLoading = true;
             const formData = new FormData();
             formData.append('_method','PUT');
 
@@ -110,8 +113,11 @@ export default {
                         link_url: null,
                     }
 				})
-                .catch(res => {alert("Verifique os dados inseridos.")})
-                .finally(this.bannerStore.refresh);
+                .catch(() => {alert("Verifique os dados inseridos.")})
+                .finally(() => {
+                    this.bannerStore.refresh();
+                    this.isLoading = false;
+                });
         }
     }
 }

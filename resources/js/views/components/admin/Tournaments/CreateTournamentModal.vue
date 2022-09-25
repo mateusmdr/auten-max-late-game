@@ -7,6 +7,7 @@
         :width="55"
         @submit="submit"
         ref="modal"
+        :isLoading="isLoading"
 	>
         <div class="row mb-3">
             <div class="col-4">
@@ -218,6 +219,7 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             inputs: {
                 name: null,
                 date: null,
@@ -313,6 +315,7 @@ export default {
             return schedule;
         },
         submit() {
+            this.isLoading = true;
             axios
                 .post('/api/tournament', {
 					'name': this.inputs.name,
@@ -344,7 +347,10 @@ export default {
                     }
 				})
                 .catch(res => {this.errors = res.response.data.errors; alert("Verifique os dados inseridos.")})
-                .finally(this.tournamentStore.refresh);
+                .finally(() =>{
+                    this.tournamentStore.refresh();
+                    this.isLoading = false;
+                });
         }
     }
 }

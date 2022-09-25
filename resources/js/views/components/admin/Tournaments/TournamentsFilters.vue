@@ -92,7 +92,7 @@ export default {
                     {
                         tournament_recurrence_id_null: now.tournamentStatus === 3 ? true : undefined,
                         tournament_recurrence_id_present: now.tournamentStatus === 2 ? true : undefined,
-                        is_approved_is: now.tournamentStatus === 1 ? false : now.tournamentStatus !== 1 ? true : undefined,
+                        is_approved_is: now.tournamentStatus === 1 ? false : now.tournamentStatus !== 0 ? true : undefined,
                         date_equals: now.date ? format(now.date, 'DD/MM/YYYY') : undefined,
                         tournament_platform_id_equals: now.tournamentPlatform ? now.tournamentPlatform  : undefined,
                         buy_in_gte: now.minBuyIn ? now.minBuyIn : undefined,

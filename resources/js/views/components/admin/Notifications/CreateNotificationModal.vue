@@ -7,6 +7,7 @@
 		@submit="submit"
 		:width="50"
         ref="modal"
+        :isLoading="isLoading"
 	>
 		<div class="row mb-3">
             <div class="col-4">
@@ -79,6 +80,7 @@ export default {
     },
 	data() {
         return {
+            isLoading: false,
             inputs: {
                 type: 'administrative',
 				user_id: null,
@@ -97,6 +99,7 @@ export default {
 				const res = confirm("Tem certeza que deseja enviar uma mensagem para TODOS os usuários cadastrados?");
 				if(!res) return;
 			}
+            this.isLoading = true;
             axios
                 .post('/api/notification', {
 					type: this.inputs.type,
@@ -115,7 +118,10 @@ export default {
 					}
 				})
                 .catch(res => this.errors = res.response.data.errors)
-                .finally(this.notificationStore.refresh);
+                .finally(() => {
+                    this.notificationStore.refresh();
+                    this.isLoading = false;
+                });
         }
     }
 }

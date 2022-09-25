@@ -11,6 +11,7 @@
         :noSubmit="true"
         @close="$emit('close')"
         noButton
+        :isLoading="isLoading"
 	>
         <div class="row mb-3" v-if="tournament.isRecurrent">
             <div class="col-12 mb-3">
@@ -38,10 +39,6 @@
 </template>
 
 <script>
-import {useTournamentTypeStore, useTournamentPlatformStore, useTournamentStore} from '../../../../stores/admin';
-import {storeToRefs} from 'pinia';
-
-import {format} from 'date-format-parse';
 
 export default {
     emits: ['close'],
@@ -49,18 +46,12 @@ export default {
         tournament: Object,
         viewMode: Boolean
     },
-    setup() {
-        const tournamentStore = useTournamentStore();
-
-        return {
-            tournamentStore
-        }
-    },
     mounted() {
         this.$refs.modal.openModal();
     },
     data() {
         return {
+            isLoading: false,
             inputs: {
                 all: null
             },
@@ -68,11 +59,13 @@ export default {
     },
     methods: {
         submit() {
+            this.isLoading = true;
+
             axios
-                .delete(`/api/tournament/${this.tournament.id}${this.inputs.all && '/recurrence'}`)
+                .delete(`/api/tournament/${this.tournament.id}${this.inputs.all ? '/recurrence' : ''}`)
                 .catch(res => {alert("Falha ao cancelar o torneio: " + res.response.data?.errors)})
                 .finally(() => {
-                    this.tournamentStore.refresh();
+                    this.isLoading = false;
                     this.$emit('close');
                 });
         }

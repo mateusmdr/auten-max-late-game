@@ -7,6 +7,7 @@
         :width="55"
         @submit="submit"
         ref="modal"
+        :isLoading="isLoading"
 	>
         <div class="row mb-3">
             <div class="col-6">
@@ -123,6 +124,7 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             inputs: {
                 user: this.payment.user,
                 date: parse(this.payment.date, "DD/MM/YYYY"),
@@ -138,6 +140,7 @@ export default {
     },
     methods: {
         submit() {
+            this.isLoading = true;
             axios
                 .put(`/api/payment/${this.payment.id}`, {
                     datetime: format(this.inputs.date, "YYYY-MM-DD") + " " + this.inputs.time,
@@ -158,7 +161,10 @@ export default {
                     }
 				})
                 .catch(res => {this.errors = res.response.data.errors; alert("Verifique os dados inseridos.")})
-                .finally(this.paymentStore.refresh);
+                .finally(() => {
+                    this.paymentStore.refresh();
+                    this.isLoading = false;
+                });
         }
     }
 }

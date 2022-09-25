@@ -11,6 +11,7 @@
         :confirm="!tournament.isRecurrent"
         :noSubmit="!tournament.isRecurrent"
         @close="$emit('close')"
+        :isLoading="isLoading"
 	>
         <div class="row mb-3" v-if="tournament.isRecurrent">
             <div class="col-12 mb-3">
@@ -58,6 +59,7 @@ export default {
         this.subscription = this.tournament.subscription.split(' ');
 
         return {
+            isLoading: false,
             inputs: {
                 all: false
             },
@@ -65,15 +67,17 @@ export default {
     },
     methods: {
         submit() {
+            this.isLoading = true;
             axios
                 .delete(`/api/tournament/${this.tournament.id}/notification`, {
                     data: {
                         all: this.tournament.isRecurrent ? this.inputs.all : undefined,
                     }
                 })
-                .then(() => {
+                .finally(() => {
                     this.tournamentStore.refresh();
                     this.notificationStore.refresh();
+                    this.isLoading = false;
                     this.$emit('close');
                 });
         }

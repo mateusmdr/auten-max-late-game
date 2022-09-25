@@ -8,6 +8,7 @@
 		ref="modal"
 		@submit="submit"
 		@close="$emit('close')"
+        :isLoading="isLoading"
 	>
 		<div class="row mb-4">
 			<div class="col-4">
@@ -84,6 +85,7 @@ export default {
 	},
 	data() {
 		return {
+            isLoading: false,
 			inputs: {
 				company_name: this.ad.company_name,
 				begin_at: parse(this.ad.begin_at, 'DD/MM/YYYY'),
@@ -104,9 +106,11 @@ export default {
 	},
 	methods: {
 		submit() {
+            this.isLoading = true;
+
 			const formData = new FormData();
 			formData.append('_method','PUT');
-			
+
 			if(!!this.inputs.img) {
 				formData.append('img', this.inputs.img);
 			}
@@ -126,7 +130,7 @@ export default {
 
 			axios
 				.post(
-					`/api/ad/${this.ad.id}`, 
+					`/api/ad/${this.ad.id}`,
 					formData,
 					{
 						headers: {
@@ -137,7 +141,10 @@ export default {
                 .then(this.$refs.modal.closeModal)
 				.then(() => this.$emit('close'))
                 .catch(res => this.errors = res.response.data.errors)
-                .finally(this.adStore.refresh);
+                .finally(() => {
+                    this.isLoading = false;
+                    this.adStore.refresh();
+                });
         },
     }
 }

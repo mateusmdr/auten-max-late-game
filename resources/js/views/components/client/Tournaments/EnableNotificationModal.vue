@@ -9,6 +9,7 @@
         ref="modal"
         noButton
         @close="$emit('close')"
+        :isLoading="isLoading"
 	>
         <div class="row mb-3">
             <div :class="tournament.isRecurrent ? 'col-6 row align-content-start' : 'col-12 row'">
@@ -145,6 +146,7 @@ export default {
 	},
     data() {
         return {
+            isLoading: false,
             inputs: {
                 before: true,
                 after: false,
@@ -164,6 +166,7 @@ export default {
     },
     methods: {
         submit() {
+            this.isLoading = true;
             const schedule = this.tournament.isRecurrent && this.inputs.option === 'custom' ?
                 "0 0 * * " +
                 this.inputs.weekDays
@@ -181,8 +184,9 @@ export default {
                     time: this.inputs.specific ? this.inputs.time : undefined,
                     schedule
                 })
-                .then(() => {
+                .finally(() => {
                     this.tournamentStore.refresh();
+                    this.isLoading = false;
                     this.$emit('close');
                 });
         }

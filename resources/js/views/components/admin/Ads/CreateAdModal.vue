@@ -7,6 +7,7 @@
 		:width="50"
 		ref="modal"
 		@submit="submit"
+        :isLoading="isLoading"
 	>
 		<div class="row mb-4">
 			<div class="col-4">
@@ -76,6 +77,7 @@ export default {
     },
 	data() {
 		return {
+            isLoading: false,
 			inputs: {
 				company_name: "",
 				begin_at: null,
@@ -96,9 +98,10 @@ export default {
 	},
 	methods: {
 		submit() {
+            this.isLoading = true;
 			const formData = new FormData();
             formData.append('img', this.inputs.img);
-			
+
 			const inputData = {
 				...this.inputs,
 				price: this.inputs.price.replace(/[^\d.-]/g, ''),
@@ -112,7 +115,7 @@ export default {
 
 			axios
 				.post(
-					'/api/ad', 
+					'/api/ad',
 					formData,
 					{
 						headers: {
@@ -132,7 +135,10 @@ export default {
 					}
 				})
                 .catch(res => this.errors = res.response.data.errors)
-                .finally(() => this.adStore.refresh());
+                .finally(() => {
+                    this.adStore.refresh();
+                    this.isLoading = false;
+                });
         }
     }
 }

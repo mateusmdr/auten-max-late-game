@@ -7,6 +7,7 @@
         @submit="submit"
         :width="50"
         ref="modal"
+        isLoading="isLoading"
 	>
         <div class="row mb-3">
             <div class="col-6">
@@ -76,6 +77,7 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
             inputs: {
                 name: null,
                 email: null,
@@ -96,6 +98,8 @@ export default {
     },
     methods: {
         submit() {
+            this.isLoading = true;
+
             axios
                 .post('/api/user', this.inputs)
                 .then(this.$refs.modal.closeModal)
@@ -110,7 +114,10 @@ export default {
                     }
 				})
                 .catch(res => this.errors = res.response.data.errors)
-                .finally(this.userStore.refresh);
+                .finally(() => {
+                    this.userStore.refresh();
+                    this.isLoading = false;
+                });
         }
     }
 }
