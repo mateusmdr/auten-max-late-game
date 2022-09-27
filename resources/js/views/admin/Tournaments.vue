@@ -14,7 +14,7 @@
             v-else
             :tournament="selectedTournament"
             :viewMode="viewMode"
-            @close="selectedTournament = null"
+            @close="selectedTournament = null;updateTournaments()"
             @editMode="viewMode = false"
         />
 

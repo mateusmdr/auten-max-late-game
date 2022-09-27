@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import {useTournamentTypeStore, useTournamentPlatformStore, useTournamentStore} from '../../../../stores/admin';
+import {useTournamentTypeStore, useTournamentPlatformStore} from '../../../../stores/admin';
 import {storeToRefs} from 'pinia';
 
 import { parse, format } from 'date-format-parse';
@@ -91,7 +91,6 @@ export default {
     setup(context, props) {
         const tournamentTypeStore = useTournamentTypeStore();
         const tournamentPlatformStore = useTournamentPlatformStore();
-        const tournamentStore = useTournamentStore();
 
         const {tournamentTypes} = storeToRefs(tournamentTypeStore);
         const {tournamentPlatforms} = storeToRefs(tournamentPlatformStore);
@@ -99,7 +98,6 @@ export default {
         return {
             tournamentTypes,
             tournamentPlatforms,
-            tournamentStore,
         }
     },
     props: {
@@ -158,8 +156,8 @@ export default {
                 .then(() => this.$emit('close'))
                 .catch(res => this.errors = res.response.data.errors)
                 .finally(() => {
-                    this.tournamentStore.refresh();
                     this.isLoading = false;
+                    this.$refs.modal.closeModal();
                 });
         },
         deleteTournament() {
@@ -176,7 +174,6 @@ export default {
                     .delete(`/api/tournament/${this.tournament.id}`)
                     .catch(res => {alert("Falha ao cancelar o torneio: " + res.response.data?.errors)})
                     .finally(() => {
-                        this.tournamentStore.refresh();
                         this.isLoading = false;
                         this.$refs.modal.closeModal();
                     });
