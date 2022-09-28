@@ -28,7 +28,7 @@
             @editMode="viewMode = false"
             @viewMode="viewMode = true"
             @removeMode="removeMode = true"
-            @update="updateTournaments"
+            @update="updateTournaments()"
         />
         <Paginator @click="qtd += 20;updateTournaments()" :visible="qtd<=tournaments.length"/>
     </Section>

@@ -7,7 +7,7 @@
         @submit="submit"
         :width="50"
         ref="modal"
-        isLoading="isLoading"
+        :isLoading="isLoading"
 	>
         <div class="row mb-3">
             <div class="col-6">
