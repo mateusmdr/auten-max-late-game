@@ -106,6 +106,10 @@ class RegisterController extends Controller
 
             $this->validator($data)->validate();
 
+            if($data === null) {
+                return to_route('register');
+            }
+
             event(new Registered($user = $this->create($data)));
 
             $this->guard()->login($user);
