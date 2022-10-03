@@ -198,15 +198,13 @@ export default {
     setup() {
         const tournamentTypeStore = useTournamentTypeStore();
         const tournamentPlatformStore = useTournamentPlatformStore();
-        const tournamentStore = useTournamentStore();
 
         const {tournamentTypes} = storeToRefs(tournamentTypeStore);
         const {tournamentPlatforms} = storeToRefs(tournamentPlatformStore);
 
         return {
             tournamentTypes,
-            tournamentPlatforms,
-            tournamentStore
+            tournamentPlatforms
         }
     },
     created() {
@@ -348,7 +346,6 @@ export default {
 				})
                 .catch(res => {this.errors = res.response.data.errors; alert("Verifique os dados inseridos.")})
                 .finally(() =>{
-                    this.tournamentStore.refresh();
                     this.isLoading = false;
                 });
         }

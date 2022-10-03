@@ -112,7 +112,6 @@
 </template>
 
 <script>
-import {useTournamentStore} from '../../../../stores/client';
 import {parse, format} from 'date-format-parse';
 import NumberInput from "../../NumberInput";
 import moment from "moment";
@@ -120,13 +119,6 @@ import moment from "moment";
 export default {
     components: {NumberInput},
     emits: ['close'],
-    setup() {
-        const tournamentStore = useTournamentStore();
-
-        return {
-            tournamentStore
-        }
-    },
     props: {
         tournament: Object
     },
@@ -185,9 +177,8 @@ export default {
                     schedule
                 })
                 .finally(() => {
-                    this.tournamentStore.refresh();
                     this.isLoading = false;
-                    this.$emit('close');
+                    this.$refs.modal.closeModal();
                 });
         }
     }

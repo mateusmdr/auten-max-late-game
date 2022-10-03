@@ -36,16 +36,14 @@
 </template>
 
 <script>
-import {useNotificationStore, useTournamentStore} from '../../../stores/client';
+import {useNotificationStore} from '../../../stores/client';
 
 export default {
     emits: ['close'],
     setup() {
-        const tournamentStore = useTournamentStore();
         const notificationStore = useNotificationStore();
 
         return {
-            tournamentStore,
             notificationStore
         }
     },
@@ -75,10 +73,9 @@ export default {
                     }
                 })
                 .finally(() => {
-                    this.tournamentStore.refresh();
                     this.notificationStore.refresh();
                     this.isLoading = false;
-                    this.$emit('close');
+                    this.$refs.modal.closeModal();
                 });
         }
     }

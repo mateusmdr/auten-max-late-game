@@ -17,13 +17,13 @@
         <ClientEnableNotificationModal
             v-if="!!selectedTournament && !disable"
             :tournament="selectedTournament"
-            @close="selectedTournament = null"
+            @close="selectedTournament = null; updateTournaments()"
         />
 
         <ClientDisableNotificationModal
             v-if="disable"
             :tournament="selectedTournament"
-            @close="selectedTournament = null; disable = false"
+            @close="selectedTournament = null; disable = false; updateTournaments()"
         />
     </Section>
 </template>
