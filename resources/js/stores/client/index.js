@@ -234,8 +234,6 @@ export const useAdStore = defineStore('ad', {
         }
     }
 });
-const language = navigator.language.toLocaleLowerCase();
-const isEnglish = language === 'en' || language === 'en-us';
 //PaymentPlans
 export const usePaymentPlanStore = defineStore('paymentPlan', {
     state: () => ({
@@ -245,12 +243,10 @@ export const usePaymentPlanStore = defineStore('paymentPlan', {
     }),
     actions: {
         async refresh() {
-            if(isEnglish) {
-                await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL')
-                    .then(res => res.json())
-                    .then((res) => this.dollarPrice = res.USDBRL.high)
-                    .catch(e => console.error(e));
-            }
+            await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL')
+                .then(res => res.json())
+                .then((res) => this.dollarPrice = res.USDBRL.high)
+                .catch(e => console.error(e));
             return (
                 axios
                 .get('/api/payment_plan')
@@ -263,20 +259,19 @@ export const usePaymentPlanStore = defineStore('paymentPlan', {
                     }
                 })
                 .then(({monthly, biannual, yearly}) => {
-                    const coin = isEnglish ? '$' : 'R$';
-                    const calcValue = (value) => isEnglish ? (this.dollarPrice * value).toFixed(2).replace('.',',') : value;
+                    const dollarPrice = (value) => (value / this.dollarPrice + 0.2).toFixed(2).replace('.',',');
                     this.paymentPlans = [
                         {
                             value: 'yearly',
-                            text: `${yearly.name} - ${coin} ${calcValue(yearly.price)}`,
+                            text: `${yearly.name} - R$ ${yearly.price} ($ ${dollarPrice(yearly.price)})`,
                         },
                         {
                             value: 'biannual',
-                            text: `${biannual.name} - ${coin} ${calcValue(biannual.price)}`,
+                            text: `${biannual.name} - R$ ${biannual.price} ($ ${dollarPrice(biannual.price)})`,
                         },
                         {
                             value: 'monthly',
-                            text: `${monthly.name} - ${coin} ${calcValue(monthly.price)}`,
+                            text: `${monthly.name} - R$ ${monthly.price} ($ ${dollarPrice(monthly.price)})`,
                         }
                     ]
                 })
