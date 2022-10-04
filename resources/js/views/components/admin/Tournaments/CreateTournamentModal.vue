@@ -187,7 +187,7 @@
 </template>
 
 <script>
-import {useTournamentTypeStore, useTournamentPlatformStore, useTournamentStore} from '../../../../stores/admin';
+import {useTournamentTypeStore, useTournamentPlatformStore} from '../../../../stores/admin';
 import {storeToRefs} from 'pinia';
 
 import moment from 'moment';
@@ -195,6 +195,7 @@ import DisabledInput from "../../DisabledInput";
 import {format} from "date-format-parse";
 
 export default {
+    emits: ['close'],
     components: {DisabledInput},
     setup() {
         const tournamentTypeStore = useTournamentTypeStore();
@@ -343,11 +344,12 @@ export default {
                         weekDays: Array(6).fill(false),
                         ends_at: null
                     }
+
+                    this.$refs.modal.closeModal();
 				})
                 .catch(res => {this.errors = res.response.data.errors; alert("Verifique os dados inseridos.")})
                 .finally(() =>{
                     this.isLoading = false;
-                    this.$refs.modal.closeModal();
                 });
         }
     }

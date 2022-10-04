@@ -2,6 +2,7 @@
     <Section title="Próximos torneios" icon="emoji_events">
         <AdminCreateTournamentModal
             v-if="!selectedTournament"
+            @close="updateTournaments()"
         />
 
         <AdminRemoveTournamentModal
