@@ -171,7 +171,7 @@ export default {
                 .post(`/api/tournament/${this.tournament.id}/notification`, {
                     before: this.inputs.before,
                     after: this.inputs.after,
-                    interval: this.inputs.after ? moment(this.end, 'HH:mm').add(this.inputs.interval, 'minutes').format('HH:mm') : undefined,
+                    interval: this.inputs.after ? moment(this.end, 'HH:mm').subtract(this.inputs.interval, 'minutes').format('HH:mm') : undefined,
                     option: this.inputs.option,
                     time: this.inputs.specific ? this.inputs.time : undefined,
                     schedule
