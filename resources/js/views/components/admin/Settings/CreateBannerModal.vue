@@ -20,8 +20,8 @@
                 <FileInput
                     label="Imagem do banner *"
                     @change="(img) => inputs.img = img"
-                    hint="Selecione uma imagem .png ou .jpg."
-                    mime="image/jpeg,image/png"
+                    hint="Selecione uma imagem .png, .jpg ou .gif."
+                    mime="image/jpeg,image/png,image/gif"
                 />
             </div>
         </div>

@@ -16,7 +16,7 @@ class StoreBannerRequest extends BaseRequest
         return [
             'title' => 'required|string',
             'position' => 'required|integer|in:1,2,3,4,5',
-            'img' => 'required|mimes:png,jpg|max:' . DBSizes::IMG,
+            'img' => 'required|mimes:png,jpg,gif|max:' . DBSizes::IMG,
             'link_url' => 'required|url|max:'. DBSizes::STRING,
         ];
     }

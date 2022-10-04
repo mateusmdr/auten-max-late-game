@@ -17,7 +17,7 @@ class UpdateBannerRequest extends FormRequest
         return [
             'title' => 'string',
             'position' => 'integer|in:1,2,3,4,5',
-            'img' => 'mimes:png,jpg|max:' . DBSizes::IMG,
+            'img' => 'mimes:png,jpg,gif|max:' . DBSizes::IMG,
             'link_url' => 'url|max:'. DBSizes::STRING,
         ];
     }
