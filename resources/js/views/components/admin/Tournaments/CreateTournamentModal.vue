@@ -8,6 +8,7 @@
         @submit="submit"
         ref="modal"
         :isLoading="isLoading"
+        @close="$emit('close')"
 	>
         <div class="row mb-3">
             <div class="col-4">
@@ -328,7 +329,6 @@ export default {
                     'schedule': this.inputs.is_recurrent ? this.getSchedule() : undefined,
                     'ends_at': this.inputs.is_recurrent ? format(this.inputs.ends_at, 'YYYY-MM-DD') : undefined,
 				})
-                .then(this.$refs.modal.closeModal)
 				.then(() => {
 					this.inputs = {
                         name: null,
@@ -347,6 +347,7 @@ export default {
                 .catch(res => {this.errors = res.response.data.errors; alert("Verifique os dados inseridos.")})
                 .finally(() =>{
                     this.isLoading = false;
+                    this.$refs.modal.closeModal();
                 });
         }
     }

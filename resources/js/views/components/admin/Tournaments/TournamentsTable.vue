@@ -50,7 +50,7 @@ export default {
                         'is_approved': true
                     })
                     .catch(res => {alert("Falha ao aprovar o torneio: " + res.response.data?.errors)})
-                    .finally(this.$emit('update'));
+                    .finally(() => this.$emit('update'));
             }
         },
         editTournament(tournament) {
