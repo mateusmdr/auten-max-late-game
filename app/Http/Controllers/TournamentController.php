@@ -41,7 +41,7 @@ class TournamentController extends Controller
             'tournament_recurrence_id_present',
             'is_approved_is',
             'date_equals',
-            'tournament_platform_id_equals',
+            'tournament_platform_id_in',
             'buy_in_gte',
             'buy_in_ste',
             'tournament_type_id_equals',
@@ -104,6 +104,9 @@ class TournamentController extends Controller
                         break;
                     case 'present':
                         $builder->whereNotNull($field);
+                        break;
+                    case 'in':
+                        $builder->whereIn($field, explode(',',$value));
                         break;
                 }
             }

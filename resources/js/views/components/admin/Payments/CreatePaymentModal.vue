@@ -67,14 +67,10 @@
 
 <script>
 import {
-    useTournamentTypeStore,
-    useTournamentPlatformStore,
-    useTournamentStore,
     useUserStore, usePaymentStore
 } from '../../../../stores/admin';
 import {mapState, mapStores, storeToRefs} from 'pinia';
 
-import moment from 'moment';
 import DisabledInput from "../../DisabledInput";
 import {format} from "date-format-parse";
 import NumberInput from "../../NumberInput";
@@ -174,39 +170,4 @@ export default {
     h5 {
         color: #E2E2FF;
     }
-</style>
-
-<style>
-
-.v-custom *{
-    cursor: pointer;
-}
-
-.v-custom .vs__search::placeholder,
-.v-custom .vs__dropdown-toggle,
-.v-custom .vs__dropdown-menu{
-    background: #4F4F4F;
-    border: none;
-    color: #BFC9DB;
-}
-
-.v-custom .vs__selected {
-    color: #BFC9DB;
-}
-
-.v-custom .vs__clear,
-.v-custom .vs__open-indicator {
-    fill: #BFC9DB;
-}
-
-.v-custom .vs__dropdown-toggle {
-    height: 3rem;
-    padding: 0 1rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-}
-
 </style>

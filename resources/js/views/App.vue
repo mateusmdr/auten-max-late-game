@@ -124,3 +124,49 @@ export default {
     }
 
 </style>
+
+
+<style>
+
+.v-custom *{
+    cursor: pointer;
+}
+
+.v-custom .vs__search::placeholder,
+.v-custom .vs__dropdown-toggle,
+.v-custom .vs__dropdown-menu{
+    background: #4F4F4F;
+    border: none;
+    color: #BFC9DB;
+}
+
+.v-custom .vs__selected {
+    color: #BFC9DB;
+}
+
+.v-custom .vs__clear,
+.v-custom .vs__open-indicator {
+    fill: #BFC9DB;
+}
+
+.v-custom .vs__dropdown-toggle {
+    height: 3rem;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.v-custom .vs__selected {
+    background-color: #232323;
+}
+
+.v-custom .vs__dropdown-option--disabled { display: none; }
+
+.v-custom .vs__deselect {
+    fill: #EB4263;
+}
+
+</style>
