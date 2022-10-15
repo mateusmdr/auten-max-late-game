@@ -49,6 +49,30 @@ class TournamentController extends Controller
 
         $builder = Tournament::query()->with(['notifications','tournament_type','tournament_platform']);
 
+        if(!Auth::user()->is_admin) {
+            $builder->where('is_approved',true);
+        }
+        $builder
+            ->where(function ($query) {
+                $query
+                    ->where('subscription_end_at', '>', 'subscription_begin_at')
+                    ->whereDate('date', '>=', today())
+                    ->whereTime('subscription_end_at', '>=', now());
+            })
+            ->orWhere(function ($query) {
+                $query
+                    ->where('subscription_end_at', '<=', 'subscription_begin_at')
+                    ->where(function ($query) {
+                        $query
+                            ->whereDate('date','>=', today())
+                            ->orWhere(function($query) {
+                                $query
+                                    ->whereDate('date', '=', today()->subDay())
+                                    ->whereTime('subscription_end_at', '>=', now());
+                            });
+                    });
+            });
+
         if($request->has('enabled_notifications')) {
             $callback = function($query) {
                 $query->select(DB::raw(1))
@@ -111,15 +135,6 @@ class TournamentController extends Controller
                 }
             }
         }
-
-        if(!Auth::user()->is_admin) {
-            $builder->where('is_approved',true);
-        }
-        $builder->whereDate('date','>=', today());
-        $builder->where(function ($query) {
-            $query->whereTime('subscription_end_at','>=',now())
-                ->orWhereDate('date','>',today());
-        });
 
         return TournamentResource::collection(
             $builder
